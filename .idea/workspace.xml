@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="add testbackground">
-      <change beforePath="$PROJECT_DIR$/scripts/InputManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/InputManager.js" afterDir="false" />
+    <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="implement drawBarrell()">
+      <change afterPath="$PROJECT_DIR$/assets/zombie32x64.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +32,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\wattest2\assets" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -39,7 +45,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1684428883443</updated>
-      <workItem from="1684428886228" duration="5707000" />
+      <workItem from="1684428886228" duration="6730000" />
     </task>
     <task id="LOCAL-00001" summary="refactor">
       <created>1684429148893</created>
@@ -76,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684432571147</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="implement drawBarrell()">
+      <created>1684435897323</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1684435897323</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +112,7 @@
     <MESSAGE value="increase movement speed" />
     <MESSAGE value="resize canvas after tilesize" />
     <MESSAGE value="add testbackground" />
-    <option name="LAST_COMMIT_MESSAGE" value="add testbackground" />
+    <MESSAGE value="implement drawBarrell()" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement drawBarrell()" />
   </component>
 </project>

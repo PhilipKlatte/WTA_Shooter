@@ -1,25 +1,26 @@
 var canvas, ctx;
 
+const tilesize = 32;
+
 var orientation = {
     up: 180,
     down: 0,
     left: 270,
     right: 90
 }
-
 var player;
 var world;
 var barrell;
 
-var playerPosX = 200;
-var playerPosY = 200;
+var zombie;
+var playerPosX = 3*tilesize;
+var playerPosY = 20*tilesize;
 var playerVelocityRight = 0;
 var playerVelocityLeft = 0;
 var playerVelocityUp = 0;
 var playerVelocityDown = 0;
-var playerOrientation = orientation.down;
 
-const tilesize = 32;
+var playerOrientation = orientation.down;
 
 
 
@@ -45,12 +46,12 @@ function movePlayer(){
     let centerX = playerPosX + player.width / 2;
     let centerY = playerPosY + player.height / 2;
 
-    if (centerX + player.height / 2 + playerVelocityRight < canvas.width + 1) {
+    if (playerPosX + playerVelocityRight < canvas.width + 1) {
         playerPosX += playerVelocityRight;
     } else{
         playerPosX = canvas.width - player.width;
     }
-    if (centerX - player.height / 2 - playerVelocityLeft > -1) {
+    if (playerPosX - playerVelocityLeft > -1) {
         playerPosX -= playerVelocityLeft;
     } else{
         playerPosX = 0;
@@ -83,9 +84,15 @@ function draw() {
     drawWorld();
     drawBarrell();
     drawPlayer();
+    drawZombie();
     //drawAndRotatePlayer()
     //drawRotatedRect(700, 100, 100, 200, 90);
     drawGrid(tilesize);
+}
+
+function drawZombie(){
+    ctx.drawImage(zombie, 17*tilesize, 11*tilesize);
+    ctx.drawImage(zombie, 4*tilesize, 5*tilesize);
 }
 
 function drawWorld(){
@@ -169,6 +176,7 @@ function preloadAssets() {
     player = addImage("assets/player32x64.png");
     world = addImage("assets/testmap.png");
     barrell = addImage("assets/barrell32x64.png");
+    zombie = addImage("assets/zombie32x64.png");
 
     var checkResources = function () {
         if (_toPreload === 0)
