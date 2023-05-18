@@ -74,7 +74,7 @@ function draw() {
 
     drawPlayer()
     drawRotatedRect(700, 100, 100, 200, 90);
-    drawGrid(50);
+    drawGrid(32);
 }
 
 function drawPlayer(){
@@ -142,7 +142,7 @@ function preloadAssets() {
 
     background = addImage("https://picsum.photos/640/480");
     player = addImage("assets/ufo356x50x4.png");
-    player = addImage("c.png")
+    player = addImage("assets/c.png")
 
     var checkResources = function () {
         if (_toPreload === 0)
