@@ -1,14 +1,23 @@
 var canvas, ctx;
 
+var orientation = {
+    up: 180,
+    down: 0,
+    left: 270,
+    right: 90
+}
+
 var playerPosX = 200;
 var playerPosY = 200;
 var playerVelocityRight = 0;
 var playerVelocityLeft = 0;
 var playerVelocityUp = 0;
 var playerVelocityDown = 0;
-var playerOrientation = 0;
+var playerOrientation = orientation.down;
 
 var player;
+
+
 
 function init() {
     canvas = document.getElementById("canvas");
