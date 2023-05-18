@@ -1,7 +1,7 @@
 addEventListener("keydown", (ev) => keydownEvent(ev));
 addEventListener("keyup", (ev) => keyupEvent(ev));
 
-let movementSpeed = 20;
+let movementSpeed = 32;
 
 function keydownEvent(ev) {
     const key_pressed = String.fromCharCode(ev.keyCode);
