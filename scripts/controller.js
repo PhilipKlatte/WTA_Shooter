@@ -6,7 +6,9 @@ var orientation = {
     left: 270,
     right: 90
 }
+
 var player;
+var world;
 
 var playerPosX = 200;
 var playerPosY = 200;
@@ -24,6 +26,7 @@ function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (32 * tilesize).toString());
     canvas.setAttribute("height", (24 * tilesize).toString());
+    // canvas = 1024x768
 
     ctx = canvas.getContext("2d");
 
@@ -76,12 +79,17 @@ function movePlayer(){
 function draw() {
     ctx.clearRect(0,0, canvas.width, canvas.height);
 
-    drawPlayer()
+    drawWorld();
+    drawAndRotatePlayer()
     drawRotatedRect(700, 100, 100, 200, 90);
     drawGrid(tilesize);
 }
 
-function drawPlayer(){
+function drawWorld(){
+    ctx.drawImage(world, 0, 0);
+}
+
+function drawAndRotatePlayer(){
     // const image = new Image();
     // image.onload = () => {
     //     this.ctx.drawImage(image, player2PosX, player2PosY)
@@ -145,8 +153,9 @@ function preloadAssets() {
     }
 
     background = addImage("https://picsum.photos/640/480");
-    player = addImage("assets/ufo356x50x4.png");
-    player = addImage("assets/c.png")
+    //player = addImage("assets/c.png");
+    player = addImage("assets/testplayer.png");
+    world = addImage("assets/testmap.png");
 
     var checkResources = function () {
         if (_toPreload === 0)
