@@ -4,8 +4,12 @@
 
 body {
     background: indigo;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .game-canvas {
     background: white;
+    margin: 90px;
 }
