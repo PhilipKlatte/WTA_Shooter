@@ -1,14 +1,14 @@
 var canvas, ctx;
 
-var player2PosX = 200;
-var player2PosY = 200;
-let playerVelocityRight = 0;
-let playerVelocityLeft = 0;
-let playerVelocityUp = 0;
-let playerVelocityDown = 0;
-let player2orientation = 0;
+var playerPosX = 200;
+var playerPosY = 200;
+var playerVelocityRight = 0;
+var playerVelocityLeft = 0;
+var playerVelocityUp = 0;
+var playerVelocityDown = 0;
+var playerOrientation = 0;
 
-var player2;
+var player;
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -25,28 +25,28 @@ function gameLoop() {
 }
 
 function movePlayer(){
-    let centerX = player2PosX + player2.width / 2;
-    let centerY = player2PosY + player2.height / 2;
+    let centerX = playerPosX + player.width / 2;
+    let centerY = playerPosY + player.height / 2;
 
-    if (centerX + player2.height / 2 + playerVelocityRight < canvas.width + 1) {
-        player2PosX += playerVelocityRight;
+    if (centerX + player.height / 2 + playerVelocityRight < canvas.width + 1) {
+        playerPosX += playerVelocityRight;
     } else{
-        player2PosX = canvas.width - player2.width / 2 * 3;
+        playerPosX = canvas.width - player.width / 2 * 3;
     }
-    if (centerX - player2.height / 2 - playerVelocityLeft > -1) {
-        player2PosX -= playerVelocityLeft;
+    if (centerX - player.height / 2 - playerVelocityLeft > -1) {
+        playerPosX -= playerVelocityLeft;
     } else{
-        player2PosX = player2.width / 2;
+        playerPosX = player.width / 2;
     }
-    if (player2PosY - playerVelocityUp > -1) {
-        player2PosY -= playerVelocityUp;
+    if (playerPosY - playerVelocityUp > -1) {
+        playerPosY -= playerVelocityUp;
     } else{
-        player2PosY = 0;
+        playerPosY = 0;
     }
-    if (player2PosY + playerVelocityDown < canvas.height - player2.height) {
-        player2PosY += playerVelocityDown;
+    if (playerPosY + playerVelocityDown < canvas.height - player.height) {
+        playerPosY += playerVelocityDown;
     } else {
-        player2PosY = canvas.height - player2.height;
+        playerPosY = canvas.height - player.height;
     }
 
     // console.log("X", player2PosX);
@@ -63,12 +63,12 @@ function movePlayer(){
 function draw() {
     ctx.clearRect(0,0, canvas.width, canvas.height);
 
-    drawPlayer2()
+    drawPlayer()
     drawRotatedRect(700, 100, 100, 200, 90);
     drawGrid();
 }
 
-function drawPlayer2(){
+function drawPlayer(){
     // const image = new Image();
     // image.onload = () => {
     //     this.ctx.drawImage(image, player2PosX, player2PosY)
@@ -77,9 +77,9 @@ function drawPlayer2(){
 
     ctx.save();
     ctx.beginPath();
-    ctx.translate(player2PosX+player2.width / 2, player2PosY+player2.height / 2);
-    ctx.rotate(player2orientation*Math.PI/180);
-    ctx.drawImage(player2, -player2.width / 2, -player2.height / 2);
+    ctx.translate(playerPosX+player.width / 2, playerPosY+player.height / 2);
+    ctx.rotate(playerOrientation*Math.PI/180);
+    ctx.drawImage(player, -player.width / 2, -player.height / 2);
     ctx.restore();
 }
 
@@ -125,30 +125,6 @@ function drawRotatedRect(x,y,width,height,degrees){
     ctx.restore();
 }
 
-function keyboardPressed(ev) {
-    var key_pressed = String.fromCharCode(ev.keyCode);
-
-    if (key_pressed === "W") {
-        movePlayerIfDoesntCollide(player2PosX, player2PosY - 5);
-    }
-    if (key_pressed === "A") {
-        movePlayerIfDoesntCollide(player2PosX - 5, player2PosY);
-    }
-    if (key_pressed === "S") {
-        movePlayerIfDoesntCollide(player2PosX, player2PosY + 5);
-    }
-    if (key_pressed === "D") {
-        movePlayerIfDoesntCollide(player2PosX + 5, player2PosY);
-    }
-}
-
-function movePlayerIfDoesntCollide(newx, newy){
-    if (newx > -1 && newx + 50 < 901 && newy > -1 && newy + 50 < 601) {
-        player2PosX = newx;
-        player2PosY = newy;
-    }
-}
-
 function preloadAssets() {
     var _toPreload = 0;
 
@@ -166,7 +142,7 @@ function preloadAssets() {
 
     background = addImage("https://picsum.photos/640/480");
     player = addImage("assets/ufo356x50x4.png");
-    player2 = addImage("c.png")
+    player = addImage("c.png")
 
     var checkResources = function () {
         if (_toPreload === 0)

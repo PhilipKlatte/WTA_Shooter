@@ -9,19 +9,19 @@ function keydownEvent(ev) {
     switch(key_pressed){
         case 'W':
             playerVelocityUp = movementSpeed;
-            player2orientation = 0;
+            playerOrientation = 0;
             break;
         case 'A':
             playerVelocityLeft = movementSpeed;
-            player2orientation = 270;
+            playerOrientation = 270;
             break;
         case 'S':
             playerVelocityDown = movementSpeed;
-            player2orientation = 180;
+            playerOrientation = 180;
             break;
         case 'D':
             playerVelocityRight = movementSpeed;
-            player2orientation = 90;
+            playerOrientation = 90;
             break;
     }
 }
