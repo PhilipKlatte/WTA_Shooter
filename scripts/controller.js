@@ -6,6 +6,7 @@ var orientation = {
     left: 270,
     right: 90
 }
+var player;
 
 var playerPosX = 200;
 var playerPosY = 200;
@@ -15,12 +16,15 @@ var playerVelocityUp = 0;
 var playerVelocityDown = 0;
 var playerOrientation = orientation.down;
 
-var player;
+const tilesize = 32;
 
 
 
 function init() {
     canvas = document.getElementById("canvas");
+    canvas.setAttribute("width", (32 * tilesize).toString());
+    canvas.setAttribute("height", (24 * tilesize).toString());
+
     ctx = canvas.getContext("2d");
 
     preloadAssets();
@@ -74,7 +78,7 @@ function draw() {
 
     drawPlayer()
     drawRotatedRect(700, 100, 100, 200, 90);
-    drawGrid(32);
+    drawGrid(tilesize);
 }
 
 function drawPlayer(){
