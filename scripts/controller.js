@@ -9,6 +9,7 @@ var orientation = {
 
 var player;
 var world;
+var barrell;
 
 var playerPosX = 200;
 var playerPosY = 200;
@@ -47,12 +48,12 @@ function movePlayer(){
     if (centerX + player.height / 2 + playerVelocityRight < canvas.width + 1) {
         playerPosX += playerVelocityRight;
     } else{
-        playerPosX = canvas.width - player.width / 2 * 3;
+        playerPosX = canvas.width - player.width;
     }
     if (centerX - player.height / 2 - playerVelocityLeft > -1) {
         playerPosX -= playerVelocityLeft;
     } else{
-        playerPosX = player.width / 2;
+        playerPosX = 0;
     }
     if (playerPosY - playerVelocityUp > -1) {
         playerPosY -= playerVelocityUp;
@@ -80,13 +81,25 @@ function draw() {
     ctx.clearRect(0,0, canvas.width, canvas.height);
 
     drawWorld();
-    drawAndRotatePlayer()
-    drawRotatedRect(700, 100, 100, 200, 90);
+    drawBarrell();
+    drawPlayer();
+    //drawAndRotatePlayer()
+    //drawRotatedRect(700, 100, 100, 200, 90);
     drawGrid(tilesize);
 }
 
 function drawWorld(){
     ctx.drawImage(world, 0, 0);
+}
+
+function drawPlayer(){
+    ctx.drawImage(player, playerPosX, playerPosY);
+}
+
+function drawBarrell(){
+    ctx.drawImage(barrell, 576, 512);
+    ctx.drawImage(barrell, 12*tilesize, 4*tilesize);
+    ctx.drawImage(barrell, 27*tilesize, 10*tilesize);
 }
 
 function drawAndRotatePlayer(){
@@ -97,7 +110,6 @@ function drawAndRotatePlayer(){
     // image.src = "player.png";
 
     ctx.save();
-    ctx.beginPath();
     ctx.translate(playerPosX+player.width / 2, playerPosY+player.height / 2);
     ctx.rotate(playerOrientation*Math.PI/180);
     ctx.drawImage(player, -player.width / 2, -player.height / 2);
@@ -154,8 +166,9 @@ function preloadAssets() {
 
     background = addImage("https://picsum.photos/640/480");
     //player = addImage("assets/c.png");
-    player = addImage("assets/testplayer.png");
+    player = addImage("assets/player32x64.png");
     world = addImage("assets/testmap.png");
+    barrell = addImage("assets/barrell32x64.png");
 
     var checkResources = function () {
         if (_toPreload === 0)
