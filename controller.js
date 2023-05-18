@@ -65,7 +65,7 @@ function draw() {
 
     drawPlayer()
     drawRotatedRect(700, 100, 100, 200, 90);
-    drawGrid();
+    drawGrid(50);
 }
 
 function drawPlayer(){
@@ -83,35 +83,26 @@ function drawPlayer(){
     ctx.restore();
 }
 
-function drawGrid(){
-    ctx.beginPath();
-    ctx.moveTo(100, 0);
-    ctx.lineTo(100,600);
-    ctx.moveTo(200, 0);
-    ctx.lineTo(200,600);
-    ctx.moveTo(300, 0);
-    ctx.lineTo(300,600);
-    ctx.moveTo(400, 0);
-    ctx.lineTo(400,600);
-    ctx.moveTo(500, 0);
-    ctx.lineTo(500,600);
-    ctx.moveTo(600, 0);
-    ctx.lineTo(600,600);
-    ctx.moveTo(700, 0);
-    ctx.lineTo(700,600);
-    ctx.moveTo(800, 0);
-    ctx.lineTo(800,600);
+function drawGrid(spacing){
+    var x = 0;
 
-    ctx.moveTo(0, 100);
-    ctx.lineTo(900, 100);
-    ctx.moveTo(0, 200);
-    ctx.lineTo(900, 200);
-    ctx.moveTo(0, 300);
-    ctx.lineTo(900, 300);
-    ctx.moveTo(0, 400);
-    ctx.lineTo(900, 400);
-    ctx.moveTo(0, 500);
-    ctx.lineTo(900, 500);
+    while (x < canvas.width){
+        x += spacing;
+        drawLine(x, 0, x, canvas.height);
+    }
+
+    var y = 0;
+
+    while (y < canvas.height){
+        y += spacing;
+        drawLine(0, y, canvas.width, y);
+    }
+}
+
+function drawLine(fromX, fromY, toX, toY){
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
     ctx.stroke();
 }
 
