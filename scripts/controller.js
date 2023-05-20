@@ -12,7 +12,26 @@ var player;
 var world;
 var barrell;
 
-var zombie;
+function Wand(yOben,yUnten,xLinks,xRechts){
+
+    this.yOben = yOben;
+    this.yUnten = yUnten;
+    this.xLinks = xLinks;
+    this.xRechts =xRechts;
+
+}
+var wand1 = new Wand(10*tilesize, 9*tilesize,0*tilesize,15*tilesize);
+var wand2 = new Wand(24*tilesize,16*tilesize,7*tilesize,8*tilesize);
+var wand3 = new Wand(24*tilesize,6*tilesize,21*tilesize,22*tilesize);
+
+
+function Zombie(PosX, PosY, Speed) {
+    this.PosX = PosX;
+    this.PosY = PosY;
+    this.Speed= Speed;
+  }
+  var zombie1 = new Zombie(5*tilesize, 5*tilesize, 0.5);
+  var zombie2 = new Zombie(7*tilesize, 6*tilesize, 1.5);
 var playerPosX = 3*tilesize;
 var playerPosY = 20*tilesize;
 var playerVelocityRight = 0;
@@ -38,8 +57,58 @@ function init() {
 }
 
 function gameLoop() {
-    movePlayer();
+    detectColision(wand1);
+    if(detectColision(wand1)
+    && detectColision(wand2)
+    && detectColision(wand3)){
+        movePlayer();
+    }
+    
+    moveZombie(zombie1);
+    moveZombie(zombie2);
     draw();
+}
+
+function detectColision(Wand){
+
+    var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
+    var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
+
+    if(
+        newPosX < Wand.xRechts &&
+        newPosX + player.width > Wand.xLinks &&
+        newPosY + (player.height/2) < Wand.yOben &&
+        newPosY + player.height > Wand.yUnten
+    ){
+        console.log('ColisionDetectet');
+        return false;
+    }
+    else{
+        return true;
+    }
+    
+
+
+}
+
+
+function detectColisionZom(Wand,ZomPosX, ZomPosY){
+
+    //var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
+    //var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
+
+    if(
+        ZomPosX < Wand.xRechts &&
+        ZomPosX + player.width > Wand.xLinks &&
+        ZomPosY < Wand.yOben &&
+        ZomPosY + player.height > Wand.yUnten
+    ){
+        console.log('ColisionDetectet');
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 function movePlayer(){
@@ -78,6 +147,34 @@ function movePlayer(){
     //player2PosY += playerVelocityDown;
 }
 
+function moveZombie(Zombie){
+    var newZomPosX = 0;
+    var newZomPosY= 0;
+    if (Zombie.PosX<=playerPosX){
+        newZomPosX = Zombie.PosX+Zombie.Speed;
+        
+    }else if (Zombie.PosX>=playerPosX){
+        newZomPosX = Zombie.PosX-Zombie.Speed;
+    }
+
+    if (Zombie.PosY<=playerPosY){
+       newZomPosY= Zombie.PosY+Zombie.Speed;
+    }else if ((Zombie.PosY>=playerPosY)){
+       newZomPosY= Zombie.PosY-Zombie.Speed;
+    }
+    
+    if(detectColisionZom(wand1,newZomPosX,newZomPosY) &&
+    detectColisionZom(wand2,newZomPosX,newZomPosY) &&
+    detectColisionZom(wand3,newZomPosX,newZomPosY) 
+    ){
+        Zombie.PosX = newZomPosX;
+        Zombie.PosY = newZomPosY;
+        
+    }
+    
+
+}
+
 function draw() {
     ctx.clearRect(0,0, canvas.width, canvas.height);
 
@@ -91,8 +188,11 @@ function draw() {
 }
 
 function drawZombie(){
-    ctx.drawImage(zombie, 17*tilesize, 11*tilesize);
-    ctx.drawImage(zombie, 4*tilesize, 5*tilesize);
+    //ctx.drawImage(zombie, 17*tilesize, 11*tilesize);
+    //ctx.drawImage(zombie, 4*tilesize, 5*tilesize);
+    ctx.drawImage(zombie, zombie1.PosX, zombie1.PosY);
+    ctx.drawImage(zombie, zombie2.PosX, zombie2.PosY);
+    
 }
 
 function drawWorld(){
