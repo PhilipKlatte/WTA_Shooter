@@ -17,8 +17,8 @@ var wand1 = new Wand(10*tilesize, 9*tilesize,0*tilesize,15*tilesize);
 var wand2 = new Wand(24*tilesize,16*tilesize,7*tilesize,8*tilesize);
 var wand3 = new Wand(24*tilesize,6*tilesize,21*tilesize,22*tilesize);
 
-var zombie1 = new Zombie(zombie, ctx, 5*tilesize, 5*tilesize, 0.9);
-var zombie2 = new Zombie(zombie, ctx,7*tilesize, 6*tilesize, 1.5);
+var zombie1 = new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9);
+var zombie2 = new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5);
 
 var player = new Player(3*tilesize,20*tilesize);
 /*

@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="auslagerung barrel, player, wand, zombie">
-      <change afterPath="$PROJECT_DIR$/scripts/barrel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/gameObject.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/player.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/wand.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/zombie.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/zombie.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/zombie.js" afterDir="false" />
     </list>
-    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="">
+    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="Changes by User">
       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,24 +26,24 @@
     <file path="$PROJECT_DIR$/scripts/controller.js">
       <ranges>
         <range start1="10" end1="11" start2="10" end2="12" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="13" end1="15" start2="14" end2="15" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="16" end1="22" start2="16" end2="16" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="26" end1="26" start2="20" end2="22" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="27" end1="34" start2="23" end2="25" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="36" end1="36" start2="27" end2="29" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="43" end1="44" start2="36" end2="36" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="59" end1="60" start2="51" end2="52" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="63" end1="64" start2="55" end2="56" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="66" end1="68" start2="58" end2="60" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="73" end1="75" start2="65" end2="67" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="78" end1="81" start2="70" end2="73" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="88" end1="91" start2="80" end2="80" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="112" end1="113" start2="101" end2="102" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="114" end1="116" start2="103" end2="105" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="117" end1="118" start2="106" end2="107" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="148" end1="176" start2="137" end2="138" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="202" end1="203" start2="164" end2="165" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="274" end1="276" start2="236" end2="237" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="13" end1="14" start2="14" end2="15" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="19" end1="21" start2="20" end2="22" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="26" end1="26" start2="27" end2="29" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="48" end1="49" start2="51" end2="52" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="52" end1="53" start2="55" end2="56" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="62" end1="64" start2="65" end2="67" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="67" end1="70" start2="70" end2="73" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="71" end1="72" start2="74" end2="75" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="87" end1="88" start2="90" end2="91" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="89" end1="90" start2="92" end2="93" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="91" end1="92" start2="94" end2="95" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="98" end1="99" start2="101" end2="102" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="100" end1="102" start2="103" end2="105" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="103" end1="104" start2="106" end2="107" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="151" end1="153" start2="154" end2="156" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="161" end1="162" start2="164" end2="165" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="233" end1="235" start2="236" end2="237" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="237" end1="238" start2="239" end2="240" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
       </ranges>
     </file>
   </component>
@@ -88,7 +83,7 @@
       <updated>1684428883443</updated>
       <workItem from="1684428886228" duration="7490000" />
       <workItem from="1684503903885" duration="1860000" />
-      <workItem from="1684582039502" duration="5492000" />
+      <workItem from="1684582039502" duration="6223000" />
     </task>
     <task id="LOCAL-00001" summary="refactor">
       <created>1684429148893</created>
@@ -139,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684436813069</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="auslagerung barrel, player, wand, zombie">
+      <created>1684587594548</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684587594548</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
