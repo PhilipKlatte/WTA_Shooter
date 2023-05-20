@@ -95,8 +95,8 @@ function detectColisionBarrelPlayer(barrel){
         newPosX < barrel.posX+barrelImg.width &&
         newPosX + playerImg.width > barrel.posX
         &&
-        newPosY + (playerImg.height/2) > barrel.posY+ barrelImg.height &&
-        newPosY + playerImg.height < barrel.posY
+        newPosY < barrel.posY+ barrelImg.height &&
+        newPosY + (playerImg.height/2) > barrel.posY
     ){
         console.log('ColisionDetectetPlayerBarrel');
         return detectColisionBarrelWand(barrel,walls[0]);
@@ -113,10 +113,17 @@ function detectColisionBarrelWand(barrel, wall){
     var newPosY = barrel.posY - playerVelocityUp + playerVelocityDown;
 
     if(
+        //newPosX > wall.xLinks &&
+        //newPosX + barrelImg.width < wall.xRechts
+        //&&
+        newPosY < wall.yOben &&
+        newPosY + (barrelImg.height/2) > wall.yUnten
+        /*
         newPosX < wall.xRechts &&
         newPosX + barrelImg.width > wall.xLinks &&
         newPosY + (barrelImg.height/2) < wall.yOben &&
         newPosY + barrelImg.height > wall.yUnten
+        */
     ){
         console.log('ColisionDetectetBarrelWand');
         return false;
