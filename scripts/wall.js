@@ -1,5 +1,4 @@
-
-class Wand{
+class Wall {
     constructor(yOben,yUnten,xLinks,xRechts) {
         this.yOben = yOben;
         this.yUnten = yUnten;

@@ -1,8 +1,6 @@
-class Player {
-    constructor(playerPosX, playerPosY) {
-
-        this.playerPosX = playerPosX; //3
-        this.playerPosY = playerPosY; //20
+class Player extends gameObject{
+    constructor(src, ctx, posX, posY) {
+        super(src, ctx, posX, posY);
         /*
         this.playerVelocityRight = 0;
         this.playerVelocityLeft = 0;
@@ -10,42 +8,35 @@ class Player {
         this.playerVelocityDown = 0;
         this.playerOrientation = orientation.down;
         */
-
     }
 
     movePlayer(playerVelocityRight, playerVelocityLeft, playerVelocityUp, playerVelocityDown) {
-        let centerX = this.playerPosX + player.width / 2;
-        let centerY = this.playerPosY + player.height / 2;
-
-        if (this.playerPosX + playerVelocityRight < canvas.width + 1) {
-            this.playerPosX += playerVelocityRight;
+        if (this.posX + playerVelocityRight < canvas.width + 1) {
+            this.posX += playerVelocityRight;
         } else {
-            this.playerPosX = canvas.width - playerImg.width;
+            this.posX = canvas.width - playerImg.width;
         }
-        if (this.playerPosX - playerVelocityLeft > -1) {
-            this.playerPosX -= playerVelocityLeft;
+        if (this.posX - playerVelocityLeft > -1) {
+            this.posX -= playerVelocityLeft;
         } else {
-            this.playerPosX = 0;
+            this.posX = 0;
         }
-        if (this.playerPosY - playerVelocityUp > -1) {
-            this.playerPosY -= playerVelocityUp;
+        if (this.posY - playerVelocityUp > -1) {
+            this.posY -= playerVelocityUp;
         } else {
-            this.playerPosY = 0;
+            this.posY = 0;
         }
-        if (this.playerPosY + playerVelocityDown < canvas.height - playerImg.height) {
-            this.playerPosY += playerVelocityDown;
+        if (this.posY + playerVelocityDown < canvas.height - playerImg.height) {
+            this.posY += playerVelocityDown;
         } else {
-            this.playerPosY = canvas.height - playerImg.height;
+            this.posY = canvas.height - playerImg.height;
         }
 
-        console.log("X", this.playerPosX);
-        console.log("Y", this.playerPosY);
-
-        //player2PosX += playerVelocityRight;
-        //player2PosX -= playerVelocityLeft;
-        //player2PosY -= playerVelocityUp;
-        //player2PosY += playerVelocityDown;
-
+        //logData();
     }
 
+    logData(){
+        console.log("X", this.posX);
+        console.log("Y", this.posY);
+    }
 }

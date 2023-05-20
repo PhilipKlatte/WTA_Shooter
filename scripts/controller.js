@@ -8,17 +8,15 @@ var orientation = {
     left: 270,
     right: 90
 }
-var player;
-var world;
-var barrell;
-var zombie;
 
-var wand1 = new Wand(10*tilesize, 9*tilesize,0*tilesize,15*tilesize);
-var wand2 = new Wand(24*tilesize,16*tilesize,7*tilesize,8*tilesize);
-var wand3 = new Wand(24*tilesize,6*tilesize,21*tilesize,22*tilesize);
+var playerImg;
+var worldImg;
+var barrelImg;
+var zombieImg;
 
-var zombie1 = new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9);
-var zombie2 = new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5);
+const walls = [];
+const zombies = [];
+const barrels = [];
 
 var player = new Player(3*tilesize,20*tilesize);
 /*
@@ -40,6 +38,17 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
+    player = new Player(3*tilesize,20*tilesize);
+
+    walls.push(new Wall(10*tilesize, 9*tilesize,0*tilesize,15*tilesize));
+    walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
+    walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
+
+    zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));
+    zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
+
+    barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
+
     preloadAssets();
 
     setInterval(gameLoop,60);
@@ -53,8 +62,8 @@ function gameLoop() {
         movePlayer();
     }
     
-    zombie1.move(player.playerPosX, player.playerPosY);
-    zombie2.move(player.playerPosX, player.playerPosY);
+    zombies[0].move(player.posX, player.posY);
+    zombies[1].move(player.posX, player.posY);
     draw();
 }
 
@@ -80,8 +89,8 @@ function detectColision(Wand){
 
 function detectColisionZom(Wand,ZomPosX, ZomPosY){
 
-    //var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
-    //var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
+//var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
+//var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
 
     if(
         ZomPosX < Wand.xRechts &&
@@ -162,10 +171,8 @@ function drawPlayer(){
     ctx.drawImage(player, playerPosX, playerPosY);
 }
 
-function drawBarrell(){
-    ctx.drawImage(barrell, 576, 512);
-    ctx.drawImage(barrell, 12*tilesize, 4*tilesize);
-    ctx.drawImage(barrell, 27*tilesize, 10*tilesize);
+function drawBarrell() {
+    ctx.drawImage(barrelImg, barrel1.posX, barrel1.posY);
 }
 
 function drawAndRotatePlayer(){

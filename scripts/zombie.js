@@ -22,9 +22,9 @@ class Zombie extends gameObject{
             newZomPosY = this.posY - this.speed;
         }
 
-        if(detectColisionZom(wand1, newZomPosX, newZomPosY) &&
-            detectColisionZom(wand2, newZomPosX, newZomPosY) &&
-            detectColisionZom(wand3, newZomPosX, newZomPosY)
+        if(detectColisionZom(walls[0], newZomPosX, newZomPosY) &&
+            detectColisionZom(walls[1], newZomPosX, newZomPosY) &&
+            detectColisionZom(walls[2], newZomPosX, newZomPosY)
         ){
             this.posX = newZomPosX;
             this.posY = newZomPosY;
