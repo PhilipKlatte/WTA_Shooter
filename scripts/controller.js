@@ -11,27 +11,17 @@ var orientation = {
 var player;
 var world;
 var barrell;
+var zombie;
 
-function Wand(yOben,yUnten,xLinks,xRechts){
-
-    this.yOben = yOben;
-    this.yUnten = yUnten;
-    this.xLinks = xLinks;
-    this.xRechts =xRechts;
-
-}
 var wand1 = new Wand(10*tilesize, 9*tilesize,0*tilesize,15*tilesize);
 var wand2 = new Wand(24*tilesize,16*tilesize,7*tilesize,8*tilesize);
 var wand3 = new Wand(24*tilesize,6*tilesize,21*tilesize,22*tilesize);
 
+var zombie1 = new Zombie(zombie, ctx, 5*tilesize, 5*tilesize, 0.9);
+var zombie2 = new Zombie(zombie, ctx,7*tilesize, 6*tilesize, 1.5);
 
-function Zombie(PosX, PosY, Speed) {
-    this.PosX = PosX;
-    this.PosY = PosY;
-    this.Speed= Speed;
-  }
-  var zombie1 = new Zombie(5*tilesize, 5*tilesize, 0.5);
-  var zombie2 = new Zombie(7*tilesize, 6*tilesize, 1.5);
+var player = new Player(3*tilesize,20*tilesize);
+/*
 var playerPosX = 3*tilesize;
 var playerPosY = 20*tilesize;
 var playerVelocityRight = 0;
@@ -40,7 +30,6 @@ var playerVelocityUp = 0;
 var playerVelocityDown = 0;
 
 var playerOrientation = orientation.down;
-
 
 
 function init() {
@@ -64,8 +53,8 @@ function gameLoop() {
         movePlayer();
     }
     
-    moveZombie(zombie1);
-    moveZombie(zombie2);
+    zombie1.move(player.playerPosX, player.playerPosY);
+    zombie2.move(player.playerPosX, player.playerPosY);
     draw();
 }
 
@@ -86,9 +75,6 @@ function detectColision(Wand){
     else{
         return true;
     }
-    
-
-
 }
 
 
@@ -146,34 +132,7 @@ function movePlayer(){
     //player2PosY -= playerVelocityUp;
     //player2PosY += playerVelocityDown;
 }
-
-function moveZombie(Zombie){
-    var newZomPosX = 0;
-    var newZomPosY= 0;
-    if (Zombie.PosX<=playerPosX){
-        newZomPosX = Zombie.PosX+Zombie.Speed;
-        
-    }else if (Zombie.PosX>=playerPosX){
-        newZomPosX = Zombie.PosX-Zombie.Speed;
-    }
-
-    if (Zombie.PosY<=playerPosY){
-       newZomPosY= Zombie.PosY+Zombie.Speed;
-    }else if ((Zombie.PosY>=playerPosY)){
-       newZomPosY= Zombie.PosY-Zombie.Speed;
-    }
-    
-    if(detectColisionZom(wand1,newZomPosX,newZomPosY) &&
-    detectColisionZom(wand2,newZomPosX,newZomPosY) &&
-    detectColisionZom(wand3,newZomPosX,newZomPosY) 
-    ){
-        Zombie.PosX = newZomPosX;
-        Zombie.PosY = newZomPosY;
-        
-    }
-    
-
-}
+*/
 
 function draw() {
     ctx.clearRect(0,0, canvas.width, canvas.height);

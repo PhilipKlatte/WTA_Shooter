@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="implement drawBarrell()">
-      <change afterPath="$PROJECT_DIR$/assets/zombie32x64.png" afterDir="false" />
+    <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="auslagerung barrel, player, wand, zombie">
+      <change afterPath="$PROJECT_DIR$/scripts/barrel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/gameObject.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/player.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/wand.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/zombie.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
+    </list>
+    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="">
       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -12,7 +20,37 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/scripts/controller.js">
+      <ranges>
+        <range start1="10" end1="11" start2="10" end2="12" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="13" end1="15" start2="14" end2="15" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="16" end1="22" start2="16" end2="16" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="26" end1="26" start2="20" end2="22" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="27" end1="34" start2="23" end2="25" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="36" end1="36" start2="27" end2="29" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="43" end1="44" start2="36" end2="36" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="59" end1="60" start2="51" end2="52" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="63" end1="64" start2="55" end2="56" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="66" end1="68" start2="58" end2="60" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="73" end1="75" start2="65" end2="67" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="78" end1="81" start2="70" end2="73" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="88" end1="91" start2="80" end2="80" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="112" end1="113" start2="101" end2="102" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="114" end1="116" start2="103" end2="105" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="117" end1="118" start2="106" end2="107" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="148" end1="176" start2="137" end2="138" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="202" end1="203" start2="164" end2="165" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+        <range start1="274" end1="276" start2="236" end2="237" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -29,11 +67,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\wattest2\scripts" />
       <recent name="C:\xampp\htdocs\wattest2\assets" />
     </key>
   </component>
@@ -45,7 +86,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1684428883443</updated>
-      <workItem from="1684428886228" duration="6730000" />
+      <workItem from="1684428886228" duration="7490000" />
+      <workItem from="1684503903885" duration="1860000" />
+      <workItem from="1684582039502" duration="5492000" />
     </task>
     <task id="LOCAL-00001" summary="refactor">
       <created>1684429148893</created>
@@ -89,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684435897323</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="implement drawZombie(), refactor border collision">
+      <created>1684436813069</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1684436813069</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +163,24 @@
     <MESSAGE value="resize canvas after tilesize" />
     <MESSAGE value="add testbackground" />
     <MESSAGE value="implement drawBarrell()" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement drawBarrell()" />
+    <MESSAGE value="implement drawZombie(), refactor border collision" />
+    <MESSAGE value="auslagerung barrel, player, wand, zombie" />
+    <option name="LAST_COMMIT_MESSAGE" value="auslagerung barrel, player, wand, zombie" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/scripts/player.js</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/scripts/player.js</url>
+          <line>9</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
