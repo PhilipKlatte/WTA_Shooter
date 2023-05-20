@@ -18,10 +18,10 @@ const walls = [];
 const zombies = [];
 const barrels = [];
 
-var player = new Player(3*tilesize,20*tilesize);
-/*
-var playerPosX = 3*tilesize;
-var playerPosY = 20*tilesize;
+var player;
+
+var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
+
 var playerVelocityRight = 0;
 var playerVelocityLeft = 0;
 var playerVelocityUp = 0;
@@ -55,11 +55,12 @@ function init() {
 }
 
 function gameLoop() {
-    detectColision(wand1);
-    if(detectColision(wand1)
-    && detectColision(wand2)
-    && detectColision(wand3)){
-        movePlayer();
+    if(detectColision(walls[0])
+    && detectColision(walls[1])
+    && detectColision(walls[2])){
+        if(detectColisionBarrelPlayer(barrel1)){
+            player.movePlayer(playerVelocityRight, playerVelocityLeft, playerVelocityUp, playerVelocityDown);
+        }
     }
     
     zombies[0].move(player.posX, player.posY);
@@ -68,17 +69,16 @@ function gameLoop() {
 }
 
 function detectColision(Wand){
-
-    var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
-    var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
+    var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;
+    var newPosY = player.posY - playerVelocityUp + playerVelocityDown;
 
     if(
         newPosX < Wand.xRechts &&
-        newPosX + player.width > Wand.xLinks &&
-        newPosY + (player.height/2) < Wand.yOben &&
-        newPosY + player.height > Wand.yUnten
+        newPosX + playerImg.width > Wand.xLinks &&
+        newPosY + (playerImg.height/2) < Wand.yOben &&
+        newPosY + playerImg.height > Wand.yUnten
     ){
-        console.log('ColisionDetectet');
+        console.log('ColisionDetectetPlayerWand');
         return false;
     }
     else{
@@ -86,65 +86,68 @@ function detectColision(Wand){
     }
 }
 
+function detectColisionBarrelPlayer(barrel){
 
-function detectColisionZom(Wand,ZomPosX, ZomPosY){
+    var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;
+    var newPosY = player.posY - playerVelocityUp + playerVelocityDown;
+
+    if(
+        newPosX < barrel.posX+barrelImg.width &&
+        newPosX + playerImg.width > barrel.posX
+        &&
+        newPosY + (playerImg.height/2) > barrel.posY+ barrelImg.height &&
+        newPosY + playerImg.height < barrel.posY
+    ){
+        console.log('ColisionDetectetPlayerBarrel');
+        return detectColisionBarrelWand(barrel,walls[0]);
+    }
+    else{
+        return true;
+    }
+}
+
+
+function detectColisionBarrelWand(barrel, wall){
+
+    var newPosX = barrel.posX + playerVelocityRight -playerVelocityLeft;
+    var newPosY = barrel.posY - playerVelocityUp + playerVelocityDown;
+
+    if(
+        newPosX < wall.xRechts &&
+        newPosX + barrelImg.width > wall.xLinks &&
+        newPosY + (barrelImg.height/2) < wall.yOben &&
+        newPosY + barrelImg.height > wall.yUnten
+    ){
+        console.log('ColisionDetectetBarrelWand');
+        return false;
+    }
+    else{
+        barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
+        return true;
+    }
+}
+
+
+function detectColisionZom(Wand,ZomPosX, ZomPosY) {
 
 //var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
 //var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
 
-    if(
+    if (
         ZomPosX < Wand.xRechts &&
-        ZomPosX + player.width > Wand.xLinks &&
+        ZomPosX + playerImg.width > Wand.xLinks &&
         ZomPosY < Wand.yOben &&
-        ZomPosY + player.height > Wand.yUnten
-    ){
-        console.log('ColisionDetectet');
+        ZomPosY + playerImg.height > Wand.yUnten
+    ) {
+        //console.log('ColisionDetectetZom');
         return false;
-    }
-    else{
+    } else {
         return true;
     }
 }
 
-function movePlayer(){
-    let centerX = playerPosX + player.width / 2;
-    let centerY = playerPosY + player.height / 2;
-
-    if (playerPosX + playerVelocityRight < canvas.width + 1) {
-        playerPosX += playerVelocityRight;
-    } else{
-        playerPosX = canvas.width - player.width;
-    }
-    if (playerPosX - playerVelocityLeft > -1) {
-        playerPosX -= playerVelocityLeft;
-    } else{
-        playerPosX = 0;
-    }
-    if (playerPosY - playerVelocityUp > -1) {
-        playerPosY -= playerVelocityUp;
-    } else{
-        playerPosY = 0;
-    }
-    if (playerPosY + playerVelocityDown < canvas.height - player.height) {
-        playerPosY += playerVelocityDown;
-    } else {
-        playerPosY = canvas.height - player.height;
-    }
-
-    // console.log("X", player2PosX);
-    // console.log("Y", player2PosY);
-    // console.log("centerX", centerX);
-    // console.log("centerY", centerY);
-
-    //player2PosX += playerVelocityRight;
-    //player2PosX -= playerVelocityLeft;
-    //player2PosY -= playerVelocityUp;
-    //player2PosY += playerVelocityDown;
-}
-*/
-
 function draw() {
-    ctx.clearRect(0,0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawWorld();
     drawBarrell();
@@ -155,27 +158,25 @@ function draw() {
     drawGrid(tilesize);
 }
 
-function drawZombie(){
-    //ctx.drawImage(zombie, 17*tilesize, 11*tilesize);
-    //ctx.drawImage(zombie, 4*tilesize, 5*tilesize);
-    ctx.drawImage(zombie, zombie1.PosX, zombie1.PosY);
-    ctx.drawImage(zombie, zombie2.PosX, zombie2.PosY);
-    
+function drawZombie() {
+    ctx.drawImage(zombieImg, zombies[0].posX, zombies[0].posY);
+    ctx.drawImage(zombieImg, zombies[1].posX, zombies[1].posY);
+
 }
 
-function drawWorld(){
-    ctx.drawImage(world, 0, 0);
+function drawWorld() {
+    ctx.drawImage(worldImg, 0, 0);
 }
 
-function drawPlayer(){
-    ctx.drawImage(player, playerPosX, playerPosY);
+function drawPlayer() {
+    ctx.drawImage(playerImg, player.posX, player.posY);
 }
 
 function drawBarrell() {
     ctx.drawImage(barrelImg, barrel1.posX, barrel1.posY);
 }
 
-function drawAndRotatePlayer(){
+function drawAndRotatePlayer() {
     // const image = new Image();
     // image.onload = () => {
     //     this.ctx.drawImage(image, player2PosX, player2PosY)
@@ -183,42 +184,42 @@ function drawAndRotatePlayer(){
     // image.src = "player.png";
 
     ctx.save();
-    ctx.translate(playerPosX+player.width / 2, playerPosY+player.height / 2);
-    ctx.rotate(playerOrientation*Math.PI/180);
+    ctx.translate(playerPosX + player.width / 2, playerPosY + player.height / 2);
+    ctx.rotate(playerOrientation * Math.PI / 180);
     ctx.drawImage(player, -player.width / 2, -player.height / 2);
     ctx.restore();
 }
 
-function drawGrid(spacing){
+function drawGrid(spacing) {
     var x = 0;
 
-    while (x < canvas.width){
+    while (x < canvas.width) {
         x += spacing;
         drawLine(x, 0, x, canvas.height);
     }
 
     var y = 0;
 
-    while (y < canvas.height){
+    while (y < canvas.height) {
         y += spacing;
         drawLine(0, y, canvas.width, y);
     }
 }
 
-function drawLine(fromX, fromY, toX, toY){
+function drawLine(fromX, fromY, toX, toY) {
     ctx.beginPath();
     ctx.moveTo(fromX, fromY);
     ctx.lineTo(toX, toY);
     ctx.stroke();
 }
 
-function drawRotatedRect(x,y,width,height,degrees){
+function drawRotatedRect(x, y, width, height, degrees) {
     ctx.save();
     ctx.beginPath();
-    ctx.translate( x+width/2, y+height/2 );
-    ctx.rotate(degrees*Math.PI/180);
+    ctx.translate(x + width / 2, y + height / 2);
+    ctx.rotate(degrees * Math.PI / 180);
     ctx.fillStyle = "brown";
-    ctx.fillRect( -width/2, -height/2, width, height);
+    ctx.fillRect(-width / 2, -height / 2, width, height);
     ctx.restore();
 }
 
@@ -238,16 +239,15 @@ function preloadAssets() {
     }
 
     background = addImage("https://picsum.photos/640/480");
-    //player = addImage("assets/c.png");
-    player = addImage("assets/player32x64.png");
-    world = addImage("assets/testmap.png");
-    barrell = addImage("assets/barrell32x64.png");
-    zombie = addImage("assets/zombie32x64.png");
+    playerImg = addImage("assets/player32x64.png");
+    worldImg = addImage("assets/testmap.png");
+    barrelImg = addImage("assets/barrell32x64.png");
+    zombieImg = addImage("assets/zombie32x64.png");
 
     var checkResources = function () {
         if (_toPreload === 0)
 
-            setInterval (gameLoop,40);
+            setInterval(gameLoop, 40);
         else
             setTimeout(checkResources, 200);
     }
