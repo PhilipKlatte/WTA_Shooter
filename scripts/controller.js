@@ -20,7 +20,7 @@ const barrels = [];
 
 var player;
 
-var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
+var barrel1 = new Barrel(barrelImg, ctx, 17*tilesize,5*tilesize);
 
 var playerVelocityRight = 0;
 var playerVelocityLeft = 0;
@@ -47,7 +47,7 @@ function init() {
     zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));
     zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
 
-    barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
+    //barrels.push(new Barrel(barrelImg, ctx, 2*tilesize,5*tilesize));
 
     preloadAssets();
 
@@ -99,11 +99,41 @@ function detectColisionBarrelPlayer(barrel){
         newPosY + (playerImg.height/2) > barrel.posY
     ){
         console.log('ColisionDetectetPlayerBarrel');
-        return detectColisionBarrelWand(barrel,walls[0]);
+        
+            
+                if(detectColisionBarrelWandAll(barrel)){
+                
+                return true
+                }
+            
+            
+        
+        else{
+            
+            return false
+        }
     }
     else{
         return true;
     }
+}
+
+
+function detectColisionBarrelWandAll(barrel){
+
+    if(detectColisionBarrelWand(barrel,walls[0])){
+
+        if(detectColisionBarrelWand(barrel,walls[1])){
+
+            if(detectColisionBarrelWand(barrel,walls[2])){
+                barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
+                return true
+            }
+
+        }
+
+    }
+    return false
 }
 
 
@@ -113,11 +143,13 @@ function detectColisionBarrelWand(barrel, wall){
     var newPosY = barrel.posY - playerVelocityUp + playerVelocityDown;
 
     if(
-        //newPosX > wall.xLinks &&
-        //newPosX + barrelImg.width < wall.xRechts
-        //&&
-        newPosY < wall.yOben &&
-        newPosY + (barrelImg.height/2) > wall.yUnten
+        newPosX  + barrelImg.width > wall.xLinks 
+        &&
+        newPosX < wall.xRechts
+        &&
+        newPosY + barrelImg.height > wall.yUnten 
+        &&
+        newPosY +(barrelImg.height/2)   < wall.yOben 
         /*
         newPosX < wall.xRechts &&
         newPosX + barrelImg.width > wall.xLinks &&
@@ -129,7 +161,7 @@ function detectColisionBarrelWand(barrel, wall){
         return false;
     }
     else{
-        barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
+        //barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
         return true;
     }
 }
