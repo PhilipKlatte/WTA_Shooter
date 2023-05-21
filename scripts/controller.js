@@ -69,7 +69,11 @@ function gameLoop() {
 
 function moveZombies(){
     zombies.forEach(zombie => {
-        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
+        if (zombie.seesPlayer()){
+            zombie.move(player.posX, player.posY);
+        } else{
+            console.log("zombie not moving");
+        }
     })
 }
 
