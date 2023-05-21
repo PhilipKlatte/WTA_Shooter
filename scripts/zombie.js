@@ -45,7 +45,33 @@ class Zombie extends gameObject{
     }
 
     visionBlockedByVerticalWall(wall){
+        let slope = this.calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
+        //let slope = this.calculateSlope(832, -576, 608, -416);
+        let xIntercept = this.calculateXIntercept(slope);
+
+        let y = (627 - xIntercept) / slope;
+        //let y = (672 - xIntercept) / slope;
+
+        let viewInterceptsWall = -y < wall.yOben && -y > wall.yUnten;
+        let playerLeftAndZombieRight = (player.posX < wall.xRechts && this.posX > wall.xRechts);
+        let playerRightAndZombieLeft = (player.posX > wall.xRechts && this.posX < wall.xRechts);
+
+        let playerAndZombiesOnOppositeSides = playerLeftAndZombieRight || playerRightAndZombieLeft;
+
+        let doesntSeePlayer = viewInterceptsWall && playerAndZombiesOnOppositeSides;
+
+        console.log("slope: ", slope);
+        console.log("xIntercept: ", xIntercept);
+        console.log("y: ", y);
+
+        console.log(!doesntSeePlayer);
+
         return false;
+    }
+
+    calculateXIntercept(slope){
+        return player.posX + -player.posY / -slope;
+        //return 832 - slope * - 576;
     }
 
     visionBlockedByHorizontalWall(wall){
