@@ -69,12 +69,8 @@ function gameLoop() {
 
 function moveZombies(){
     zombies.forEach(zombie => {
-        if (zombie.seesPlayer()){
-            zombie.move(player.posX, player.posY);
-        } else{
-            console.log("zombie not moving");
-        }
-    })
+        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
+    });
 }
 
 function detectColision(wall){
@@ -160,11 +156,11 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawGrid(tilesize);
-    drawLineToPlayer();
-    drawLineForWall();
+    drawLineFromZombieToPlayer();
+    //drawLineForWall();
 }
 
-function drawLineToPlayer(){
+function drawLineFromZombieToPlayer(){
     zombies.forEach(zombie => {
         drawLine(zombie.posX, zombie.posY, player.posX, player.posY);
     });
