@@ -4,7 +4,6 @@ class Zombie extends gameObject{
         this.speed= speed;
     }
 
-
     move(targetX, targetY){
         var newZomPosX = 0;
         var newZomPosY= 0;
@@ -29,6 +28,30 @@ class Zombie extends gameObject{
             this.posX = newZomPosX;
             this.posY = newZomPosY;
         }
+    }
+
+    seesPlayer(){
+        let wall = -304;
+        let wallStart = 0;
+        let wallFinish = 480;
+
+        let slope = this.calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
+        let yIntercept = this.calculateYIntercept(slope);
+
+        let x = (wall - yIntercept) / slope;
+
+        return !(x < wallFinish && x > wallStart);
+    }
+
+    calculateYIntercept(slope){
+        return -player.posY - slope * player.posX;
+    }
+
+    calculateSlope(x1, y1, x2, y2){
+        let deltaY = y2 - y1;
+        let deltaX = x2 - x1;
+
+        return deltaY / deltaX;
     }
 }
 
