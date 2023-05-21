@@ -22,10 +22,10 @@ var player;
 
 var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
 
-var playerVelocityRight = 0;
-var playerVelocityLeft = 0;
-var playerVelocityUp = 0;
-var playerVelocityDown = 0;
+// var playerVelocityRight = 0;
+// var playerVelocityLeft = 0;
+// var playerVelocityUp = 0;
+// var playerVelocityDown = 0;
 
 var playerOrientation = orientation.down;
 
@@ -59,7 +59,7 @@ function gameLoop() {
     && detectColision(walls[1])
     && detectColision(walls[2])){
         if(detectColisionBarrelPlayer(barrel1)){
-            player.movePlayer(playerVelocityRight, playerVelocityLeft, playerVelocityUp, playerVelocityDown);
+            player.movePlayer();
         }
     }
     
@@ -68,15 +68,15 @@ function gameLoop() {
     draw();
 }
 
-function detectColision(Wand){
-    var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;
-    var newPosY = player.posY - playerVelocityUp + playerVelocityDown;
+function detectColision(wall){
+    var newPosX = player.posX + player.playerVelocityRight - player.playerVelocityLeft;
+    var newPosY = player.posY - player.playerVelocityUp + player.playerVelocityDown;
 
     if(
-        newPosX < Wand.xRechts &&
-        newPosX + playerImg.width > Wand.xLinks &&
-        newPosY + (playerImg.height/2) < Wand.yOben &&
-        newPosY + playerImg.height > Wand.yUnten
+        newPosX < wall.xRechts &&
+        newPosX + playerImg.width > wall.xLinks &&
+        newPosY + (playerImg.height/2) < wall.yOben &&
+        newPosY + playerImg.height > wall.yUnten
     ){
         console.log('ColisionDetectetPlayerWand');
         return false;
@@ -88,8 +88,8 @@ function detectColision(Wand){
 
 function detectColisionBarrelPlayer(barrel){
 
-    var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;
-    var newPosY = player.posY - playerVelocityUp + playerVelocityDown;
+    var newPosX = player.posX + player.playerVelocityRight - player.playerVelocityLeft;
+    var newPosY = player.posY - player.playerVelocityUp + player.playerVelocityDown;
 
     if(
         newPosX < barrel.posX+barrelImg.width &&
@@ -99,7 +99,7 @@ function detectColisionBarrelPlayer(barrel){
         newPosY + playerImg.height < barrel.posY
     ){
         console.log('ColisionDetectetPlayerBarrel');
-        return detectColisionBarrelWand(barrel,walls[0]);
+        return detectColisionBarrelWall(barrel,walls[0]);
     }
     else{
         return true;
@@ -107,10 +107,10 @@ function detectColisionBarrelPlayer(barrel){
 }
 
 
-function detectColisionBarrelWand(barrel, wall){
+function detectColisionBarrelWall(barrel, wall){
 
-    var newPosX = barrel.posX + playerVelocityRight -playerVelocityLeft;
-    var newPosY = barrel.posY - playerVelocityUp + playerVelocityDown;
+    var newPosX = barrel.posX + player.playerVelocityRight - player.playerVelocityLeft;
+    var newPosY = barrel.posY - player.playerVelocityUp + player.playerVelocityDown;
 
     if(
         newPosX < wall.xRechts &&
@@ -122,22 +122,19 @@ function detectColisionBarrelWand(barrel, wall){
         return false;
     }
     else{
-        barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
+        barrel.moveBarrel(player.playerVelocityRight, player.playerVelocityLeft, player.playerVelocityUp, player.playerVelocityDown)
         return true;
     }
 }
 
 
-function detectColisionZom(Wand,ZomPosX, ZomPosY) {
-
-//var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;
-//var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;
+function detectColisionZom(wall, zomPosX, zomPosY) {
 
     if (
-        ZomPosX < Wand.xRechts &&
-        ZomPosX + playerImg.width > Wand.xLinks &&
-        ZomPosY < Wand.yOben &&
-        ZomPosY + playerImg.height > Wand.yUnten
+        zomPosX < wall.xRechts &&
+        zomPosX + playerImg.width > wall.xLinks &&
+        zomPosY < wall.yOben &&
+        zomPosY + playerImg.height > wall.yUnten
     ) {
         //console.log('ColisionDetectetZom');
         return false;
@@ -153,8 +150,6 @@ function draw() {
     drawBarrell();
     drawPlayer();
     drawZombie();
-    //drawAndRotatePlayer()
-    //drawRotatedRect(700, 100, 100, 200, 90);
     drawGrid(tilesize);
 }
 

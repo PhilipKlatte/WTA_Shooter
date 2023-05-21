@@ -8,19 +8,19 @@ function keydownEvent(ev) {
 
     switch(key_pressed){
         case 'W':
-            playerVelocityUp = movementSpeed;
+            player.playerVelocityUp = movementSpeed;
             playerOrientation = orientation.down;
             break;
         case 'A':
-            playerVelocityLeft = movementSpeed;
+            player.playerVelocityLeft = movementSpeed;
             playerOrientation = orientation.left;
             break;
         case 'S':
-            playerVelocityDown = movementSpeed;
+            player.playerVelocityDown = movementSpeed;
             playerOrientation = orientation.up;
             break;
         case 'D':
-            playerVelocityRight = movementSpeed;
+            player.playerVelocityRight = movementSpeed;
             playerOrientation = orientation.right;
             break;
     }
@@ -31,16 +31,16 @@ function keyupEvent(ev){
 
     switch(key_pressed){
         case 'W':
-            playerVelocityUp = 0;
+            player.playerVelocityUp = 0;
             break;
         case 'A':
-            playerVelocityLeft = 0;
+            player.playerVelocityLeft = 0;
             break;
         case 'S':
-            playerVelocityDown = 0;
+            player.playerVelocityDown = 0;
             break;
         case 'D':
-            playerVelocityRight = 0;
+            player.playerVelocityRight = 0;
             break;
     }
 }
