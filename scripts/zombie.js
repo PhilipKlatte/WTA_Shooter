@@ -31,23 +31,24 @@ class Zombie extends gameObject{
     }
 
     seesPlayer(){
-        let seesPlayer = true;
+        let sees = false;
 
         walls.forEach(wall => {
             if (wall.orientation === "vertical"){
-
+                if (this.visionBlockedByVerticalWall(wall)) sees = true;
             } else if (wall.orientation === "horizontal"){
-                seesPlayer = this.visionBlockedByHorizontalWall(wall);
+                if (this.visionBlockedByHorizontalWall(wall)) sees = true;
             }
         });
 
-        return seesPlayer;
+        return sees;
+    }
+
+    visionBlockedByVerticalWall(wall){
+        return false;
     }
 
     visionBlockedByHorizontalWall(wall){
-        let wallStart = 0;
-        let wallFinish = 480;
-
         let slope = this.calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
         let yIntercept = this.calculateYIntercept(slope);
 
