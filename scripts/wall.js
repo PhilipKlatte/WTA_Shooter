@@ -5,6 +5,6 @@ class Wall {
         this.xLinks = xLinks;
         this.xRechts =xRechts;
 
-        this.orientation = (Math.abs(yOben - yUnten) === tilesize) ? "horizontal" : "horizontal";
+        this.orientation = (Math.abs(yOben - yUnten) === tilesize) ? "horizontal" : "vertical";
     }
 }

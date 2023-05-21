@@ -33,19 +33,13 @@ class Zombie extends gameObject{
     seesPlayer(){
         let seesPlayer = true;
 
-        // walls.forEach(wall => {
-        //     if (wall.orientation === "vertical"){
-        //
-        //     } else if (wall.orientation === "horizontal"){
-        //         seesPlayer = this.visionBlockedByHorizontalWall(wall);
-        //     }
-        // });
+        walls.forEach(wall => {
+            if (wall.orientation === "vertical"){
 
-        if (walls[0].orientation === "vertical"){
-
-        } else if (walls[0].orientation === "horizontal"){
-            seesPlayer = this.visionBlockedByHorizontalWall(walls[0]);
-        }
+            } else if (wall.orientation === "horizontal"){
+                seesPlayer = this.visionBlockedByHorizontalWall(wall);
+            }
+        });
 
         return seesPlayer;
     }
