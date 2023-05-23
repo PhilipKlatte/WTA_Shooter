@@ -1,16 +1,14 @@
-class Player extends gameObject{
-    constructor(src, ctx, posX, posY) {
+class Bullet extends gameObject {
+    constructor(src, ctx, posX, posY, velocityRight, velocityLeft, velocityUp, velocityDown) {
         super(src, ctx, posX, posY);
-        
-        this.velocityRight = 0;
-        this.velocityLeft = 0;
-        this.velocityUp = 0;
-        this.velocityDown = 0;
-        
-        this.playerOrientation = orientation.down;
+
+        this.velocityRight = velocityRight * 10;
+        this.velocityLeft = velocityLeft * 10;
+        this.velocityUp = velocityUp * 10;
+        this.velocityDown = velocityDown * 10;
     }
 
-    movePlayer() {
+    move() {
         if (this.posX + this.velocityRight < canvas.width + 1) {
             this.posX += this.velocityRight;
         } else {

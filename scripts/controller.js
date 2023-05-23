@@ -17,6 +17,7 @@ var zombieImg;
 const walls = [];
 const zombies = [];
 const barrels = [];
+const bullets = [];
 
 var player;
 
@@ -33,7 +34,7 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
-    player = new Player(3*tilesize,20*tilesize);
+    player = new Player(3*tilesize, ctx, 3*tilesize, 20*tilesize);
 
     walls.push(new Wall(9*tilesize, 10*tilesize,0*tilesize,15*tilesize));
     walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
@@ -57,9 +58,23 @@ function gameLoop() {
             player.movePlayer();
         }
     }
-    
+
+    moveBullets();
     moveZombies();
     draw();
+
+    console.log("bullets:", bullets.length);
+}
+
+function moveBullets(){
+    bullets.forEach(bullet => {
+        bullet.move();
+    })
+}
+
+function shoot(){
+    bullets.push(new Bullet(null, ctx, player.posX + playerImg.width/2, player.posY + playerImg.height/2, player.velocityRight, player.velocityLeft, player.velocityUp, player.velocityDown));
+    //bullets.push(new Bullet(null, ctx, 20, 20, player.velocityRight, player.velocityLeft, player.velocityUp, player.velocityDown));
 }
 
 function moveZombies(){
@@ -147,12 +162,22 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawWorld();
-    drawBarrell();
+    drawBarrels();
     drawPlayer();
     drawZombie();
+    drawBullets();
     drawGrid(tilesize);
     drawLineFromZombieToPlayer();
     //drawLineForWall();
+}
+
+function drawBullets(){
+    bullets.forEach(bullet => {
+        ctx.beginPath();
+        ctx.arc(bullet.posX, bullet.posY,4,0, 2* Math.PI);
+        ctx.fill();
+        ctx.stroke();
+    })
 }
 
 function drawLineFromZombieToPlayer(){
@@ -179,7 +204,7 @@ function drawPlayer() {
     ctx.drawImage(playerImg, player.posX, player.posY);
 }
 
-function drawBarrell() {
+function drawBarrels() {
     ctx.drawImage(barrelImg, barrel1.posX, barrel1.posY);
 }
 
