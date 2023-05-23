@@ -1,8 +1,6 @@
 class Bullet extends gameObject {
-    constructor(id, src, ctx, posX, posY, velocityRight, velocityLeft, velocityUp, velocityDown) {
+    constructor(src, ctx, posX, posY, velocityRight, velocityLeft, velocityUp, velocityDown) {
         super(src, ctx, posX, posY);
-
-        this.id = id;
 
         this.velocityRight = velocityRight * 10;
         this.velocityLeft = velocityLeft * 10;

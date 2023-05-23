@@ -86,8 +86,8 @@ function shoot(){
 
 function shootReverse(){
     bullets.push(new Bullet(
-        bullets.length + 1,
-        null, ctx,
+        null,
+        ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
         -player.velocityRight,
