@@ -74,7 +74,6 @@ function moveBullets(){
 
 function shoot(){
     bullets.push(new Bullet(
-        bullets.length + 1,
         null, ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
