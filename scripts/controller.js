@@ -22,11 +22,6 @@ var player;
 
 var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
 
-// var playerVelocityRight = 0;
-// var playerVelocityLeft = 0;
-// var playerVelocityUp = 0;
-// var playerVelocityDown = 0;
-
 var playerOrientation = orientation.down;
 
 
@@ -40,7 +35,7 @@ function init() {
 
     player = new Player(3*tilesize,20*tilesize);
 
-    walls.push(new Wall(10*tilesize, 9*tilesize,0*tilesize,15*tilesize));
+    walls.push(new Wall(9*tilesize, 10*tilesize,0*tilesize,15*tilesize));
     walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
     walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
@@ -63,9 +58,14 @@ function gameLoop() {
         }
     }
     
-    zombies[0].move(player.posX, player.posY);
-    zombies[1].move(player.posX, player.posY);
+    moveZombies();
     draw();
+}
+
+function moveZombies(){
+    zombies.forEach(zombie => {
+        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
+    });
 }
 
 function detectColision(wall){
@@ -151,12 +151,24 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawGrid(tilesize);
+    drawLineFromZombieToPlayer();
+    //drawLineForWall();
+}
+
+function drawLineFromZombieToPlayer(){
+    zombies.forEach(zombie => {
+        drawLine(zombie.posX, zombie.posY, player.posX, player.posY);
+    });
+}
+
+function drawLineForWall(){
+    drawLine(0, 304, 32*tilesize, 304);
 }
 
 function drawZombie() {
-    ctx.drawImage(zombieImg, zombies[0].posX, zombies[0].posY);
-    ctx.drawImage(zombieImg, zombies[1].posX, zombies[1].posY);
-
+    zombies.forEach(zombie => {
+        ctx.drawImage(zombieImg, zombie.posX, zombie.posY);
+    })
 }
 
 function drawWorld() {
