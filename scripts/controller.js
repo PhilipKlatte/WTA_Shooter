@@ -84,6 +84,18 @@ function shoot(){
         player.velocityDown));
 }
 
+function shootReverse(){
+    bullets.push(new Bullet(
+        bullets.length + 1,
+        null, ctx,
+        player.posX + playerImg.width/2,
+        player.posY + playerImg.height/2,
+        -player.velocityRight,
+        -player.velocityLeft,
+        -player.velocityUp,
+        -player.velocityDown));
+}
+
 function moveZombies(){
     zombies.forEach(zombie => {
         if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);

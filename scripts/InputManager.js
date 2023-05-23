@@ -25,6 +25,10 @@ function keydownEvent(ev) {
             break;
         case 'M':
             shoot();
+            break;
+        case 'K':
+            shootReverse();
+            break;
     }
 }
 
