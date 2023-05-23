@@ -31,9 +31,7 @@ class Zombie extends gameObject{
     }
 
     seesPlayer(){
-        let sees = true;
-        //let sees = this.visionBlockedByVerticalWall(672, 832, 576, 608, 416);
-        //let sees = this.visionBlockedByVerticalWall(walls[2], player.posX, player.posY, this.posX, this.posY);
+        let sees;
 
         walls.forEach(wall => {
             if (wall.orientation === "vertical"){
@@ -55,9 +53,6 @@ class Zombie extends gameObject{
         let slope = this.calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
         let y = this.calculateYIntercept(slope, offsetPlayerX, newPlayerY);
 
-        // console.log("slope", slope);
-        // console.log("y", y);
-
         let viewInterceptsWall = -y < wall.yOben && -y > wall.yUnten;
         let playerLeftAndZombieRight = (player.posX < wall.xLinks && this.posX > wall.xLinks);
         let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
@@ -65,12 +60,7 @@ class Zombie extends gameObject{
 
         let doesntSeePlayer = viewInterceptsWall && playerAndZombieOnOppositeSides;
 
-        // console.log("player left", playerLeftAndZombieRight);
-        // console.log("player right", playerRightAndZombieLeft);
-        // console.log("opp sides", playerAndZombieOnOppositeSides);
-        // console.log("sees player", !doesntSeePlayer);
-
-        return doesntSeePlayer;
+         return doesntSeePlayer;
     }
 
     calculateXIntercept(slope, playerX, playerY){
