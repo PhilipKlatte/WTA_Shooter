@@ -103,8 +103,8 @@ function moveZombies(){
 }
 
 function detectColision(wall){
-    var newPosX = player.posX + player.playerVelocityRight - player.playerVelocityLeft;
-    var newPosY = player.posY - player.playerVelocityUp + player.playerVelocityDown;
+    var newPosX = player.posX + player.velocityRight - player.velocityLeft;
+    var newPosY = player.posY - player.velocityUp + player.velocityDown;
 
     if(
         newPosX < wall.xRechts &&
@@ -122,8 +122,8 @@ function detectColision(wall){
 
 function detectColisionBarrelPlayer(barrel){
 
-    var newPosX = player.posX + player.playerVelocityRight - player.playerVelocityLeft;
-    var newPosY = player.posY - player.playerVelocityUp + player.playerVelocityDown;
+    var newPosX = player.posX + player.velocityRight - player.velocityLeft;
+    var newPosY = player.posY - player.velocityUp + player.velocityDown;
 
     if(
         newPosX < barrel.posX+barrelImg.width &&
@@ -143,8 +143,8 @@ function detectColisionBarrelPlayer(barrel){
 
 function detectColisionBarrelWall(barrel, wall){
 
-    var newPosX = barrel.posX + player.playerVelocityRight - player.playerVelocityLeft;
-    var newPosY = barrel.posY - player.playerVelocityUp + player.playerVelocityDown;
+    var newPosX = barrel.posX + player.velocityRight - player.velocityLeft;
+    var newPosY = barrel.posY - player.velocityUp + player.velocityDown;
 
     if(
         newPosX < wall.xRechts &&
@@ -156,7 +156,7 @@ function detectColisionBarrelWall(barrel, wall){
         return false;
     }
     else{
-        barrel.moveBarrel(player.playerVelocityRight, player.playerVelocityLeft, player.playerVelocityUp, player.playerVelocityDown)
+        barrel.moveBarrel(player.velocityRight, player.velocityLeft, player.velocityUp, player.velocityDown)
         return true;
     }
 }
