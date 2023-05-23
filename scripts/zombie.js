@@ -5,8 +5,8 @@ class Zombie extends gameObject{
     }
 
     move(targetX, targetY){
-        var newZomPosX = 0;
-        var newZomPosY= 0;
+        let newZomPosX = 0;
+        let newZomPosY= 0;
 
         if (this.posX <= targetX){
             newZomPosX = this.posX + this.speed;
@@ -31,7 +31,7 @@ class Zombie extends gameObject{
     }
 
     seesPlayer(){
-        let sees;
+        let sees = true;
 
         walls.forEach(wall => {
             if (wall.orientation === "vertical"){
@@ -60,11 +60,7 @@ class Zombie extends gameObject{
 
         let doesntSeePlayer = viewInterceptsWall && playerAndZombieOnOppositeSides;
 
-         return doesntSeePlayer;
-    }
-
-    calculateXIntercept(slope, playerX, playerY){
-        return playerX - slope * playerY;
+        return doesntSeePlayer;
     }
 
     visionBlockedByHorizontalWall(wall){

@@ -22,11 +22,6 @@ var player;
 
 var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
 
-// var playerVelocityRight = 0;
-// var playerVelocityLeft = 0;
-// var playerVelocityUp = 0;
-// var playerVelocityDown = 0;
-
 var playerOrientation = orientation.down;
 
 
@@ -45,7 +40,7 @@ function init() {
     walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
     zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));
-    //zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
+    zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
 
     barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
 
