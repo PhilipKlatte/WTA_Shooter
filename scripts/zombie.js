@@ -58,9 +58,7 @@ class Zombie extends gameObject{
         let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
         let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;
 
-        let doesntSeePlayer = viewInterceptsWall && playerAndZombieOnOppositeSides;
-
-        return doesntSeePlayer;
+        return viewInterceptsWall && playerAndZombieOnOppositeSides;
     }
 
     visionBlockedByHorizontalWall(wall){
@@ -75,9 +73,7 @@ class Zombie extends gameObject{
 
         let playerAndZombiesOnOppositeSides = playerAboveAndZombieBelow || playerBelowAndZombieAbove;
 
-        let doesntSeePlayer = viewInterceptsWall && playerAndZombiesOnOppositeSides;
-
-        return doesntSeePlayer;
+        return viewInterceptsWall && playerAndZombiesOnOppositeSides;
     }
 
     calculateYIntercept(slope, playerPosX, playerPosY){
