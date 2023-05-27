@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/player.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/player.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/wand.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/zombie.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/zombie.js" afterDir="false" />
     </list>
-    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="Changes by User">
-      <change beforePath="$PROJECT_DIR$/scripts/barrel.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/barrel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
-    </list>
+    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="Changes by User" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,51 +18,10 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/scripts/controller.js">
-      <ranges>
-        <range start1="10" end1="14" start2="10" end2="10" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="15" end1="18" start2="11" end2="15" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="19" end1="21" start2="16" end2="19" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="22" end1="26" start2="20" end2="24" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="41" end1="41" start2="39" end2="50" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="48" end1="53" start2="57" end2="63" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="55" end1="57" start2="65" end2="67" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="61" end1="64" start2="71" end2="73" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="67" end1="70" start2="76" end2="79" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="71" end1="72" start2="80" end2="81" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="78" end1="78" start2="87" end2="128" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="80" end1="81" start2="130" end2="131" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="82" end1="84" start2="132" end2="134" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="85" end1="86" start2="135" end2="136" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="87" end1="88" start2="137" end2="138" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="89" end1="92" start2="139" end2="142" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="93" end1="112" start2="143" end2="145" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="113" end1="135" start2="146" end2="147" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="137" end1="138" start2="149" end2="150" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="148" end1="154" start2="160" end2="164" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="156" end1="158" start2="166" end2="168" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="160" end1="162" start2="170" end2="172" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="164" end1="168" start2="174" end2="176" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
-        <range start1="170" end1="171" start2="178" end2="179" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="178" end1="180" start2="186" end2="188" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="184" end1="185" start2="192" end2="193" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="187" end1="188" start2="195" end2="196" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="194" end1="195" start2="202" end2="203" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="200" end1="201" start2="208" end2="209" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="207" end1="208" start2="215" end2="216" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="210" end1="212" start2="218" end2="220" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="213" end1="214" start2="221" end2="222" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="233" end1="238" start2="241" end2="245" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="242" end1="243" start2="249" end2="250" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-        <range start1="250" end1="250" start2="257" end2="258" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -83,6 +39,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "wändeSindKeinKleber",
+    "node.js.selected.package.tslint": "(autodetect)",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
@@ -168,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684588392117</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refactor">
+      <created>1685208533248</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1685208533248</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,21 +160,5 @@
     <MESSAGE value="auslagerung barrel, player, wand, zombie" />
     <MESSAGE value="refactor" />
     <option name="LAST_COMMIT_MESSAGE" value="refactor" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/scripts/player.js</url>
-          <line>10</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/scripts/player.js</url>
-          <line>7</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

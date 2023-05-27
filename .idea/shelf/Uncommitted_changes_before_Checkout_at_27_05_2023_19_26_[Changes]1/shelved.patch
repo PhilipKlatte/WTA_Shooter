@@ -1,0 +1,21 @@
+Index: scripts/zombie.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>class Zombie extends gameObject{\r\n    constructor(src, ctx, posX, posY, speed){\r\n        super(src, ctx, posX, posY);\r\n        this.speed= speed;\r\n    }\r\n\r\n\r\n    move(targetX, targetY){\r\n        var newZomPosX = 0;\r\n        var newZomPosY= 0;\r\n\r\n        if (this.posX <= targetX){\r\n            newZomPosX = this.posX + this.speed;\r\n\r\n        }else if (this.posX >= targetX){\r\n            newZomPosX = this.posX - this.speed;\r\n        }\r\n\r\n        if (this.posY <= targetY){\r\n            newZomPosY = this.posY + this.speed;\r\n        }else if ((this.posY >= targetY)){\r\n            newZomPosY = this.posY - this.speed;\r\n        }\r\n\r\n        if(detectColisionZom(walls[0], newZomPosX, newZomPosY) &&\r\n            detectColisionZom(walls[1], newZomPosX, newZomPosY) &&\r\n            detectColisionZom(walls[2], newZomPosX, newZomPosY)\r\n        ){\r\n            this.posX = newZomPosX;\r\n            this.posY = newZomPosY;\r\n        }\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scripts/zombie.js b/scripts/zombie.js
+--- a/scripts/zombie.js	
++++ b/scripts/zombie.js	
+@@ -1,7 +1,9 @@
+ class Zombie extends gameObject{
+-    constructor(src, ctx, posX, posY, speed){
++    constructor(src, ctx, posX, posY, speed, lastPlayerPosX, lastPlayerPosY){
+         super(src, ctx, posX, posY);
+         this.speed= speed;
++        this.lastPlayerPosX = lastPlayerPosX;
++        this.lastPlayerPosY = lastPlayerPosY;
+     }
+ 
+ 

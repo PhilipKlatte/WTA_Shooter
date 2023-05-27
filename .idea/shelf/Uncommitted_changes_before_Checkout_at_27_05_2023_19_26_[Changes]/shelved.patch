@@ -1,0 +1,217 @@
+Index: scripts/controller.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>var canvas, ctx;\r\n\r\nconst tilesize = 32;\r\n\r\nvar orientation = {\r\n    up: 180,\r\n    down: 0,\r\n    left: 270,\r\n    right: 90\r\n}\r\n\r\nvar playerImg;\r\nvar worldImg;\r\nvar barrelImg;\r\nvar zombieImg;\r\n\r\nconst walls = [];\r\nconst zombies = [];\r\nconst barrels = [];\r\n\r\nvar player;\r\n\r\nvar barrel1 = new Barrel(barrelImg, ctx, 17*tilesize,5*tilesize);\r\n\r\nvar playerVelocityRight = 0;\r\nvar playerVelocityLeft = 0;\r\nvar playerVelocityUp = 0;\r\nvar playerVelocityDown = 0;\r\n\r\nvar playerOrientation = orientation.down;\r\n\r\n\r\nfunction init() {\r\n    canvas = document.getElementById(\"canvas\");\r\n    canvas.setAttribute(\"width\", (32 * tilesize).toString());\r\n    canvas.setAttribute(\"height\", (24 * tilesize).toString());\r\n    // canvas = 1024x768\r\n\r\n    ctx = canvas.getContext(\"2d\");\r\n\r\n    player = new Player(3*tilesize,20*tilesize);\r\n\r\n    walls.push(new Wall(10*tilesize, 9*tilesize,0*tilesize,15*tilesize));\r\n    walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));\r\n    walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));\r\n\r\n    zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));\r\n    zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));\r\n\r\n    //barrels.push(new Barrel(barrelImg, ctx, 2*tilesize,5*tilesize));\r\n\r\n    preloadAssets();\r\n\r\n    setInterval(gameLoop,60);\r\n}\r\n\r\nfunction gameLoop() {\r\n    if(detectColision(walls[0])\r\n    && detectColision(walls[1])\r\n    && detectColision(walls[2])){\r\n        if(detectColisionBarrelPlayer(barrel1)){\r\n            player.movePlayer(playerVelocityRight, playerVelocityLeft, playerVelocityUp, playerVelocityDown);\r\n        }\r\n    }\r\n    \r\n    zombies[0].move(player.posX, player.posY);\r\n    zombies[1].move(player.posX, player.posY);\r\n    draw();\r\n}\r\n\r\nfunction detectColision(Wand){\r\n    var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;\r\n    var newPosY = player.posY - playerVelocityUp + playerVelocityDown;\r\n\r\n    if(\r\n        newPosX < Wand.xRechts &&\r\n        newPosX + playerImg.width > Wand.xLinks &&\r\n        newPosY + (playerImg.height/2) < Wand.yOben &&\r\n        newPosY + playerImg.height > Wand.yUnten\r\n    ){\r\n        console.log('ColisionDetectetPlayerWand');\r\n        return false;\r\n    }\r\n    else{\r\n        return true;\r\n    }\r\n}\r\n\r\nfunction detectColisionBarrelPlayer(barrel){\r\n\r\n    var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;\r\n    var newPosY = player.posY - playerVelocityUp + playerVelocityDown;\r\n\r\n    if(\r\n        newPosX < barrel.posX+barrelImg.width &&\r\n        newPosX + playerImg.width > barrel.posX\r\n        &&\r\n        newPosY < barrel.posY+ barrelImg.height &&\r\n        newPosY + (playerImg.height/2) > barrel.posY\r\n    ){\r\n        console.log('ColisionDetectetPlayerBarrel');\r\n        \r\n            \r\n                if(detectColisionBarrelWandAll(barrel)){\r\n                \r\n                return true\r\n                }\r\n            \r\n            \r\n        \r\n        else{\r\n            \r\n            return false\r\n        }\r\n    }\r\n    else{\r\n        return true;\r\n    }\r\n}\r\n\r\n\r\nfunction detectColisionBarrelWandAll(barrel){\r\n\r\n    if(detectColisionBarrelWand(barrel,walls[0])){\r\n\r\n        if(detectColisionBarrelWand(barrel,walls[1])){\r\n\r\n            if(detectColisionBarrelWand(barrel,walls[2])){\r\n                barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)\r\n                return true\r\n            }\r\n\r\n        }\r\n\r\n    }\r\n    return false\r\n}\r\n\r\n\r\nfunction detectColisionBarrelWand(barrel, wall){\r\n\r\n    var newPosX = barrel.posX + playerVelocityRight -playerVelocityLeft;\r\n    var newPosY = barrel.posY - playerVelocityUp + playerVelocityDown;\r\n\r\n    if(\r\n        newPosX  + barrelImg.width > wall.xLinks \r\n        &&\r\n        newPosX < wall.xRechts\r\n        &&\r\n        newPosY + barrelImg.height > wall.yUnten \r\n        &&\r\n        newPosY +(barrelImg.height/2)   < wall.yOben \r\n        /*\r\n        newPosX < wall.xRechts &&\r\n        newPosX + barrelImg.width > wall.xLinks &&\r\n        newPosY + (barrelImg.height/2) < wall.yOben &&\r\n        newPosY + barrelImg.height > wall.yUnten\r\n        */\r\n    ){\r\n        console.log('ColisionDetectetBarrelWand');\r\n        return false;\r\n    }\r\n    else{\r\n        //barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)\r\n        return true;\r\n    }\r\n}\r\n\r\n\r\nfunction detectColisionZom(Wand,ZomPosX, ZomPosY) {\r\n\r\n//var newPosX = playerPosX + playerVelocityRight -playerVelocityLeft;\r\n//var newPosY = playerPosY - playerVelocityUp + playerVelocityDown;\r\n\r\n    if (\r\n        ZomPosX < Wand.xRechts &&\r\n        ZomPosX + playerImg.width > Wand.xLinks &&\r\n        ZomPosY < Wand.yOben &&\r\n        ZomPosY + playerImg.height > Wand.yUnten\r\n    ) {\r\n        //console.log('ColisionDetectetZom');\r\n        return false;\r\n    } else {\r\n        return true;\r\n    }\r\n}\r\n\r\nfunction draw() {\r\n    ctx.clearRect(0, 0, canvas.width, canvas.height);\r\n\r\n    drawWorld();\r\n    drawBarrell();\r\n    drawPlayer();\r\n    drawZombie();\r\n    //drawAndRotatePlayer()\r\n    //drawRotatedRect(700, 100, 100, 200, 90);\r\n    drawGrid(tilesize);\r\n}\r\n\r\nfunction drawZombie() {\r\n    ctx.drawImage(zombieImg, zombies[0].posX, zombies[0].posY);\r\n    ctx.drawImage(zombieImg, zombies[1].posX, zombies[1].posY);\r\n\r\n}\r\n\r\nfunction drawWorld() {\r\n    ctx.drawImage(worldImg, 0, 0);\r\n}\r\n\r\nfunction drawPlayer() {\r\n    ctx.drawImage(playerImg, player.posX, player.posY);\r\n}\r\n\r\nfunction drawBarrell() {\r\n    ctx.drawImage(barrelImg, barrel1.posX, barrel1.posY);\r\n}\r\n\r\nfunction drawAndRotatePlayer() {\r\n    // const image = new Image();\r\n    // image.onload = () => {\r\n    //     this.ctx.drawImage(image, player2PosX, player2PosY)\r\n    // };\r\n    // image.src = \"player.png\";\r\n\r\n    ctx.save();\r\n    ctx.translate(playerPosX + player.width / 2, playerPosY + player.height / 2);\r\n    ctx.rotate(playerOrientation * Math.PI / 180);\r\n    ctx.drawImage(player, -player.width / 2, -player.height / 2);\r\n    ctx.restore();\r\n}\r\n\r\nfunction drawGrid(spacing) {\r\n    var x = 0;\r\n\r\n    while (x < canvas.width) {\r\n        x += spacing;\r\n        drawLine(x, 0, x, canvas.height);\r\n    }\r\n\r\n    var y = 0;\r\n\r\n    while (y < canvas.height) {\r\n        y += spacing;\r\n        drawLine(0, y, canvas.width, y);\r\n    }\r\n}\r\n\r\nfunction drawLine(fromX, fromY, toX, toY) {\r\n    ctx.beginPath();\r\n    ctx.moveTo(fromX, fromY);\r\n    ctx.lineTo(toX, toY);\r\n    ctx.stroke();\r\n}\r\n\r\nfunction drawRotatedRect(x, y, width, height, degrees) {\r\n    ctx.save();\r\n    ctx.beginPath();\r\n    ctx.translate(x + width / 2, y + height / 2);\r\n    ctx.rotate(degrees * Math.PI / 180);\r\n    ctx.fillStyle = \"brown\";\r\n    ctx.fillRect(-width / 2, -height / 2, width, height);\r\n    ctx.restore();\r\n}\r\n\r\nfunction preloadAssets() {\r\n    var _toPreload = 0;\r\n\r\n    var addImage = function (src) {\r\n\r\n        var img = new Image();\r\n        img.src = src;\r\n        _toPreload++;\r\n\r\n        img.addEventListener('load', function () {\r\n            _toPreload--;\r\n        }, false);\r\n        return img;\r\n    }\r\n\r\n    background = addImage(\"https://picsum.photos/640/480\");\r\n    playerImg = addImage(\"assets/player32x64.png\");\r\n    worldImg = addImage(\"assets/testmap.png\");\r\n    barrelImg = addImage(\"assets/barrell32x64.png\");\r\n    zombieImg = addImage(\"assets/zombie32x64.png\");\r\n\r\n    var checkResources = function () {\r\n        if (_toPreload === 0)\r\n\r\n            setInterval(gameLoop, 40);\r\n        else\r\n            setTimeout(checkResources, 200);\r\n    }\r\n    checkResources();\r\n}\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", init);\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scripts/controller.js b/scripts/controller.js
+--- a/scripts/controller.js	
++++ b/scripts/controller.js	
+@@ -55,9 +55,7 @@
+ }
+ 
+ function gameLoop() {
+-    if(detectColision(walls[0])
+-    && detectColision(walls[1])
+-    && detectColision(walls[2])){
++    if(detectColision()){
+         if(detectColisionBarrelPlayer(barrel1)){
+             player.movePlayer(playerVelocityRight, playerVelocityLeft, playerVelocityUp, playerVelocityDown);
+         }
+@@ -68,10 +66,33 @@
+     draw();
+ }
+ 
+-function detectColision(Wand){
++function detectColision(){
+     var newPosX = player.posX + playerVelocityRight -playerVelocityLeft;
+     var newPosY = player.posY - playerVelocityUp + playerVelocityDown;
++    var wallCollideBool=0;
++    for (var i = 0; i < walls.length; i++) {
++
++        if(
++            newPosX < walls[i].xRechts &&
++            newPosX + playerImg.width > walls[i].xLinks &&
++            newPosY + (playerImg.height/2) < walls[i].yOben &&
++            newPosY + playerImg.height > walls[i].yUnten
++        ){
++                console.log('ColisionDetectetPlayerWand');
++            wallCollideBool+=1;
++        }
++        
++
++    }
++    if(wallCollideBool>0){
++        return false;
++    }
++    return true
++
+ 
++
++
++/*
+     if(
+         newPosX < Wand.xRechts &&
+         newPosX + playerImg.width > Wand.xLinks &&
+@@ -84,6 +105,7 @@
+     else{
+         return true;
+     }
++    */
+ }
+ 
+ function detectColisionBarrelPlayer(barrel){
+@@ -121,21 +143,21 @@
+ 
+ function detectColisionBarrelWandAll(barrel){
+ 
+-    if(detectColisionBarrelWand(barrel,walls[0])){
++ 
++    for (var i = 0; i < walls.length; i++) {
+ 
+-        if(detectColisionBarrelWand(barrel,walls[1])){
++        if(detectColisionBarrelWand(barrel,walls[i])){
+ 
+-            if(detectColisionBarrelWand(barrel,walls[2])){
+-                barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
+-                return true
+-            }
++        }
++        else {
++            return false
++        }
++
++    }
++    barrel.moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown)
++    return true
++}
+ 
+-        }
+-
+-    }
+-    return false
+-}
+-
+ 
+ function detectColisionBarrelWand(barrel, wall){
+ 
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" name=\"Changes\" comment=\"refactor\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/index.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/scripts/controller.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/scripts/controller.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/scripts/player.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/scripts/player.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/scripts/wand.js\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/scripts/zombie.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/scripts/zombie.js\" afterDir=\"false\" />\r\n    </list>\r\n    <list id=\"45de873e-32be-436b-a4d4-6337ee199012\" name=\"Changes by User\" comment=\"Changes by User\">\r\n      <change beforePath=\"$PROJECT_DIR$/scripts/barrel.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/scripts/barrel.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/scripts/controller.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/scripts/controller.js\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"LineStatusTrackerManager\">\r\n    <file path=\"$PROJECT_DIR$/scripts/controller.js\">\r\n      <ranges>\r\n        <range start1=\"10\" end1=\"14\" start2=\"10\" end2=\"10\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"15\" end1=\"18\" start2=\"11\" end2=\"15\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"19\" end1=\"21\" start2=\"16\" end2=\"19\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"22\" end1=\"26\" start2=\"20\" end2=\"24\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"41\" end1=\"41\" start2=\"39\" end2=\"50\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"48\" end1=\"53\" start2=\"57\" end2=\"63\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"55\" end1=\"57\" start2=\"65\" end2=\"67\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"61\" end1=\"64\" start2=\"71\" end2=\"73\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"67\" end1=\"70\" start2=\"76\" end2=\"79\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"71\" end1=\"72\" start2=\"80\" end2=\"81\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"78\" end1=\"78\" start2=\"87\" end2=\"128\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"80\" end1=\"81\" start2=\"130\" end2=\"131\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"82\" end1=\"84\" start2=\"132\" end2=\"134\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"85\" end1=\"86\" start2=\"135\" end2=\"136\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"87\" end1=\"88\" start2=\"137\" end2=\"138\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"89\" end1=\"92\" start2=\"139\" end2=\"142\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"93\" end1=\"112\" start2=\"143\" end2=\"145\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"113\" end1=\"135\" start2=\"146\" end2=\"147\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"137\" end1=\"138\" start2=\"149\" end2=\"150\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"148\" end1=\"154\" start2=\"160\" end2=\"164\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"156\" end1=\"158\" start2=\"166\" end2=\"168\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"160\" end1=\"162\" start2=\"170\" end2=\"172\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"164\" end1=\"168\" start2=\"174\" end2=\"176\" changelist=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" />\r\n        <range start1=\"170\" end1=\"171\" start2=\"178\" end2=\"179\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"178\" end1=\"180\" start2=\"186\" end2=\"188\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"184\" end1=\"185\" start2=\"192\" end2=\"193\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"187\" end1=\"188\" start2=\"195\" end2=\"196\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"194\" end1=\"195\" start2=\"202\" end2=\"203\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"200\" end1=\"201\" start2=\"208\" end2=\"209\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"207\" end1=\"208\" start2=\"215\" end2=\"216\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"210\" end1=\"212\" start2=\"218\" end2=\"220\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"213\" end1=\"214\" start2=\"221\" end2=\"222\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"233\" end1=\"238\" start2=\"241\" end2=\"245\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"242\" end1=\"243\" start2=\"249\" end2=\"250\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n        <range start1=\"250\" end1=\"250\" start2=\"257\" end2=\"258\" changelist=\"45de873e-32be-436b-a4d4-6337ee199012\" />\r\n      </ranges>\r\n    </file>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2PyUa7CQJcPgJ9fjTJBwmSTta0Q\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"autoscrollFromSource\" value=\"true\" />\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"codeWithMe.voiceChat.enabledByDefault\": \"false\",\r\n    \"settings.editor.selected.configurable\": \"preferences.pluginManager\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\xampp\\htdocs\\wattest2\\scripts\" />\r\n      <recent name=\"C:\\xampp\\htdocs\\wattest2\\assets\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"158cb733-c3f7-4a1c-962e-fc8c78ffee14\" name=\"Changes\" comment=\"\" />\r\n      <created>1684428883443</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1684428883443</updated>\r\n      <workItem from=\"1684428886228\" duration=\"7490000\" />\r\n      <workItem from=\"1684503903885\" duration=\"1860000\" />\r\n      <workItem from=\"1684582039502\" duration=\"8799000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"refactor\">\r\n      <created>1684429148893</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684429148893</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"move canvas to center\">\r\n      <created>1684430733074</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684430733074</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"increase movement speed\">\r\n      <created>1684430757221</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684430757221</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"resize canvas after tilesize\">\r\n      <created>1684430797335</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684430797335</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"add testbackground\">\r\n      <created>1684432571147</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684432571147</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"implement drawBarrell()\">\r\n      <created>1684435897323</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684435897323</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"implement drawZombie(), refactor border collision\">\r\n      <created>1684436813069</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684436813069</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"auslagerung barrel, player, wand, zombie\">\r\n      <created>1684587594548</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684587594548</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"refactor\">\r\n      <created>1684588392117</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684588392117</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"10\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"move canvas to center\" />\r\n    <MESSAGE value=\"increase movement speed\" />\r\n    <MESSAGE value=\"resize canvas after tilesize\" />\r\n    <MESSAGE value=\"add testbackground\" />\r\n    <MESSAGE value=\"implement drawBarrell()\" />\r\n    <MESSAGE value=\"implement drawZombie(), refactor border collision\" />\r\n    <MESSAGE value=\"auslagerung barrel, player, wand, zombie\" />\r\n    <MESSAGE value=\"refactor\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"refactor\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"javascript\">\r\n          <url>file://$PROJECT_DIR$/scripts/player.js</url>\r\n          <line>10</line>\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"javascript\">\r\n          <url>file://$PROJECT_DIR$/scripts/player.js</url>\r\n          <line>7</line>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,18 +1,15 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
+   <component name="ChangeListManager">
+     <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="refactor">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/scripts/player.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/player.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/scripts/wand.js" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/scripts/zombie.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/zombie.js" afterDir="false" />
+-    </list>
+-    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="Changes by User">
+       <change beforePath="$PROJECT_DIR$/scripts/barrel.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/barrel.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
+     </list>
++    <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="Changes by User" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -26,47 +23,6 @@
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="LineStatusTrackerManager">
+-    <file path="$PROJECT_DIR$/scripts/controller.js">
+-      <ranges>
+-        <range start1="10" end1="14" start2="10" end2="10" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="15" end1="18" start2="11" end2="15" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="19" end1="21" start2="16" end2="19" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="22" end1="26" start2="20" end2="24" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="41" end1="41" start2="39" end2="50" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="48" end1="53" start2="57" end2="63" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="55" end1="57" start2="65" end2="67" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="61" end1="64" start2="71" end2="73" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="67" end1="70" start2="76" end2="79" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="71" end1="72" start2="80" end2="81" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="78" end1="78" start2="87" end2="128" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="80" end1="81" start2="130" end2="131" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="82" end1="84" start2="132" end2="134" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="85" end1="86" start2="135" end2="136" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="87" end1="88" start2="137" end2="138" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="89" end1="92" start2="139" end2="142" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="93" end1="112" start2="143" end2="145" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="113" end1="135" start2="146" end2="147" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="137" end1="138" start2="149" end2="150" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="148" end1="154" start2="160" end2="164" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="156" end1="158" start2="166" end2="168" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="160" end1="162" start2="170" end2="172" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="164" end1="168" start2="174" end2="176" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+-        <range start1="170" end1="171" start2="178" end2="179" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="178" end1="180" start2="186" end2="188" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="184" end1="185" start2="192" end2="193" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="187" end1="188" start2="195" end2="196" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="194" end1="195" start2="202" end2="203" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="200" end1="201" start2="208" end2="209" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="207" end1="208" start2="215" end2="216" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="210" end1="212" start2="218" end2="220" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="213" end1="214" start2="221" end2="222" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="233" end1="238" start2="241" end2="245" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="242" end1="243" start2="249" end2="250" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-        <range start1="250" end1="250" start2="257" end2="258" changelist="45de873e-32be-436b-a4d4-6337ee199012" />
+-      </ranges>
+-    </file>
+-  </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+@@ -83,6 +39,10 @@
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "WebServerToolWindowFactoryState": "false",
+     "codeWithMe.voiceChat.enabledByDefault": "false",
++    "git-widget-placeholder": "BarrelsItIs",
++    "node.js.detected.package.eslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
+     "settings.editor.selected.configurable": "preferences.pluginManager",
+     "vue.rearranger.settings.migration": "true"
+   }
+@@ -104,6 +64,7 @@
+       <workItem from="1684428886228" duration="7490000" />
+       <workItem from="1684503903885" duration="1860000" />
+       <workItem from="1684582039502" duration="8799000" />
++      <workItem from="1685207311930" duration="776000" />
+     </task>
+     <task id="LOCAL-00001" summary="refactor">
+       <created>1684429148893</created>
+Index: scripts/barrel.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>class Barrel extends gameObject {\r\n    constructor(src, ctx, posX, posY) {\r\n        super(src, ctx, posX, posY);\r\n\r\n    }\r\n    moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown){\r\n\r\n        this.posX = this.posX + playerVelocityRight - playerVelocityLeft;\r\n        this.posY = this.posY + playerVelocityUp - playerVelocityDown;\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scripts/barrel.js b/scripts/barrel.js
+--- a/scripts/barrel.js	
++++ b/scripts/barrel.js	
+@@ -6,7 +6,7 @@
+     moveBarrel(playerVelocityRight,playerVelocityLeft,playerVelocityUp,playerVelocityDown){
+ 
+         this.posX = this.posX + playerVelocityRight - playerVelocityLeft;
+-        this.posY = this.posY + playerVelocityUp - playerVelocityDown;
++        this.posY = this.posY - playerVelocityUp + playerVelocityDown;
+ 
+ 
+     }
