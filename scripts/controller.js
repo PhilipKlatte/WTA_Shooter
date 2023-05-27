@@ -25,6 +25,8 @@ var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
 
 var playerOrientation = orientation.down;
 
+var bulletSpeed = 10;
+
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -63,7 +65,9 @@ function gameLoop() {
     moveZombies();
     draw();
 
-    console.log("bullets:", bullets.length);
+    //console.log("bullets:", bullets.length);
+
+    //console.log("player orientation: ", player.orientation);
 }
 
 function moveBullets(){
@@ -72,15 +76,16 @@ function moveBullets(){
     })
 }
 
-function shoot(){
+function shoot(direction){
+
+    console.log("shot ", direction);
+
     bullets.push(new Bullet(
-        null, ctx,
+        null,
+        ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
-        player.velocityRight,
-        player.velocityLeft,
-        player.velocityUp,
-        player.velocityDown));
+        direction));
 }
 
 function shootReverse(){
@@ -88,11 +93,7 @@ function shootReverse(){
         null,
         ctx,
         player.posX + playerImg.width/2,
-        player.posY + playerImg.height/2,
-        -player.velocityRight,
-        -player.velocityLeft,
-        -player.velocityUp,
-        -player.velocityDown));
+        player.posY + playerImg.height/2));
 }
 
 function moveZombies(){
