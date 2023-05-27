@@ -187,7 +187,7 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawBullets();
-    drawGrid(tilesize);
+    //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
 }
@@ -317,7 +317,7 @@ function preloadAssets() {
     worldImg = addImage("assets/testmap.png");
     barrelImg = addImage("assets/barrell32x64.png");
     zombieImg = addImage("assets/zombie32x64.png");
-    floorImg = addImage("assets/floorpanel32x32.png")
+    floorImg = addImage("assets/floorpanel2_32x32.png")
 
     var checkResources = function () {
         if (_toPreload === 0)
