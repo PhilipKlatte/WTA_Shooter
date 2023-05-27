@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="158cb733-c3f7-4a1c-962e-fc8c78ffee14" name="Changes" comment="refactor">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_27_05_2023_19_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_27_05_2023_19_26__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_27_05_2023_19_26__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_27_05_2023_19_26__Changes_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/zombie.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/zombie.js" afterDir="false" />
+    </list>
+    <list id="6c9bc34d-19a3-4d34-95b2-dd6db76edfc4" name="Changes by klatt" comment="">
+      <change beforePath="$PROJECT_DIR$/scripts/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/controller.js" afterDir="false" />
     </list>
     <list id="45de873e-32be-436b-a4d4-6337ee199012" name="Changes by User" comment="Changes by User" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +26,21 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/scripts/controller.js">
+      <ranges>
+        <range start1="38" end1="39" start2="38" end2="39" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="40" end1="41" start2="40" end2="41" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="136" end1="136" start2="136" end2="139" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="138" end1="139" start2="141" end2="142" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="151" end1="152" start2="154" end2="155" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="156" end1="157" start2="159" end2="160" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="158" end1="160" start2="161" end2="163" changelist="158cb733-c3f7-4a1c-962e-fc8c78ffee14" />
+        <range start1="169" end1="170" start2="172" end2="182" changelist="6c9bc34d-19a3-4d34-95b2-dd6db76edfc4" />
+        <range start1="240" end1="240" start2="252" end2="253" changelist="6c9bc34d-19a3-4d34-95b2-dd6db76edfc4" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -40,6 +59,8 @@
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "wändeSindKeinKleber",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
@@ -62,6 +83,7 @@
       <workItem from="1684428886228" duration="7490000" />
       <workItem from="1684503903885" duration="1860000" />
       <workItem from="1684582039502" duration="8799000" />
+      <workItem from="1685215770091" duration="1245000" />
     </task>
     <task id="LOCAL-00001" summary="refactor">
       <created>1684429148893</created>

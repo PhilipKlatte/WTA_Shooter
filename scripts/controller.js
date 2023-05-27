@@ -134,12 +134,9 @@ function detectColisionX(wall){
         newPosX < wall.xRechts &&
         newPosX + playerImg.width > wall.xLinks &&
 
-        player.posY   < wall.yOben &&
-        player.posY + 1.5*playerImg.height > wall.yUnten
-        /*
         player.posY + (playerImg.height/2) < wall.yOben &&
         player.posY + playerImg.height > wall.yUnten
-*/
+
     ){
         console.log('ColisionDetectetPlayerWandX');
         return true;
@@ -152,7 +149,7 @@ function detectColisionX(wall){
 function detectColisionY(wall){
 
     var newPosY = player.posY - player.velocityUp + player.velocityDown;
-    var newPosX = player.posX + player.velocityRight - player.velocityLeft;
+    //var newPosX = player.posX + player.velocityRight - player.velocityLeft;
     
 
     if(
@@ -170,12 +167,7 @@ function detectColisionY(wall){
     }
 }
 
-function showWalls(){
-    for (let wall of walls){
-        drawLine(wall.xRechts, wall.yOben, wall.xLinks, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yUnten);
-    }
-}
+
 
 
 
@@ -246,7 +238,6 @@ function draw() {
     drawBullets();
     drawGrid(tilesize);
     drawLineFromZombieToPlayer();
-    showWalls();
     //drawLineForWall();
 }
 
