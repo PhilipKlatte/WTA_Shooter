@@ -38,7 +38,7 @@ function init() {
 
     player = new Player(3*tilesize, ctx, 3*tilesize, 20*tilesize);
 
-    walls.push(new Wall(9*tilesize, 10*tilesize,0*tilesize,15*tilesize));
+    walls.push(new Wall(8*tilesize, 10*tilesize,0*tilesize,15*tilesize));
     walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
     walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
@@ -55,7 +55,8 @@ function init() {
 function gameLoop() {
     if(detectColision(walls[0])
     && detectColision(walls[1])
-    && detectColision(walls[2])){
+    && detectColision(walls[2])
+    ){
         if(detectColisionBarrelPlayer(barrel1)){
             player.movePlayer();
         }
@@ -98,27 +99,77 @@ function shootReverse(){
 
 function moveZombies(){
     zombies.forEach(zombie => {
-        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
+        if (zombie.seesPlayer()){
+         zombie.move(player.posX, player.posY);
+        }
+        else if(zombie.hasEverSeenThePlayer){
+            zombie.move(zombie.lastPlayerPosX, zombie.lastPlayerPosY);
+        }
     });
 }
 
 function detectColision(wall){
+   // var newPosX = player.posX + player.velocityRight - player.velocityLeft;
+   // var newPosY = player.posY - player.velocityUp + player.velocityDown;
+
+    if(detectColisionX(wall)){
+        player.velocityRight = 0;
+        player.velocityLeft = 0;
+    }
+
+    
+    if(detectColisionY(wall)){
+        player.velocityDown=0;
+        player.velocityUp=0;
+    }
+
+    return true;
+}
+
+function detectColisionX(wall){
     var newPosX = player.posX + player.velocityRight - player.velocityLeft;
-    var newPosY = player.posY - player.velocityUp + player.velocityDown;
+
 
     if(
         newPosX < wall.xRechts &&
         newPosX + playerImg.width > wall.xLinks &&
+
+        player.posY + (playerImg.height/2) < wall.yOben &&
+        player.posY + playerImg.height > wall.yUnten
+
+    ){
+        console.log('ColisionDetectetPlayerWandX');
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function detectColisionY(wall){
+
+    var newPosY = player.posY - player.velocityUp + player.velocityDown;
+
+    
+
+    if(
+        player.posX < wall.xRechts &&
+        player.playerPosX + playerImg.width > wall.xLinks &&
+
         newPosY + (playerImg.height/2) < wall.yOben &&
         newPosY + playerImg.height > wall.yUnten
     ){
-        console.log('ColisionDetectetPlayerWand');
-        return false;
-    }
-    else{
+        console.log('ColisionDetectetPlayerWandY');
         return true;
     }
+    else{
+        return false;
+    }
 }
+
+
+
+
 
 function detectColisionBarrelPlayer(barrel){
 
