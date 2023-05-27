@@ -1,33 +1,39 @@
 addEventListener("keydown", (ev) => keydownEvent(ev));
 addEventListener("keyup", (ev) => keyupEvent(ev));
 
-let movementSpeed = 5;
+let playerMovementSpeed = 5;
 
 function keydownEvent(ev) {
     const key_pressed = String.fromCharCode(ev.keyCode);
 
     switch(key_pressed){
         case 'W':
-            player.velocityUp = movementSpeed;
-            playerOrientation = orientation.down;
+            player.velocityUp = playerMovementSpeed;
+            player.orientation = orientation.down;
             break;
         case 'A':
-            player.velocityLeft = movementSpeed;
-            playerOrientation = orientation.left;
+            player.velocityLeft = playerMovementSpeed;
+            player.orientation = orientation.left;
             break;
         case 'S':
-            player.velocityDown = movementSpeed;
-            playerOrientation = orientation.up;
+            player.velocityDown = playerMovementSpeed;
+            player.orientation = orientation.up;
             break;
         case 'D':
-            player.velocityRight = movementSpeed;
-            playerOrientation = orientation.right;
+            player.velocityRight = playerMovementSpeed;
+            player.orientation = orientation.right;
             break;
-        case 'M':
-            shoot();
+        case 'I':
+            shoot(orientation.up);
+            break;
+        case 'J':
+            shoot(orientation.left);
             break;
         case 'K':
-            shootReverse();
+            shoot(orientation.down);
+            break;
+        case 'L':
+            shoot(orientation.right);
             break;
     }
 }

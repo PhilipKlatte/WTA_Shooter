@@ -7,7 +7,7 @@ class Player extends gameObject{
         this.velocityUp = 0;
         this.velocityDown = 0;
         
-        this.playerOrientation = orientation.down;
+        this.orientation = orientation.up;
     }
 
     movePlayer() {
