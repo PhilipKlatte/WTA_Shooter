@@ -36,9 +36,9 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
-    player = new Player(3*tilesize, ctx, 3*tilesize, 20*tilesize);
+    player = new Player(3*tilesize, ctx, 3*tilesize, 2*tilesize);
 
-    walls.push(new Wall(8*tilesize, 10*tilesize,0*tilesize,15*tilesize));
+    walls.push(new Wall(9*tilesize, 10*tilesize,0*tilesize,15*tilesize));
     walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
     walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
@@ -134,9 +134,12 @@ function detectColisionX(wall){
         newPosX < wall.xRechts &&
         newPosX + playerImg.width > wall.xLinks &&
 
+        player.posY   < wall.yOben &&
+        player.posY + 1.5*playerImg.height > wall.yUnten
+        /*
         player.posY + (playerImg.height/2) < wall.yOben &&
         player.posY + playerImg.height > wall.yUnten
-
+*/
     ){
         console.log('ColisionDetectetPlayerWandX');
         return true;
@@ -149,15 +152,15 @@ function detectColisionX(wall){
 function detectColisionY(wall){
 
     var newPosY = player.posY - player.velocityUp + player.velocityDown;
-
+    var newPosX = player.posX + player.velocityRight - player.velocityLeft;
     
 
     if(
         player.posX < wall.xRechts &&
-        player.playerPosX + playerImg.width > wall.xLinks &&
+        player.posX + playerImg.width > wall.xLinks &&
 
-        newPosY + (playerImg.height/2) < wall.yOben &&
-        newPosY + playerImg.height > wall.yUnten
+        newPosY   < wall.yOben &&
+        newPosY + 1.5*playerImg.height > wall.yUnten
     ){
         console.log('ColisionDetectetPlayerWandY');
         return true;
@@ -167,7 +170,12 @@ function detectColisionY(wall){
     }
 }
 
-
+function showWalls(){
+    for (let wall of walls){
+        drawLine(wall.xRechts, wall.yOben, wall.xLinks, wall.yUnten);
+        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yUnten);
+    }
+}
 
 
 
@@ -238,6 +246,7 @@ function draw() {
     drawBullets();
     drawGrid(tilesize);
     drawLineFromZombieToPlayer();
+    showWalls();
     //drawLineForWall();
 }
 
