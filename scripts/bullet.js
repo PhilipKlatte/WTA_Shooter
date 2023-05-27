@@ -1,35 +1,33 @@
-class Player extends gameObject{
-    constructor(src, ctx, posX, posY) {
+class Bullet extends gameObject {
+    constructor(src, ctx, posX, posY, velocityRight, velocityLeft, velocityUp, velocityDown) {
         super(src, ctx, posX, posY);
-        
-        this.velocityRight = 0;
-        this.velocityLeft = 0;
-        this.velocityUp = 0;
-        this.velocityDown = 0;
-        
-        this.playerOrientation = orientation.down;
+
+        this.velocityRight = velocityRight * 10;
+        this.velocityLeft = velocityLeft * 10;
+        this.velocityUp = velocityUp * 10;
+        this.velocityDown = velocityDown * 10;
     }
 
-    movePlayer() {
+    move() {
         if (this.posX + this.velocityRight < canvas.width + 1) {
             this.posX += this.velocityRight;
         } else {
-            this.posX = canvas.width - playerImg.width;
+            delete bullets[bullets.indexOf(this)];
         }
         if (this.posX - this.velocityLeft > -1) {
             this.posX -= this.velocityLeft;
         } else {
-            this.posX = 0;
+            delete bullets[bullets.indexOf(this)];
         }
         if (this.posY - this.velocityUp > -1) {
             this.posY -= this.velocityUp;
         } else {
-            this.posY = 0;
+            delete bullets[bullets.indexOf(this)];
         }
         if (this.posY + this.velocityDown < canvas.height - playerImg.height) {
             this.posY += this.velocityDown;
         } else {
-            this.posY = canvas.height - playerImg.height;
+            delete bullets[bullets.indexOf(this)];
         }
 
         //logCoordinates();
