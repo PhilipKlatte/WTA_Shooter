@@ -42,9 +42,11 @@ function init() {
 
     player = new Player(3*tilesize, ctx, 3*tilesize, 20*tilesize);
 
-    walls.push(new Wall(9*tilesize, 10*tilesize,0*tilesize,15*tilesize));
-    walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
-    walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
+    loadWalls();
+
+    // walls.push(new Wall(9*tilesize, 10*tilesize,0*tilesize,15*tilesize));
+    // walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
+    // walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
     zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));
     zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
