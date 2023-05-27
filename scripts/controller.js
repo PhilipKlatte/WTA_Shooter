@@ -14,6 +14,9 @@ var worldImg;
 var barrelImg;
 var zombieImg;
 var floorImg;
+var wall_horizontal;
+var wall_horizontal_top;
+var wall_vertical;
 
 const walls = [];
 const zombies = [];
@@ -181,15 +184,27 @@ function detectColisionZom(wall, zomPosX, zomPosY) {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    //drawWorld();
     drawFloor()
+    drawWorld();
     drawBarrels();
     drawPlayer();
     drawZombie();
     drawBullets();
+    showWalls();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
+}
+
+function showWalls(){
+    for (let wall of walls){
+        drawLine(wall.xRechts, wall.yOben, wall.xLinks, wall.yUnten);
+        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yUnten);
+        drawLine(wall.xLinks, wall.yUnten, wall.xRechts, wall.yUnten);
+        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yOben);
+        drawLine(wall.xRechts, wall.yOben, wall.xRechts, wall.yUnten);
+        drawLine(wall.xLinks, wall.yOben, wall.xLinks, wall.yUnten);
+    }
 }
 
 function drawBullets(){
@@ -215,10 +230,6 @@ function drawZombie() {
     zombies.forEach(zombie => {
         ctx.drawImage(zombieImg, zombie.posX, zombie.posY);
     })
-}
-
-function drawWorld() {
-    ctx.drawImage(worldImg, 0, 0);
 }
 
 function drawPlayer() {
@@ -318,6 +329,9 @@ function preloadAssets() {
     barrelImg = addImage("assets/barrell32x64.png");
     zombieImg = addImage("assets/zombie32x64.png");
     floorImg = addImage("assets/floorpanel2_32x32.png")
+    wall_horizontal = addImage("assets/wall_horizontal4_32x32.png")
+    wall_horizontal_top = addImage("assets/wall_horizontal_top_32x32.png")
+    wall_vertical = addImage("assets/wall_vertical2_32x32.png")
 
     var checkResources = function () {
         if (_toPreload === 0)

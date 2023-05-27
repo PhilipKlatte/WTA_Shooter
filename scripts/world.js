@@ -1,16 +1,32 @@
-function drawWorld() {
-    drawWalls(0, 0, 0, 24);
-    drawWalls(31, 0, 31, 24);
-    drawWalls(7, 16, 7, 23);
-    drawWalls(21, 6, 21, 23);
-    drawWalls(14, 9, 14, 16);
 
-    drawWalls(1, 0, 31, 0);
-    drawWalls(1, 23, 31, 23);
-    drawWalls(1, 9, 14, 9);
+var wallDefinitions = [
+    [0,0,0,24],
+    [31,0,31,24],
+    [7, 16, 7, 23],
+    [21, 6, 21, 23],
+    [14, 9, 14, 16],
+    [1, 0, 31, 0],
+    [1, 23, 31, 23],
+    [1, 9, 14, 9]
+]
+
+function drawWorld() {
+    // drawWall(0, 0, 0, 24);
+    // drawWall(31, 0, 31, 24);
+    // drawWall(7, 16, 7, 23);
+    // drawWall(21, 6, 21, 23);
+    // drawWall(14, 9, 14, 16);
+    //
+    // drawWall(1, 0, 31, 0);
+    // drawWall(1, 23, 31, 23);
+    // drawWall(1, 9, 14, 9);
+
+    wallDefinitions.forEach(wall => {
+        drawWall(wall[0], wall[1], wall[2], wall[3]);
+    })
 }
 
-function drawWalls(fromX, fromY, untilX, untilY){
+function drawWall(fromX, fromY, untilX, untilY){
     if (fromX === untilX) drawVerticalWall(fromX*tilesize, fromY*tilesize, untilX*tilesize, untilY*tilesize);
     if (fromY === untilY) drawHorizontalWall(fromX*tilesize, fromY*tilesize, untilX*tilesize, untilY*tilesize);
 }
