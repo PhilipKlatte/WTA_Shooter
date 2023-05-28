@@ -174,21 +174,26 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawBullets();
-    showWallCollision();
+    showCollideZones();
     //drawGrid(tilesize);
     drawLineFromZombieToPlayer();
     //drawLineForWall();
 }
 
-function showWallCollision(){
-    for (let wall of walls){
-        drawLine(wall.xRechts, wall.yOben, wall.xLinks, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yUnten);
-        drawLine(wall.xLinks, wall.yUnten, wall.xRechts, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yOben);
-        drawLine(wall.xRechts, wall.yOben, wall.xRechts, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xLinks, wall.yUnten);
-    }
+function showCollideZones(){
+    player.showCollideZone();
+
+    walls.forEach(wall => {
+        wall.showCollideZone();
+    })
+
+    zombies.forEach(zombie => {
+        zombie.showCollideZone();
+    })
+
+    barrels.forEach(barrel => {
+        barrel.showCollideZone();
+    })
 }
 
 function drawBullets(){

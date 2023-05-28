@@ -6,9 +6,6 @@ class Bullet extends GameObject {
         this.velocityLeft = (direction === orientation.left) ? bulletSpeed : 0;
         this.velocityUp = (direction === orientation.up) ? bulletSpeed : 0;
         this.velocityDown = (direction === orientation.down) ? bulletSpeed : 0;
-
-
-        console.log("bullet right: ", this.velocityRight);
     }
 
     move() {

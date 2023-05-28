@@ -8,6 +8,8 @@ class Player extends GameObject{
         this.velocityDown = 0;
         
         this.orientation = orientation.up;
+
+        this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
     }
 
     movePlayer() {
