@@ -1,4 +1,4 @@
-class Bullet extends gameObject {
+class Bullet extends GameObject {
     constructor(src, ctx, posX, posY, direction) {
         super(src, ctx, posX, posY);
 

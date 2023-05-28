@@ -1,4 +1,4 @@
-class Player extends gameObject{
+class Player extends GameObject{
     constructor(src, ctx, posX, posY) {
         super(src, ctx, posX, posY);
         

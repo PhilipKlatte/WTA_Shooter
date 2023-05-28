@@ -48,7 +48,7 @@ function init() {
     // walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
     // walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
-    zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));
+    zombies.push(new Zombie(zombieImg, ctx, 20*tilesize, 20*tilesize, 0.9));
     zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
 
     barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));

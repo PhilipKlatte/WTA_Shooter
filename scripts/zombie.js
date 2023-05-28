@@ -1,4 +1,4 @@
-class Zombie extends gameObject{
+class Zombie extends GameObject{
     constructor(src, ctx, posX, posY, speed){
         super(src, ctx, posX, posY);
         this.speed= speed;

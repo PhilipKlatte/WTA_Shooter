@@ -1,4 +1,4 @@
-class Barrel extends gameObject {
+class Barrel extends GameObject {
     constructor(src, ctx, posX, posY) {
         super(src, ctx, posX, posY);
 
