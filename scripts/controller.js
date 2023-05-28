@@ -59,16 +59,9 @@ function init() {
 }
 
 function gameLoop() {
-    if(detectColision(walls[0])
-    && detectColision(walls[1])
-    && detectColision(walls[2])){
-        if(detectColisionBarrelPlayer(barrel1)){
-            player.movePlayer();
-        }
-    }
-
     moveBullets();
     moveZombies();
+    player.movePlayer();
     draw();
 
     //console.log("bullets:", bullets.length);
@@ -83,23 +76,12 @@ function moveBullets(){
 }
 
 function shoot(direction){
-
-    console.log("shot ", direction);
-
     bullets.push(new Bullet(
         null,
         ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
         direction));
-}
-
-function shootReverse(){
-    bullets.push(new Bullet(
-        null,
-        ctx,
-        player.posX + playerImg.width/2,
-        player.posY + playerImg.height/2));
 }
 
 function moveZombies(){
@@ -192,13 +174,13 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawBullets();
-    showWalls();
+    showWallCollision();
     //drawGrid(tilesize);
-    //drawLineFromZombieToPlayer();
+    drawLineFromZombieToPlayer();
     //drawLineForWall();
 }
 
-function showWalls(){
+function showWallCollision(){
     for (let wall of walls){
         drawLine(wall.xRechts, wall.yOben, wall.xLinks, wall.yUnten);
         drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yUnten);
