@@ -48,7 +48,7 @@ class Zombie extends gameObject{
         let slope = this.calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
         let y = this.calculateYIntercept(slope, offsetPlayerX, newPlayerY);
 
-        let viewInterceptsWall = -y < wall.yOben && -y > wall.yUnten;
+        let viewInterceptsWall = y < -wall.yOben && y > -wall.yUnten;
         let playerLeftAndZombieRight = (player.posX < wall.xLinks && this.posX > wall.xLinks);
         let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
         let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;
