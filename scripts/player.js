@@ -1,4 +1,4 @@
-class Player extends gameObject{
+class Player extends GameObject{
     constructor(src, ctx, posX, posY) {
         super(src, ctx, posX, posY);
         
@@ -8,6 +8,8 @@ class Player extends gameObject{
         this.velocityDown = 0;
         
         this.orientation = orientation.up;
+
+        this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
     }
 
     movePlayer() {

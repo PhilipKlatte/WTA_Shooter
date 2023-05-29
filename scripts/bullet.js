@@ -1,4 +1,4 @@
-class Bullet extends gameObject {
+class Bullet extends GameObject {
     constructor(src, ctx, posX, posY, direction) {
         super(src, ctx, posX, posY);
 
@@ -6,9 +6,6 @@ class Bullet extends gameObject {
         this.velocityLeft = (direction === orientation.left) ? bulletSpeed : 0;
         this.velocityUp = (direction === orientation.up) ? bulletSpeed : 0;
         this.velocityDown = (direction === orientation.down) ? bulletSpeed : 0;
-
-
-        console.log("bullet right: ", this.velocityRight);
     }
 
     move() {

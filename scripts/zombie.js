@@ -1,7 +1,9 @@
-class Zombie extends gameObject{
+class Zombie extends GameObject{
     constructor(src, ctx, posX, posY, speed){
         super(src, ctx, posX, posY);
         this.speed= speed;
+
+        this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
     }
 
     move(targetX, targetY){
@@ -21,13 +23,8 @@ class Zombie extends gameObject{
             newZomPosY = this.posY - this.speed;
         }
 
-        if(detectColisionZom(walls[0], newZomPosX, newZomPosY) &&
-            detectColisionZom(walls[1], newZomPosX, newZomPosY) &&
-            detectColisionZom(walls[2], newZomPosX, newZomPosY)
-        ){
-            this.posX = newZomPosX;
-            this.posY = newZomPosY;
-        }
+        this.posX = newZomPosX;
+        this.posY = newZomPosY;
     }
 
     seesPlayer(){
@@ -53,7 +50,7 @@ class Zombie extends gameObject{
         let slope = this.calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
         let y = this.calculateYIntercept(slope, offsetPlayerX, newPlayerY);
 
-        let viewInterceptsWall = -y < wall.yOben && -y > wall.yUnten;
+        let viewInterceptsWall = y < -wall.yOben && y > -wall.yUnten;
         let playerLeftAndZombieRight = (player.posX < wall.xLinks && this.posX > wall.xLinks);
         let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
         let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;

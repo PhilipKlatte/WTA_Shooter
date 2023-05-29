@@ -1,4 +1,3 @@
-
 var wallDefinitions = [
     [0,0,0,24],
     [31,0,31,24],

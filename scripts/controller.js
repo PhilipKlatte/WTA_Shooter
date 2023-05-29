@@ -48,7 +48,7 @@ function init() {
     // walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
     // walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
-    zombies.push(new Zombie(zombieImg, ctx, 5*tilesize, 5*tilesize, 0.9));
+    zombies.push(new Zombie(zombieImg, ctx, 20*tilesize, 20*tilesize, 0.9));
     zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
 
     barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
@@ -59,16 +59,9 @@ function init() {
 }
 
 function gameLoop() {
-    if(detectColision(walls[0])
-    && detectColision(walls[1])
-    && detectColision(walls[2])){
-        if(detectColisionBarrelPlayer(barrel1)){
-            player.movePlayer();
-        }
-    }
-
     moveBullets();
     moveZombies();
+    player.movePlayer();
     draw();
 
     //console.log("bullets:", bullets.length);
@@ -83,23 +76,12 @@ function moveBullets(){
 }
 
 function shoot(direction){
-
-    console.log("shot ", direction);
-
     bullets.push(new Bullet(
         null,
         ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
         direction));
-}
-
-function shootReverse(){
-    bullets.push(new Bullet(
-        null,
-        ctx,
-        player.posX + playerImg.width/2,
-        player.posY + playerImg.height/2));
 }
 
 function moveZombies(){
@@ -192,21 +174,26 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawBullets();
-    showWalls();
+    showCollideZones();
     //drawGrid(tilesize);
-    //drawLineFromZombieToPlayer();
+    drawLineFromZombieToPlayer();
     //drawLineForWall();
 }
 
-function showWalls(){
-    for (let wall of walls){
-        drawLine(wall.xRechts, wall.yOben, wall.xLinks, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yUnten);
-        drawLine(wall.xLinks, wall.yUnten, wall.xRechts, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xRechts, wall.yOben);
-        drawLine(wall.xRechts, wall.yOben, wall.xRechts, wall.yUnten);
-        drawLine(wall.xLinks, wall.yOben, wall.xLinks, wall.yUnten);
-    }
+function showCollideZones(){
+    player.showCollideZone();
+
+    walls.forEach(wall => {
+        wall.showCollideZone();
+    })
+
+    zombies.forEach(zombie => {
+        zombie.showCollideZone();
+    })
+
+    barrels.forEach(barrel => {
+        barrel.showCollideZone();
+    })
 }
 
 function drawBullets(){
