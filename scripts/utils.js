@@ -15,8 +15,8 @@ function collidesWith(gameObject, collideObject){
 
 function collidesWithOneOf(gameObject, collideObjects){
     for (const collideObject of collideObjects) {
-        if (collidesWith(gameObject, collideObject)) return true;
+        if (collidesWith(gameObject, collideObject)) return collideObject;
     }
 
-    return false;
+    return null;
 }
