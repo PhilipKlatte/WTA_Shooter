@@ -25,8 +25,6 @@ const bullets = [];
 
 var player;
 
-var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
-
 var playerOrientation = orientation.down;
 
 var bulletSpeed = 10;
@@ -164,7 +162,9 @@ function drawPlayer() {
 }
 
 function drawBarrels() {
-    ctx.drawImage(barrelImg, barrel1.posX, barrel1.posY);
+    barrels.forEach(barrel => {
+        ctx.drawImage(barrelImg, barrel.posX, barrel.posY);
+    })
 }
 
 function drawAndRotatePlayer() {
