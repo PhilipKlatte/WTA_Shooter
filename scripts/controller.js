@@ -64,7 +64,11 @@ function gameLoop() {
     player.movePlayer();
     draw();
 
-    if (collidesWith(player, walls[0])) console.log("collides");
+    if (collidesWithOneOf(player, walls)){
+        console.log("collides");
+    } else{
+        console.log("doesnt collide")
+    }
 
     //console.log("bullets:", bullets.length);
 

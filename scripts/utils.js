@@ -13,6 +13,10 @@ function collidesWith(gameObject, collideObject){
             gameObjectCZfromY < collideObjectCZuntilY && gameObjectCZuntilY > collideObjectCZfromY;
 }
 
-function collidesWithAll(gameObject, array){
-    
+function collidesWithOneOf(gameObject, collideObjects){
+    for (const collideObject of collideObjects) {
+        if (collidesWith(gameObject, collideObject)) return true;
+    }
+
+    return false;
 }
