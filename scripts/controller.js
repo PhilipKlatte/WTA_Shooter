@@ -61,7 +61,7 @@ function init() {
 function gameLoop() {
     moveBullets();
     moveZombies();
-    player.movePlayer();
+    player.move();
     draw();
 
     if (collidesWithOneOf(player, walls) != null){
