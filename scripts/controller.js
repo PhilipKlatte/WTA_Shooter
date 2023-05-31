@@ -17,6 +17,7 @@ var floorImg;
 var wall_horizontal;
 var wall_horizontal_top;
 var wall_vertical;
+var pressE;
 
 const walls = [];
 const zombies = [];
@@ -62,16 +63,6 @@ function gameLoop() {
     player.move();
     moveBarrels();
     draw();
-
-    if (collidesWithOneOf(player, walls) != null){
-        console.log("collides");
-    } else{
-        console.log("doesnt collide");
-    }
-
-    //console.log("bullets:", bullets.length);
-
-    //console.log("player orientation: ", player.orientation);
 }
 
 function moveBarrels(){
@@ -110,9 +101,9 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawBullets();
-    showCollideZones();
+    //showCollideZones();
     //drawGrid(tilesize);
-    drawLineFromZombieToPlayer();
+    //drawLineFromZombieToPlayer();
     //drawLineForWall();
 }
 
@@ -259,6 +250,7 @@ function preloadAssets() {
     wall_horizontal = addImage("assets/wall_horizontal4_32x32.png")
     wall_horizontal_top = addImage("assets/wall_horizontal_top_32x32.png")
     wall_vertical = addImage("assets/wall_vertical2_32x32.png")
+    pressE = addImage("assets/PressE.png");
 
     var checkResources = function () {
         if (_toPreload === 0)
