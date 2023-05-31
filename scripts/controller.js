@@ -25,8 +25,6 @@ const bullets = [];
 
 var player;
 
-var barrel1 = new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize);
-
 var playerOrientation = orientation.down;
 
 var bulletSpeed = 10;
@@ -61,12 +59,25 @@ function init() {
 function gameLoop() {
     moveBullets();
     moveZombies();
-    player.movePlayer();
+    player.move();
+    moveBarrels();
     draw();
+
+    if (collidesWithOneOf(player, walls) != null){
+        console.log("collides");
+    } else{
+        console.log("doesnt collide");
+    }
 
     //console.log("bullets:", bullets.length);
 
     //console.log("player orientation: ", player.orientation);
+}
+
+function moveBarrels(){
+    barrels.forEach(barrel => {
+        barrel.move();
+    })
 }
 
 function moveBullets(){
@@ -88,81 +99,6 @@ function moveZombies(){
     zombies.forEach(zombie => {
         if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
     });
-}
-
-function detectColision(wall){
-    var newPosX = player.posX + player.velocityRight - player.velocityLeft;
-    var newPosY = player.posY - player.velocityUp + player.velocityDown;
-
-    if(
-        newPosX < wall.xRechts &&
-        newPosX + playerImg.width > wall.xLinks &&
-        newPosY + (playerImg.height/2) < wall.yOben &&
-        newPosY + playerImg.height > wall.yUnten
-    ){
-        console.log('ColisionDetectetPlayerWand');
-        return false;
-    }
-    else{
-        return true;
-    }
-}
-
-function detectColisionBarrelPlayer(barrel){
-
-    var newPosX = player.posX + player.velocityRight - player.velocityLeft;
-    var newPosY = player.posY - player.velocityUp + player.velocityDown;
-
-    if(
-        newPosX < barrel.posX+barrelImg.width &&
-        newPosX + playerImg.width > barrel.posX
-        &&
-        newPosY + (playerImg.height/2) > barrel.posY+ barrelImg.height &&
-        newPosY + playerImg.height < barrel.posY
-    ){
-        console.log('ColisionDetectetPlayerBarrel');
-        return detectColisionBarrelWall(barrel,walls[0]);
-    }
-    else{
-        return true;
-    }
-}
-
-
-function detectColisionBarrelWall(barrel, wall){
-
-    var newPosX = barrel.posX + player.velocityRight - player.velocityLeft;
-    var newPosY = barrel.posY - player.velocityUp + player.velocityDown;
-
-    if(
-        newPosX < wall.xRechts &&
-        newPosX + barrelImg.width > wall.xLinks &&
-        newPosY + (barrelImg.height/2) < wall.yOben &&
-        newPosY + barrelImg.height > wall.yUnten
-    ){
-        console.log('ColisionDetectetBarrelWand');
-        return false;
-    }
-    else{
-        barrel.moveBarrel(player.velocityRight, player.velocityLeft, player.velocityUp, player.velocityDown)
-        return true;
-    }
-}
-
-
-function detectColisionZom(wall, zomPosX, zomPosY) {
-
-    if (
-        zomPosX < wall.xRechts &&
-        zomPosX + playerImg.width > wall.xLinks &&
-        zomPosY < wall.yOben &&
-        zomPosY + playerImg.height > wall.yUnten
-    ) {
-        //console.log('ColisionDetectetZom');
-        return false;
-    } else {
-        return true;
-    }
 }
 
 function draw() {
@@ -226,7 +162,9 @@ function drawPlayer() {
 }
 
 function drawBarrels() {
-    ctx.drawImage(barrelImg, barrel1.posX, barrel1.posY);
+    barrels.forEach(barrel => {
+        ctx.drawImage(barrelImg, barrel.posX, barrel.posY);
+    })
 }
 
 function drawAndRotatePlayer() {

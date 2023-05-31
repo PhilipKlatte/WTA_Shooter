@@ -12,26 +12,13 @@ class Player extends GameObject{
         this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
     }
 
-    movePlayer() {
-        if (this.posX + this.velocityRight < canvas.width + 1) {
-            this.posX += this.velocityRight;
-        } else {
-            this.posX = canvas.width - playerImg.width;
+    move() {
+        if (collidesWithOneOf(new Player(this.src, this.ctx, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
+            this.posX = this.posX + this.velocityRight - this.velocityLeft;
         }
-        if (this.posX - this.velocityLeft > -1) {
-            this.posX -= this.velocityLeft;
-        } else {
-            this.posX = 0;
-        }
-        if (this.posY - this.velocityUp > -1) {
-            this.posY -= this.velocityUp;
-        } else {
-            this.posY = 0;
-        }
-        if (this.posY + this.velocityDown < canvas.height - playerImg.height) {
-            this.posY += this.velocityDown;
-        } else {
-            this.posY = canvas.height - playerImg.height;
+
+        if (collidesWithOneOf(new Player(this.src, this.ctx, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) === null) {
+            this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
 
         //logCoordinates();
