@@ -38,10 +38,10 @@ function init() {
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, 4*tilesize, 3*tilesize, getRandomNumber(2, 9)));
-    zombies.push(new Zombie(zombieImg, 28*tilesize, 5*tilesize, getRandomNumber(2, 9)));
-    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumber(2, 9)));
-    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumber(2, 9)));
+    zombies.push(new Zombie(zombieImg, 4*tilesize, 3*tilesize, getRandomNumberIn(2, 9)));
+    zombies.push(new Zombie(zombieImg, 28*tilesize, 5*tilesize, getRandomNumberIn(2, 9)));
+    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumberIn(2, 9)));
+    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumberIn(2, 9)));
 
     barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
@@ -49,23 +49,11 @@ function init() {
 }
 
 function gameLoop() {
-    moveBullets();
+    bullets.forEach(bullet => bullet.move());
     moveZombies();
     player.move();
-    moveBarrels();
+    barrels.forEach(barrel => barrel.move());
     draw();
-}
-
-function moveBarrels(){
-    barrels.forEach(barrel => {
-        barrel.move();
-    })
-}
-
-function moveBullets(){
-    bullets.forEach(bullet => {
-        bullet.move();
-    })
 }
 
 function shoot(direction){
@@ -76,14 +64,8 @@ function shoot(direction){
         direction));
 }
 
-function getRandomNumber(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
 function moveZombies(){
-    zombies.forEach(zombie => {
-        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
-    });
+    zombies.forEach(zombie => {if (zombie.seesPlayer()) zombie.move(player.posX, player.posY)});
 }
 
 function draw() {
@@ -121,23 +103,6 @@ function drawFloor(){
             ctx.drawImage(floorImg, i, j);
         }
     }
-}
-
-function drawLine(fromX, fromY, toX, toY) {
-    ctx.beginPath();
-    ctx.moveTo(fromX, fromY);
-    ctx.lineTo(toX, toY);
-    ctx.stroke();
-}
-
-function drawRotatedRect(x, y, width, height, degrees) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.translate(x + width / 2, y + height / 2);
-    ctx.rotate(degrees * Math.PI / 180);
-    ctx.fillStyle = "brown";
-    ctx.fillRect(-width / 2, -height / 2, width, height);
-    ctx.restore();
 }
 
 document.addEventListener("DOMContentLoaded", init);

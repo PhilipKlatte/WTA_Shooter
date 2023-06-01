@@ -36,7 +36,7 @@ class Zombie extends GameObject{
     hit(){
         delete zombies[zombies.indexOf(this)];
 
-        zombies.push(new Zombie(zombieImg, 17*tilesize, 11*tilesize, getRandomNumber(2, 9)));
+        zombies.push(new Zombie(zombieImg, 17*tilesize, 11*tilesize, getRandomNumberIn(2, 9)));
     }
 
     seesPlayer(){
