@@ -18,6 +18,6 @@ class AssetLoader {
 
             setInterval(gameLoop, 40);
         else
-            setTimeout(AssetLoader.checkResources, 200);
+            setTimeout(AssetLoader.#checkResources, 200);
     }
 }

@@ -10,7 +10,6 @@ var orientation = {
 }
 
 var playerImg = AssetLoader.addImage("assets/player32x64.png");
-var worldImg = AssetLoader.addImage("assets/testmap.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
 var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
 var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
@@ -50,13 +49,19 @@ function init() {
     setInterval(gameLoop,60);
 }
 
+let timer = 0;
+
 function gameLoop() {
+    console.log("Time begin: ", Date.now() - timer);
+
     moveBullets();
     moveZombies();
     player.move();
     moveBarrels();
     draw();
 
+    console.log("Time end: ", Date.now() - timer);
+    timer = Date.now();
 }
 
 function moveBarrels(){

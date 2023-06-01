@@ -1,7 +1,7 @@
 addEventListener("keydown", (ev) => keydownEvent(ev));
 addEventListener("keyup", (ev) => keyupEvent(ev));
 
-let playerMovementSpeed = 5;
+let playerMovementSpeed = 8;
 
 function keydownEvent(ev) {
     const key_pressed = String.fromCharCode(ev.keyCode);
@@ -23,6 +23,7 @@ function keydownEvent(ev) {
             player.velocityRight = playerMovementSpeed;
             player.orientation = orientation.right;
             break;
+
         case 'I':
             shoot(orientation.up);
             break;
