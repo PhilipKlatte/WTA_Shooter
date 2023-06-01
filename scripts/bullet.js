@@ -6,10 +6,12 @@ class Bullet extends GameObject {
         this.velocityLeft = (direction === orientation.left) ? bulletSpeed : 0;
         this.velocityUp = (direction === orientation.up) ? bulletSpeed : 0;
         this.velocityDown = (direction === orientation.down) ? bulletSpeed : 0;
+
+        this.collideZone = new CircularCollideZone(4);
     }
 
     move() {
-        if (collidesWithOneOf(this, walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(this, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }

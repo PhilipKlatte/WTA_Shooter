@@ -23,11 +23,11 @@ class Zombie extends GameObject{
             newZomPosY = this.posY - this.speed;
         }
 
-        if (collidesWithOneOf(new Zombie(this.src, this.ctx, newZomPosX, this.posY), walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.ctx, newZomPosX, this.posY), walls) === null) {
             this.posX = newZomPosX;
         }
 
-        if (collidesWithOneOf(new Zombie(this.src, this.ctx, this.posX, newZomPosY), walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.ctx, this.posX, newZomPosY), walls) === null) {
             this.posY = newZomPosY;
         }
     }
