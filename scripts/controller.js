@@ -26,9 +26,6 @@ var player;
 
 var playerOrientation = orientation.down;
 
-var bulletSpeed = 10;
-
-
 function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (32 * tilesize).toString());

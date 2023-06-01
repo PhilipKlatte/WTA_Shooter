@@ -2,10 +2,12 @@ class Bullet extends GameObject {
     constructor(src, posX, posY, direction) {
         super(src, posX, posY);
 
-        this.velocityRight = (direction === orientation.right) ? bulletSpeed : 0;
-        this.velocityLeft = (direction === orientation.left) ? bulletSpeed : 0;
-        this.velocityUp = (direction === orientation.up) ? bulletSpeed : 0;
-        this.velocityDown = (direction === orientation.down) ? bulletSpeed : 0;
+        this.speed = 20;
+
+        this.velocityRight = (direction === orientation.right) ? this.speed : 0;
+        this.velocityLeft = (direction === orientation.left) ? this.speed : 0;
+        this.velocityUp = (direction === orientation.up) ? this.speed : 0;
+        this.velocityDown = (direction === orientation.down) ? this.speed : 0;
 
         this.collideZone = new CircularCollideZone(4);
     }

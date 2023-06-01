@@ -7,7 +7,7 @@ class Player extends GameObject{
         this.velocityUp = 0;
         this.velocityDown = 0;
 
-        this.speed = 8;
+        this.speed = 10;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
