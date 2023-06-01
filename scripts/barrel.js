@@ -7,7 +7,7 @@ class Barrel extends GameObject {
         this.velocityUp = 0;
         this.velocityDown = 0;
 
-        this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;

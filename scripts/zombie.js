@@ -3,7 +3,7 @@ class Zombie extends GameObject{
         super(src, ctx, posX, posY);
         this.speed= speed;
 
-        this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
     }
 
     move(targetX, targetY){

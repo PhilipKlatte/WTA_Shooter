@@ -8,6 +8,6 @@ class Wall extends GameObject{
 
         this.orientation = (Math.abs(yOben - yUnten) === tilesize) ? "horizontal" : "vertical";
 
-        this.collideZone = new CollideZone(0, 0, this.xRechts - this.xLinks, this.yUnten - this.yOben);
+        this.collideZone = new RectangularCollideZone(0, 0, this.xRechts - this.xLinks, this.yUnten - this.yOben);
     }
 }

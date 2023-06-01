@@ -9,26 +9,13 @@ class Bullet extends GameObject {
     }
 
     move() {
-        if (this.posX + this.velocityRight < canvas.width + 1) {
-            this.posX += this.velocityRight;
-        } else {
-            delete bullets[bullets.indexOf(this)];
+        if (collidesWithOneOf(this, walls) === null) {
+            this.posX = this.posX + this.velocityRight - this.velocityLeft;
+            this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
-        if (this.posX - this.velocityLeft > -1) {
-            this.posX -= this.velocityLeft;
-        } else {
-            delete bullets[bullets.indexOf(this)];
-        }
-        if (this.posY - this.velocityUp > -1) {
-            this.posY -= this.velocityUp;
-        } else {
-            delete bullets[bullets.indexOf(this)];
-        }
-        if (this.posY + this.velocityDown < canvas.height - playerImg.height) {
-            this.posY += this.velocityDown;
-        } else {
-            delete bullets[bullets.indexOf(this)];
-        }
+        // } else{
+        //     delete bullets[bullets.indexOf(this)];
+        // }
 
         //logCoordinates();
     }

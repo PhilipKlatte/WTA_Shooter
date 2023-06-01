@@ -17,7 +17,6 @@ var floorImg;
 var wall_horizontal;
 var wall_horizontal_top;
 var wall_vertical;
-var pressE;
 
 const walls = [];
 const zombies = [];
@@ -63,6 +62,7 @@ function gameLoop() {
     player.move();
     moveBarrels();
     draw();
+
 }
 
 function moveBarrels(){
@@ -241,16 +241,14 @@ function preloadAssets() {
         return img;
     }
 
-    background = addImage("https://picsum.photos/640/480");
     playerImg = addImage("assets/player32x64.png");
     worldImg = addImage("assets/testmap.png");
     barrelImg = addImage("assets/barrell32x64.png");
     zombieImg = addImage("assets/zombie32x64.png");
-    floorImg = addImage("assets/floorpanel2_32x32.png")
-    wall_horizontal = addImage("assets/wall_horizontal4_32x32.png")
-    wall_horizontal_top = addImage("assets/wall_horizontal_top_32x32.png")
-    wall_vertical = addImage("assets/wall_vertical2_32x32.png")
-    pressE = addImage("assets/PressE.png");
+    floorImg = addImage("assets/floorpanel2_32x32.png");
+    wall_horizontal = addImage("assets/wall_horizontal4_32x32.png");
+    wall_horizontal_top = addImage("assets/wall_horizontal_top_32x32.png");
+    wall_vertical = addImage("assets/wall_vertical2_32x32.png");
 
     var checkResources = function () {
         if (_toPreload === 0)
