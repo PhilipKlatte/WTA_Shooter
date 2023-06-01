@@ -1,6 +1,11 @@
 class Wall extends GameObject{
     constructor(yOben,yUnten,xLinks,xRechts) {
-        super(null, null, xLinks, yOben);
+        let src = {
+            width: xRechts - xLinks,
+            height: yUnten - yOben
+        };
+
+        super(src, null, xLinks, yOben);
         this.yOben = yOben;
         this.yUnten = yUnten;
         this.xLinks = xLinks;

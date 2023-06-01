@@ -14,10 +14,9 @@ class Bullet extends GameObject {
         if (CollisionDetection.collidesWithOneOf(this, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
             this.posY = this.posY - this.velocityUp + this.velocityDown;
+        } else if (CollisionDetection.collidesWithOneOf(this, walls) != null){
+            delete bullets[bullets.indexOf(this)];
         }
-        // } else{
-        //     delete bullets[bullets.indexOf(this)];
-        // }
 
         //logCoordinates();
     }

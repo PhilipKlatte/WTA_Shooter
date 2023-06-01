@@ -1,8 +1,14 @@
 class CollisionDetection{
     static collidesWith(gameObject, collideObject){
-        if (gameObject.collideZone instanceof RectangularCollideZone && collideObject.collideZone instanceof RectangularCollideZone){
+        if (gameObject.collideZone instanceof RectangularCollideZone
+            && collideObject.collideZone instanceof RectangularCollideZone){
             return this.#RectangularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
+        if (gameObject.collideZone instanceof CircularCollideZone
+            && collideObject.collideZone instanceof RectangularCollideZone){
+            return this.#CircularCZcollidesWithRectangularCZ(gameObject, collideObject);
+        }
+
     }
 
     static collidesWithOneOf(gameObject, collideObjects){
@@ -26,5 +32,24 @@ class CollisionDetection{
 
         return gameObjectCZfromX < collideObjectCZuntilX && gameObjectCZuntilX > collideObjectCZfromX &&
             gameObjectCZfromY < collideObjectCZuntilY && gameObjectCZuntilY > collideObjectCZfromY;
+    }
+
+    static #CircularCZcollidesWithRectangularCZ(gameObject, collideObject){
+        let rectangleCenterX = collideObject.posX + collideObject.src.width/2;
+        let rectangleCenterY = collideObject.posY + collideObject.src.height/2;
+
+        let circleDistanceX = Math.abs(gameObject.posX - rectangleCenterX);
+        let circleDistanceY = Math.abs(gameObject.posY - rectangleCenterY);
+
+        if (circleDistanceX > (collideObject.src.width/2 + gameObject.collideZone.radius)) { return false; }
+        if (circleDistanceY > (collideObject.src.height/2 + gameObject.collideZone.radius)) { return false; }
+
+        if (circleDistanceX <= (collideObject.src.width/2)) { return true; }
+        if (circleDistanceY <= (collideObject.src.height/2)) { return true; }
+
+        let cornerDistance_sq = (circleDistanceX - collideObject.src.width/2)^2 +
+            (circleDistanceY - collideObject.src.height/2)^2;
+
+        return (cornerDistance_sq <= (gameObject.collideZone.radius^2));
     }
 }
