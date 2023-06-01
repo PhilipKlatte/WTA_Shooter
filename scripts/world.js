@@ -18,50 +18,48 @@ function loadWalls(){
             (wall[0] === wall[2]) ? wall[2] * tilesize + tilesize: wall[2] * tilesize
         );
 
-        console.log("wand ", w);
+        console.log(w)
 
         walls.push(w);
     });
 }
 
-function drawWorld() {
-    wallDefinitions.forEach(wall => {
-        drawWall(wall[0], wall[1], wall[2], wall[3]);
+function drawWalls(){
+    walls.forEach(wall => {
+        drawWall(wall);
     })
 }
 
-function drawWall(fromX, fromY, untilX, untilY){
-    if (fromX === untilX) drawVerticalWall(fromX*tilesize, fromY*tilesize, untilX*tilesize, untilY*tilesize);
-    if (fromY === untilY) drawHorizontalWall(fromX*tilesize, fromY*tilesize, untilX*tilesize, untilY*tilesize);
-}
+function drawWall(wall){
+    if (wall.orientation === "horizontal"){
+        let x = wall.fromX;
 
-function drawVerticalWall(fromX, fromY, untilX, untilY){
+        while (x < wall.untilX){
+            ctx.drawImage(wall_horizontal_top, x, wall.fromY);
+            x += tilesize;
+        }
 
-    while (fromY < untilY){
-        ctx.drawImage(wall_vertical, fromX, fromY);
-        fromY += tilesize;
+        x = wall.fromX;
+
+        while (x < wall.untilX){
+            ctx.drawImage(wall_horizontal, x, wall.fromY + tilesize);
+            x += tilesize;
+        }
+
+        x = wall.fromX;
+
+        while (x < wall.untilX){
+            ctx.drawImage(wall_horizontal, x, wall.fromY + 2*tilesize);
+            x += tilesize;
+        }
     }
-}
+    
+    if (wall.orientation === "vertical"){
+        let y = wall.fromY;
 
-function drawHorizontalWall(fromX, fromY, untilX, untilY){
-    let x = fromX;
-
-    while (x < untilX){
-        ctx.drawImage(wall_horizontal_top, x, fromY);
-        x += tilesize;
-    }
-
-    x = fromX;
-
-    while (x < untilX){
-        ctx.drawImage(wall_horizontal, x, fromY + tilesize);
-        x += tilesize;
-    }
-
-    x = fromX;
-
-    while (x < untilX){
-        ctx.drawImage(wall_horizontal, x, fromY + 2*tilesize);
-        x += tilesize;
+        while (y < wall.untilY){
+            ctx.drawImage(wall_vertical, wall.fromX, y);
+            y += tilesize;
+        }
     }
 }

@@ -9,14 +9,13 @@ var orientation = {
     right: 90
 }
 
-var playerImg;
-var worldImg;
-var barrelImg;
-var zombieImg;
-var floorImg;
-var wall_horizontal;
-var wall_horizontal_top;
-var wall_vertical;
+var playerImg = AssetLoader.addImage("assets/player32x64.png");
+var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
+var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
+var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
+var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
+var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
+var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 
 const walls = [];
 const zombies = [];
@@ -27,9 +26,6 @@ var player;
 
 var playerOrientation = orientation.down;
 
-var bulletSpeed = 10;
-
-
 function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (32 * tilesize).toString());
@@ -38,16 +34,14 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
-    player = new Player(3*tilesize, ctx, 3*tilesize, 20*tilesize);
+    player = new Player(3*tilesize, 3*tilesize, 20*tilesize);
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, ctx, 20*tilesize, 20*tilesize, 0.9));
-    zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
+    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumber(2, 9)));
+    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumber(2, 9)));
 
-    barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
-
-    preloadAssets();
+    barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
     setInterval(gameLoop,60);
 }
@@ -58,7 +52,6 @@ function gameLoop() {
     player.move();
     moveBarrels();
     draw();
-
 }
 
 function moveBarrels(){
@@ -76,10 +69,13 @@ function moveBullets(){
 function shoot(direction){
     bullets.push(new Bullet(
         null,
-        ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
         direction));
+}
+
+function getRandomNumber(min, max) {
+    return Math.random() * (max - min) + min;
 }
 
 function moveZombies(){
@@ -92,7 +88,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawFloor()
-    drawWorld();
+    drawWalls();
     drawBarrels();
     drawPlayer();
     drawZombie();
@@ -132,10 +128,6 @@ function drawLineFromZombieToPlayer(){
     zombies.forEach(zombie => {
         drawLine(zombie.posX, zombie.posY, player.posX, player.posY);
     });
-}
-
-function drawLineForWall(){
-    drawLine(0, 304, 32*tilesize, 304);
 }
 
 function drawZombie() {
@@ -220,40 +212,6 @@ function drawRotatedRect(x, y, width, height, degrees) {
     ctx.fillStyle = "brown";
     ctx.fillRect(-width / 2, -height / 2, width, height);
     ctx.restore();
-}
-
-function preloadAssets() {
-    var _toPreload = 0;
-
-    var addImage = function (src) {
-
-        var img = new Image();
-        img.src = src;
-        _toPreload++;
-
-        img.addEventListener('load', function () {
-            _toPreload--;
-        }, false);
-        return img;
-    }
-
-    playerImg = addImage("assets/player32x64.png");
-    worldImg = addImage("assets/testmap.png");
-    barrelImg = addImage("assets/barrell32x64.png");
-    zombieImg = addImage("assets/zombie32x64.png");
-    floorImg = addImage("assets/floorpanel2_32x32.png");
-    wall_horizontal = addImage("assets/wall_horizontal4_32x32.png");
-    wall_horizontal_top = addImage("assets/wall_horizontal_top_32x32.png");
-    wall_vertical = addImage("assets/wall_vertical2_32x32.png");
-
-    var checkResources = function () {
-        if (_toPreload === 0)
-
-            setInterval(gameLoop, 40);
-        else
-            setTimeout(checkResources, 200);
-    }
-    checkResources();
 }
 
 document.addEventListener("DOMContentLoaded", init);

@@ -1,7 +1,8 @@
 class Zombie extends GameObject{
-    constructor(src, ctx, posX, posY, speed){
-        super(src, ctx, posX, posY);
-        this.speed= speed;
+    constructor(src, posX, posY, speed){
+        super(src, posX, posY);
+
+        this.speed = speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
     }
@@ -23,11 +24,11 @@ class Zombie extends GameObject{
             newZomPosY = this.posY - this.speed;
         }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.ctx, newZomPosX, this.posY), walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, newZomPosX, this.posY), walls) === null) {
             this.posX = newZomPosX;
         }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.ctx, this.posX, newZomPosY), walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, newZomPosY), walls) === null) {
             this.posY = newZomPosY;
         }
     }
@@ -47,17 +48,17 @@ class Zombie extends GameObject{
     }
 
     visionBlockedByVerticalWall(wall, playerX, playerY, zomX, zomY){
-        let offsetPlayerX = playerX - wall.xLinks;
+        let offsetPlayerX = playerX - wall.fromX;
         let newPlayerY = -playerY;
-        let offsetZomX = zomX - wall.xLinks;
+        let offsetZomX = zomX - wall.fromX;
         let newZomY = -zomY;
 
         let slope = this.calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
         let y = this.calculateYIntercept(slope, offsetPlayerX, newPlayerY);
 
-        let viewInterceptsWall = y < -wall.yOben && y > -wall.yUnten;
-        let playerLeftAndZombieRight = (player.posX < wall.xLinks && this.posX > wall.xLinks);
-        let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
+        let viewInterceptsWall = y < -wall.fromY && y > -wall.untilY;
+        let playerLeftAndZombieRight = (player.posX < wall.fromX && this.posX > wall.fromX);
+        let playerRightAndZombieLeft = (player.posX > wall.fromX && this.posX < wall.fromX);
         let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;
 
         return viewInterceptsWall && playerAndZombieOnOppositeSides;
@@ -67,11 +68,11 @@ class Zombie extends GameObject{
         let slope = this.calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
         let yIntercept = this.calculateYIntercept(slope, player.posX, -player.posY);
 
-        let x = (-wall.yOben - yIntercept) / slope;
+        let x = (-wall.fromY - yIntercept) / slope;
 
-        let viewInterceptsWall = x > wall.xLinks && x < wall.xRechts;
-        let playerAboveAndZombieBelow = (-player.posY > -wall.yOben && -this.posY < -wall.yOben);
-        let playerBelowAndZombieAbove = (-player.posY < -wall.yOben && -this.posY > -wall.yOben);
+        let viewInterceptsWall = x > wall.fromX && x < wall.untilX;
+        let playerAboveAndZombieBelow = (-player.posY > -wall.fromY && -this.posY < -wall.fromY);
+        let playerBelowAndZombieAbove = (-player.posY < -wall.fromY && -this.posY > -wall.fromY);
 
         let playerAndZombiesOnOppositeSides = playerAboveAndZombieBelow || playerBelowAndZombieAbove;
 
