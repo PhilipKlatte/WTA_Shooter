@@ -2,16 +2,20 @@ class CollisionDetection{
     static collidesWith(gameObject, collideObject){
         if (gameObject.collideZone instanceof RectangularCollideZone
             && collideObject.collideZone instanceof RectangularCollideZone){
+
             return this.#RectangularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
         if (gameObject.collideZone instanceof CircularCollideZone
             && collideObject.collideZone instanceof RectangularCollideZone){
+
             return this.#CircularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
     }
 
     static collidesWithOneOf(gameObject, collideObjects){
         for (const collideObject of collideObjects) {
+            if (collideObject === undefined) continue;
+
             if (this.collidesWith(gameObject, collideObject)) return collideObject;
         }
 

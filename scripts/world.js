@@ -18,8 +18,6 @@ function loadWalls(){
             (wall[0] === wall[2]) ? wall[2] * tilesize + tilesize: wall[2] * tilesize
         );
 
-        console.log(w)
-
         walls.push(w);
     });
 }

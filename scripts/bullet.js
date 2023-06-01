@@ -13,6 +13,13 @@ class Bullet extends GameObject {
     }
 
     move() {
+        let hitZombie = CollisionDetection.collidesWithOneOf(this, zombies);
+        if (hitZombie != null){
+            hitZombie.hit();
+            delete bullets[bullets.indexOf(this)];
+            return;
+        }
+
         if (CollisionDetection.collidesWithOneOf(this, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
             this.posY = this.posY - this.velocityUp + this.velocityDown;
