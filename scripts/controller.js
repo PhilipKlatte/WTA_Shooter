@@ -34,7 +34,7 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
-    player = new Player(3*tilesize, 3*tilesize, 20*tilesize);
+    player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
 
@@ -91,11 +91,11 @@ function draw() {
 
     drawFloor()
     drawWalls();
-    drawBarrels();
-    drawPlayer();
-    drawZombie();
+    barrels.forEach(barrel => barrel.draw());
+    player.draw();
+    zombies.forEach(zombie => zombie.draw());
     drawBullets();
-    showCollideZones();
+    //showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
@@ -130,22 +130,6 @@ function drawLineFromZombieToPlayer(){
     zombies.forEach(zombie => {
         drawLine(zombie.posX, zombie.posY, player.posX, player.posY);
     });
-}
-
-function drawZombie() {
-    zombies.forEach(zombie => {
-        ctx.drawImage(zombieImg, zombie.posX, zombie.posY);
-    })
-}
-
-function drawPlayer() {
-    ctx.drawImage(playerImg, player.posX, player.posY);
-}
-
-function drawBarrels() {
-    barrels.forEach(barrel => {
-        ctx.drawImage(barrelImg, barrel.posX, barrel.posY);
-    })
 }
 
 function drawAndRotatePlayer() {
