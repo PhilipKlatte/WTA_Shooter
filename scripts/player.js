@@ -37,6 +37,14 @@ class Player extends GameObject{
         }
     }
 
+    shoot(direction){
+        bullets.push(new Bullet(
+            null,
+            this.posX + this.src.width/2,
+            this.posY + this.src.height/2,
+            direction));
+    }
+
     logCoordinates(){
         console.log("X", this.posX);
         console.log("Y", this.posY);

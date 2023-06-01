@@ -7,29 +7,31 @@ class Zombie extends GameObject{
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
     }
 
-    move(targetX, targetY){
-        let newZomPosX = 0;
-        let newZomPosY= 0;
+    move(){
+        if (this.seesPlayer()){
+            let newZomPosX = 0;
+            let newZomPosY= 0;
 
-        if (this.posX <= targetX){
-            newZomPosX = this.posX + this.speed;
+            if (this.posX <= player.posX){
+                newZomPosX = this.posX + this.speed;
 
-        }else if (this.posX >= targetX){
-            newZomPosX = this.posX - this.speed;
-        }
+            }else if (this.posX >= player.posX){
+                newZomPosX = this.posX - this.speed;
+            }
 
-        if (this.posY <= targetY){
-            newZomPosY = this.posY + this.speed;
-        }else if ((this.posY >= targetY)){
-            newZomPosY = this.posY - this.speed;
-        }
+            if (this.posY <= player.posY){
+                newZomPosY = this.posY + this.speed;
+            }else if ((this.posY >= player.posY)){
+                newZomPosY = this.posY - this.speed;
+            }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, newZomPosX, this.posY), walls) === null) {
-            this.posX = newZomPosX;
-        }
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, newZomPosX, this.posY), walls) === null) {
+                this.posX = newZomPosX;
+            }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, newZomPosY), walls) === null) {
-            this.posY = newZomPosY;
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, newZomPosY), walls) === null) {
+                this.posY = newZomPosY;
+            }
         }
     }
 

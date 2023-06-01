@@ -50,9 +50,10 @@ function init() {
 
 function gameLoop() {
     bullets.forEach(bullet => bullet.move());
-    moveZombies();
+    zombies.forEach(zombie => zombie.move(player.posX, player.posY));
     player.move();
     barrels.forEach(barrel => barrel.move());
+
     draw();
 }
 
@@ -62,10 +63,6 @@ function shoot(direction){
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
         direction));
-}
-
-function moveZombies(){
-    zombies.forEach(zombie => {if (zombie.seesPlayer()) zombie.move(player.posX, player.posY)});
 }
 
 function draw() {
