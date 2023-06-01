@@ -94,7 +94,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawFloor()
-    drawWorld();
+    drawWalls();
     drawBarrels();
     drawPlayer();
     drawZombie();
@@ -134,10 +134,6 @@ function drawLineFromZombieToPlayer(){
     zombies.forEach(zombie => {
         drawLine(zombie.posX, zombie.posY, player.posX, player.posY);
     });
-}
-
-function drawLineForWall(){
-    drawLine(0, 304, 32*tilesize, 304);
 }
 
 function drawZombie() {

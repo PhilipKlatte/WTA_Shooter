@@ -24,7 +24,7 @@ function loadWalls(){
     });
 }
 
-function drawWorld() {
+function drawWalls() {
     wallDefinitions.forEach(wall => {
         drawWall(wall[0], wall[1], wall[2], wall[3]);
     })
