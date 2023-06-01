@@ -52,6 +52,8 @@ function gameLoop() {
     player.move();
     moveBarrels();
     draw();
+
+    console.log(zombies);
 }
 
 function moveBarrels(){

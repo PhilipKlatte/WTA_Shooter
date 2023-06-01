@@ -33,6 +33,10 @@ class Zombie extends GameObject{
         }
     }
 
+    hit(){
+        delete zombies[zombies.indexOf(this)];
+    }
+
     seesPlayer(){
         let sees = true;
 
