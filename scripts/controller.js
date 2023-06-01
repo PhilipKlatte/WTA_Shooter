@@ -38,6 +38,8 @@ function init() {
 
     loadWalls();
 
+    zombies.push(new Zombie(zombieImg, 4*tilesize, 3*tilesize, getRandomNumber(2, 9)));
+    zombies.push(new Zombie(zombieImg, 28*tilesize, 5*tilesize, getRandomNumber(2, 9)));
     zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumber(2, 9)));
     zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumber(2, 9)));
 
@@ -52,8 +54,6 @@ function gameLoop() {
     player.move();
     moveBarrels();
     draw();
-
-    console.log(zombies);
 }
 
 function moveBarrels(){
@@ -95,7 +95,7 @@ function draw() {
     drawPlayer();
     drawZombie();
     drawBullets();
-    //showCollideZones();
+    showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();

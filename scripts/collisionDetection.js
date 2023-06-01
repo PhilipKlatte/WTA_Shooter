@@ -14,6 +14,8 @@ class CollisionDetection{
 
     static collidesWithOneOf(gameObject, collideObjects){
         for (const collideObject of collideObjects) {
+            if (collideObject === undefined) continue;
+
             if (this.collidesWith(gameObject, collideObject)) return collideObject;
         }
 

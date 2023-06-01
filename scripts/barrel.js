@@ -25,8 +25,8 @@ class Barrel extends GameObject {
             player.pushedBarrel = null;
         }
 
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.ctx, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.ctx, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
 
         if (!this.stuckHorizontally) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
@@ -35,6 +35,8 @@ class Barrel extends GameObject {
         if (!this.stuckVertically) {
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
+
+        console.log("stuckx: ", this.stuckHorizontally);
 
         if (this.velocityRight > 0) this.velocityRight -= 0.1 * player.speed;
         if (this.velocityLeft > 0) this.velocityLeft -= 0.1 * player.speed;
