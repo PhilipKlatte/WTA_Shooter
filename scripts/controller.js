@@ -90,11 +90,11 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawFloor()
-    drawWalls();
+    walls.forEach(wall => drawWall(wall));
     barrels.forEach(barrel => barrel.draw());
     player.draw();
     zombies.forEach(zombie => zombie.draw());
-    drawBullets();
+    bullets.forEach(bullet => bullet.draw());
     //showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
@@ -114,15 +114,6 @@ function showCollideZones(){
 
     barrels.forEach(barrel => {
         barrel.showCollideZone();
-    })
-}
-
-function drawBullets(){
-    bullets.forEach(bullet => {
-        ctx.beginPath();
-        ctx.arc(bullet.posX, bullet.posY,4,0, 2* Math.PI);
-        ctx.fill();
-        ctx.stroke();
     })
 }
 

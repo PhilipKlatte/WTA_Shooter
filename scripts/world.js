@@ -21,13 +21,6 @@ function loadWalls(){
         walls.push(w);
     });
 }
-
-function drawWalls(){
-    walls.forEach(wall => {
-        drawWall(wall);
-    })
-}
-
 function drawWall(wall){
     if (wall.orientation === "horizontal"){
         let x = wall.fromX;

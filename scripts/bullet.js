@@ -29,6 +29,13 @@ class Bullet extends GameObject {
 
         //logCoordinates();
     }
+    
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.posX, this.posY,4,0, 2* Math.PI);
+        ctx.fill();
+        ctx.stroke();
+    }
 
     logCoordinates(){
         console.log("X", this.posX);
