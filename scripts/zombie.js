@@ -44,29 +44,22 @@ class Zombie extends GameObject{
             }
         });
 
-        console.log("sees: ", sees);
-
         return sees;
     }
 
     visionBlockedByVerticalWall(wall, playerX, playerY, zomX, zomY){
-        let offsetPlayerX = playerX - wall.xLinks;
+        let offsetPlayerX = playerX - wall.fromX;
         let newPlayerY = -playerY;
-        let offsetZomX = zomX - wall.xLinks;
+        let offsetZomX = zomX - wall.fromX;
         let newZomY = -zomY;
 
         let slope = this.calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
         let y = this.calculateYIntercept(slope, offsetPlayerX, newPlayerY);
 
-        let viewInterceptsWall = y < -wall.yOben && y > -wall.yUnten;
-        let playerLeftAndZombieRight = (player.posX < wall.xLinks && this.posX > wall.xLinks);
-        let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
+        let viewInterceptsWall = y < -wall.fromY && y > -wall.untilY;
+        let playerLeftAndZombieRight = (player.posX < wall.fromX && this.posX > wall.fromX);
+        let playerRightAndZombieLeft = (player.posX > wall.fromX && this.posX < wall.fromX);
         let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;
-
-        console.log("view intercepts wall", viewInterceptsWall);
-        console.log("playerLeft", playerLeftAndZombieRight);
-        console.log("playerRight", playerRightAndZombieLeft);
-        console.log("opp sides", playerAndZombieOnOppositeSides);
 
         return viewInterceptsWall && playerAndZombieOnOppositeSides;
     }
@@ -75,11 +68,11 @@ class Zombie extends GameObject{
         let slope = this.calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
         let yIntercept = this.calculateYIntercept(slope, player.posX, -player.posY);
 
-        let x = (-wall.yOben - yIntercept) / slope;
+        let x = (-wall.fromY - yIntercept) / slope;
 
-        let viewInterceptsWall = x > wall.xLinks && x < wall.xRechts;
-        let playerAboveAndZombieBelow = (-player.posY > -wall.yOben && -this.posY < -wall.yOben);
-        let playerBelowAndZombieAbove = (-player.posY < -wall.yOben && -this.posY > -wall.yOben);
+        let viewInterceptsWall = x > wall.fromX && x < wall.untilX;
+        let playerAboveAndZombieBelow = (-player.posY > -wall.fromY && -this.posY < -wall.fromY);
+        let playerBelowAndZombieAbove = (-player.posY < -wall.fromY && -this.posY > -wall.fromY);
 
         let playerAndZombiesOnOppositeSides = playerAboveAndZombieBelow || playerBelowAndZombieAbove;
 
