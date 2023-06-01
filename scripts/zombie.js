@@ -1,6 +1,6 @@
 class Zombie extends GameObject{
-    constructor(src, ctx, posX, posY, speed){
-        super(src, ctx, posX, posY);
+    constructor(src, posX, posY, speed){
+        super(src, posX, posY);
         this.speed= speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
@@ -23,11 +23,11 @@ class Zombie extends GameObject{
             newZomPosY = this.posY - this.speed;
         }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.ctx, newZomPosX, this.posY), walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, newZomPosX, this.posY), walls) === null) {
             this.posX = newZomPosX;
         }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.ctx, this.posX, newZomPosY), walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, newZomPosY), walls) === null) {
             this.posY = newZomPosY;
         }
     }

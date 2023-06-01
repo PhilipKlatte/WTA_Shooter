@@ -1,7 +1,6 @@
 class GameObject {
-    constructor(src, ctx, posX, posY) {
+    constructor(src, posX, posY) {
         this.src = src;
-        this.ctx = ctx;
         this.posX = posX;
         this.posY = posY;
 
@@ -46,7 +45,7 @@ class GameObject {
     }
 
     draw (){
-        this.ctx.drawImage(this.src, this.posX, this.posY);
+        ctx.drawImage(this.src, this.posX, this.posY);
     }
 }
 

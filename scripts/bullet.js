@@ -1,6 +1,6 @@
 class Bullet extends GameObject {
-    constructor(src, ctx, posX, posY, direction) {
-        super(src, ctx, posX, posY);
+    constructor(src, posX, posY, direction) {
+        super(src, posX, posY);
 
         this.velocityRight = (direction === orientation.right) ? bulletSpeed : 0;
         this.velocityLeft = (direction === orientation.left) ? bulletSpeed : 0;

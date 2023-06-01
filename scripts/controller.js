@@ -37,14 +37,14 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
-    player = new Player(3*tilesize, ctx, 3*tilesize, 20*tilesize);
+    player = new Player(3*tilesize, 3*tilesize, 20*tilesize);
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, ctx, 20*tilesize, 20*tilesize, 0.9));
-    zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
+    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, 0.9));
+    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, 1.5));
 
-    barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
+    barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
     setInterval(gameLoop,60);
 }
@@ -79,7 +79,6 @@ function moveBullets(){
 function shoot(direction){
     bullets.push(new Bullet(
         null,
-        ctx,
         player.posX + playerImg.width/2,
         player.posY + playerImg.height/2,
         direction));

@@ -5,7 +5,7 @@ class Wall extends GameObject{
             height: yUnten - yOben
         };
 
-        super(src, null, xLinks, yOben);
+        super(src, xLinks, yOben);
         this.yOben = yOben;
         this.yUnten = yUnten;
         this.xLinks = xLinks;

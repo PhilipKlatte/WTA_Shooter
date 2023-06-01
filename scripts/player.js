@@ -1,6 +1,6 @@
 class Player extends GameObject{
-    constructor(src, ctx, posX, posY) {
-        super(src, ctx, posX, posY);
+    constructor(src, posX, posY) {
+        super(src, posX, posY);
 
         this.velocityRight = 0;
         this.velocityLeft = 0;
@@ -20,8 +20,8 @@ class Player extends GameObject{
     }
 
     move() {
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Player(this.src, this.ctx, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.ctx, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
 
         if (this.pushedBarrel != null){
             if (this.pushedBarrel.stuckHorizontally) this.stuckHorizontally = true;

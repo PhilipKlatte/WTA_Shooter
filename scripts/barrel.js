@@ -1,6 +1,6 @@
 class Barrel extends GameObject {
-    constructor(src, ctx, posX, posY) {
-        super(src, ctx, posX, posY);
+    constructor(src, posX, posY) {
+        super(src, posX, posY);
 
         this.velocityRight = 0;
         this.velocityLeft = 0;

@@ -8,7 +8,6 @@ class CollisionDetection{
             && collideObject.collideZone instanceof RectangularCollideZone){
             return this.#CircularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
-
     }
 
     static collidesWithOneOf(gameObject, collideObjects){
