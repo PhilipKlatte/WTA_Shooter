@@ -2,7 +2,7 @@ class Zombie extends GameObject{
     constructor(src, posX, posY, speed){
         super(src, posX, posY);
 
-        this.speed = getRandomNumber(2, 9);
+        this.speed = speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
     }

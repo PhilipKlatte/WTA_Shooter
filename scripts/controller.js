@@ -38,8 +38,8 @@ function init() {
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, 0.9));
-    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, 1.5));
+    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumber(2, 9)));
+    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumber(2, 9)));
 
     barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
