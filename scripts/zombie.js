@@ -1,7 +1,8 @@
 class Zombie extends GameObject{
     constructor(src, posX, posY, speed){
         super(src, posX, posY);
-        this.speed= speed;
+
+        this.speed = speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
     }
@@ -43,6 +44,8 @@ class Zombie extends GameObject{
             }
         });
 
+        console.log("sees: ", sees);
+
         return sees;
     }
 
@@ -59,6 +62,11 @@ class Zombie extends GameObject{
         let playerLeftAndZombieRight = (player.posX < wall.xLinks && this.posX > wall.xLinks);
         let playerRightAndZombieLeft = (player.posX > wall.xLinks && this.posX < wall.xLinks);
         let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;
+
+        console.log("view intercepts wall", viewInterceptsWall);
+        console.log("playerLeft", playerLeftAndZombieRight);
+        console.log("playerRight", playerRightAndZombieLeft);
+        console.log("opp sides", playerAndZombieOnOppositeSides);
 
         return viewInterceptsWall && playerAndZombieOnOppositeSides;
     }

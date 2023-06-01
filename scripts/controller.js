@@ -39,26 +39,19 @@ function init() {
     loadWalls();
 
     zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, 0.9));
-    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, 1.5));
+    // zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, 1.5));
 
     barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
     setInterval(gameLoop,60);
 }
 
-let timer = 0;
-
 function gameLoop() {
-    console.log("Time begin: ", Date.now() - timer);
-
     moveBullets();
     moveZombies();
     player.move();
     moveBarrels();
     draw();
-
-    console.log("Time end: ", Date.now() - timer);
-    timer = Date.now();
 }
 
 function moveBarrels(){
@@ -135,7 +128,7 @@ function drawLineFromZombieToPlayer(){
 
 function drawZombie() {
     zombies.forEach(zombie => {
-        ctx.drawImage(zombieImg, zombie.posX, zombie.posY);
+        if (zombie.seesPlayer()) ctx.drawImage(zombieImg, zombie.posX, zombie.posY);
     })
 }
 

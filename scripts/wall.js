@@ -1,18 +1,18 @@
 class Wall extends GameObject{
-    constructor(yOben,yUnten,xLinks,xRechts) {
+    constructor(fromY, untilY, fromX, untilX) {
         let src = {
-            width: xRechts - xLinks,
-            height: yUnten - yOben
+            width: untilX - fromX,
+            height: untilY - fromY
         };
 
-        super(src, xLinks, yOben);
-        this.yOben = yOben;
-        this.yUnten = yUnten;
-        this.xLinks = xLinks;
-        this.xRechts =xRechts;
+        super(src, fromX, fromY);
+        this.fromY = fromY;
+        this.untilY = untilY;
+        this.fromX = fromX;
+        this.untilX =untilX;
 
-        this.orientation = (Math.abs(yOben - yUnten) === tilesize) ? "horizontal" : "vertical";
+        this.orientation = (Math.abs(fromY - untilY) === tilesize) ? "horizontal" : "vertical";
 
-        this.collideZone = new RectangularCollideZone(0, 0, this.xRechts - this.xLinks, this.yUnten - this.yOben);
+        this.collideZone = new RectangularCollideZone(0, 0, this.untilX - this.fromX, this.untilY - this.fromY);
     }
 }
