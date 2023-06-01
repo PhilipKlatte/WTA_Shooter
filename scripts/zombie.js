@@ -49,7 +49,7 @@ class Zombie extends GameObject{
         if (sees){
             this.hasEverSeenPlayer = true;
             this.lastPlayerPosX = player.posX;
-            this.lastPlayerPosY = player.posY - 1.1*playerImg.height;
+            this.lastPlayerPosY = player.posY - playerImg.height;
         }
 
         return sees;
