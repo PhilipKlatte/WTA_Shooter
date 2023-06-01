@@ -88,7 +88,13 @@ function shoot(direction){
 
 function moveZombies(){
     zombies.forEach(zombie => {
-        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
+        if (zombie.seesPlayer()){ 
+
+                zombie.move(player.posX, player.posY);
+            }
+        else if(zombie.hasEverSeenPlayer){
+                zombie.move(zombie.lastPlayerPosX, zombie.lastPlayerPosY);
+        }
     });
 }
 

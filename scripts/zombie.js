@@ -2,6 +2,9 @@ class Zombie extends GameObject{
     constructor(src, ctx, posX, posY, speed){
         super(src, ctx, posX, posY);
         this.speed= speed;
+        this.hasEverSeenPlayer = false;
+        this.lastPlayerPosX;
+        this.lastPlayerPosY;
 
         this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
     }
@@ -42,6 +45,12 @@ class Zombie extends GameObject{
                 if (this.visionBlockedByHorizontalWall(wall)) sees = false;
             }
         });
+
+        if (sees){
+            this.hasEverSeenPlayer = true;
+            this.lastPlayerPosX = player.posX;
+            this.lastPlayerPosY = player.posY - 1.1*playerImg.height;
+        }
 
         return sees;
     }
