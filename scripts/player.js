@@ -7,7 +7,7 @@ class Player extends GameObject{
         this.velocityUp = 0;
         this.velocityDown = 0;
 
-        this.collideZone = new CollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
         this.orientation = orientation.up;
 
@@ -18,8 +18,8 @@ class Player extends GameObject{
     }
 
     move() {
-        this.stuckHorizontally = collidesWithOneOf(new Player(this.src, this.ctx, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
-        this.stuckVertically = collidesWithOneOf(new Player(this.src, this.ctx, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Player(this.src, this.ctx, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.ctx, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
 
         if (this.pushedBarrel != null){
             if (this.pushedBarrel.stuckHorizontally) this.stuckHorizontally = true;

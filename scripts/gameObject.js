@@ -7,8 +7,12 @@ class GameObject {
 
         this.collideZone = null;
     }
-    
+
     showCollideZone(){
+         if (this.collideZone instanceof RectangularCollideZone) this.showRectangularCollideZone();
+    }
+
+    showRectangularCollideZone(){
         drawLine(
             this.posX + this.collideZone.untilX,
             this.posY + this.collideZone.fromY,
