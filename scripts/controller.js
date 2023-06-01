@@ -74,6 +74,10 @@ function shoot(direction){
         direction));
 }
 
+function getRandomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function moveZombies(){
     zombies.forEach(zombie => {
         if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
