@@ -94,10 +94,20 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
 
+    drawKillCount();
+
     //showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
+}
+
+function drawKillCount(){
+    let text = "kills: " + player.killCount;
+    ctx.save();
+    ctx.font ="bold 60px serif";
+    ctx.fillText(text, tilesize, 2*tilesize);
+    ctx.restore();
 }
 
 function drawFloor(){
