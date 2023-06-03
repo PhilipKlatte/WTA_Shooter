@@ -77,9 +77,9 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
 
-    showCollideZones();
+    //showCollideZones();
     //drawGrid(tilesize);
-    drawLineFromZombieToPlayer();
+    //drawLineFromZombieToPlayer();
     //drawLineForWall();
 }
 

@@ -5,6 +5,8 @@ class Zombie extends GameObject{
         this.speed = speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+
+        this.health = 40;
     }
 
     move(){
@@ -35,7 +37,19 @@ class Zombie extends GameObject{
         }
     }
 
+    draw(){
+        super.draw();
+        ctx.font ="10px";
+        ctx.fillText(this.health, this.posX,this.posY);
+    }
+
     hit(){
+        this.health -= 20;
+
+        if (this.health <= 0) this.kill();
+    }
+
+    kill(){
         delete zombies[zombies.indexOf(this)];
 
         let zombie = null;
