@@ -22,6 +22,12 @@ function loadWalls(){
     });
 }
 
+function spawnNewZombie(){
+    let difference = maxZombieCount - count(zombies);
+
+    spawnZombies(difference);
+}
+
 function spawnZombies(count){
     for (let i = 0; i < count; i++) {
         let zombie = null;

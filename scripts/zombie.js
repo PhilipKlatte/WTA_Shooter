@@ -78,7 +78,12 @@ class Zombie extends GameObject{
     kill(){
         delete zombies[zombies.indexOf(this)];
 
-        spawnZombies(1);
+        if (getRandomNumberIn(0, 100) < 10) {
+            console.log("zombie count increased")
+            maxZombieCount++;
+        }
+
+        spawnNewZombie();
     }
 
     #seesPlayer(){
