@@ -10,6 +10,7 @@ class Player extends GameObject{
         this.speed = 10;
         this.health = 100;
         this.damageTaken = 0;
+        this.lastDamage = 0;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
@@ -53,9 +54,13 @@ class Player extends GameObject{
     }
 
     hit(damage) {
+        if (clock - this.lastDamage < 200) return;
+
         this.damageTaken += damage;
 
         if (this.health - this.damageTaken <= 0) this.kill();
+
+        this.lastDamage = clock;
     }
 
     kill(){
