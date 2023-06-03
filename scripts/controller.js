@@ -24,6 +24,9 @@ const zombies = [];
 const barrels = [];
 const bullets = [];
 
+var mouseX = 0;
+var mouseY = 0;
+
 var player;
 
 var frame = 0;
@@ -93,10 +96,23 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
 
-    //showCollideZones();
+    drawMouse();
+
+    showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
+}
+
+function drawMouse(){
+    let mouse = new GameObject(null, mouseX, mouseY);
+    mouse.collideZone = new CircularCollideZone(70);
+
+    ctx.beginPath();
+    (CollisionDetection.collidesWithOneOf(mouse, walls) === null) ? ctx.fillStyle = "#00ff04" : ctx.fillStyle = "#ff0000";
+    ctx.arc(mouseX, mouseY,70,0, 2* Math.PI);
+    ctx.fill();
+    ctx.stroke();
 }
 
 function drawFloor(){
@@ -120,4 +136,11 @@ function drawFloor(){
     }
 }
 
+
+function MouseMoved(ev){
+    mouseX = ev.clientX - canvas.offsetLeft;
+    mouseY = ev.clientY - canvas.offsetTop;
+}
+
 document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("mousemove", MouseMoved);
