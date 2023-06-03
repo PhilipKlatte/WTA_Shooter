@@ -47,6 +47,17 @@ function drawRotatedRect(x, y, width, height, degrees) {
     ctx.restore();
 }
 
+function calculateYIntercept(slope, playerPosX, playerPosY){
+    return playerPosY - slope * playerPosX;
+}
+
+function calculateSlope(x1, y1, x2, y2){
+    let deltaY = y2 - y1;
+    let deltaX = x2 - x1;
+
+    return deltaY / deltaX;
+}
+
 function drawGrid(spacing) {
     let x = 0;
 

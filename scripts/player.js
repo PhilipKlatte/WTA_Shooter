@@ -8,6 +8,8 @@ class Player extends GameObject{
         this.velocityDown = 0;
 
         this.speed = 10;
+        this.health = 100;
+        this.damageTaken = 0;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
@@ -35,6 +37,28 @@ class Player extends GameObject{
         if (!this.stuckVertically) {
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
+
+        this.displayHealth();
+    }
+
+    draw(){
+        super.draw();
+        this.displayHealth();
+    }
+
+    displayHealth(){
+        let newHealth = this.health-this.damageTaken;
+        ctx.fillText(newHealth.toString(), this.posX,this.posY);
+    }
+
+    hit(damage) {
+        this.damageTaken += damage;
+
+        if (this.health - this.damageTaken <= 0) this.kill();
+    }
+
+    kill(){
+        player = null;
     }
 
     shoot(direction){
