@@ -48,7 +48,7 @@ function init() {
 
     spawnZombies(maxZombieCount);
 
-    barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
+    spawnBarrels(3);
 
     interval = setInterval(gameLoop,50);
 }

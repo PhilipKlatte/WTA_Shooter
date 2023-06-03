@@ -28,6 +28,23 @@ function spawnNewZombie(){
     spawnZombies(difference);
 }
 
+function spawnBarrels(count){
+    for (let i = 0; i < count; i++) {
+        let barrel = null;
+
+        do {
+            barrel = new Barrel(
+                barrelImg,
+                getRandomNumberIn(0, tilesX)*tilesize,
+                getRandomNumberIn(0, tilesY)*tilesize
+            )
+        } while (CollisionDetection.collidesWithOneOf(barrel, walls) != null
+            && !CollisionDetection.collidesWith(barrel, player));
+
+        barrels.push(barrel);
+    }
+}
+
 function spawnZombies(count){
     for (let i = 0; i < count; i++) {
         let zombie = null;
