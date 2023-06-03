@@ -16,6 +16,7 @@ class Player extends GameObject{
         this.orientation = orientation.up;
 
         this.pushedBarrel = null;
+        this.lastShot = 0;
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
@@ -62,11 +63,15 @@ class Player extends GameObject{
     }
 
     shoot(direction){
+        if (clock - this.lastShot < 200) return;
+
         bullets.push(new Bullet(
             null,
             this.posX + this.src.width/2,
             this.posY + this.src.height/2,
             direction));
+
+        this.lastShot = clock;
     }
 
     logCoordinates(){

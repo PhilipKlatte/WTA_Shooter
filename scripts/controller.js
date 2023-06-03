@@ -26,7 +26,9 @@ const bullets = [];
 
 var player;
 
-var playerOrientation = orientation.down;
+var frame = 0;
+var start = Date.now();     // Time at which the game was started
+var clock = 0;              // Time elapsed since game was started
 
 var interval = null;
 
@@ -49,10 +51,14 @@ function init() {
 
     barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
-    interval = setInterval(gameLoop,60);
+    interval = setInterval(gameLoop,50);
 }
 
 function reset(){
+    frame = 0;
+    start = Date.now();
+    clock = 0;
+
     walls.splice(0, walls.length);
     zombies.splice(0, zombies.length);
     barrels.splice(0, barrels.length);
@@ -72,14 +78,9 @@ function gameLoop() {
     barrels.forEach(barrel => barrel.move());
 
     draw();
-}
 
-function shoot(direction){
-    bullets.push(new Bullet(
-        null,
-        player.posX + playerImg.width/2,
-        player.posY + playerImg.height/2,
-        direction));
+    (frame === 19) ? frame = 0 : frame ++;
+    clock = Date.now() - start;
 }
 
 function draw() {
