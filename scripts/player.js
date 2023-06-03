@@ -58,7 +58,7 @@ class Player extends GameObject{
     }
 
     kill(){
-        player = null;
+        reset();
     }
 
     shoot(direction){

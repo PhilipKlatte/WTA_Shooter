@@ -28,6 +28,8 @@ var player;
 
 var playerOrientation = orientation.down;
 
+var interval = null;
+
 function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
@@ -47,7 +49,20 @@ function init() {
 
     barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
-    setInterval(gameLoop,60);
+    interval = setInterval(gameLoop,60);
+}
+
+function reset(){
+    walls.splice(0, walls.length);
+    zombies.splice(0, zombies.length);
+    barrels.splice(0, barrels.length);
+    bullets.splice(0, bullets.length);
+
+    player = new Player(playerImg, 3*tilesize, 20*tilesize);
+
+    clearInterval(interval);
+
+    init();
 }
 
 function gameLoop() {
