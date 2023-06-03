@@ -5,62 +5,114 @@ class Zombie extends GameObject{
         this.speed = speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+
+        this.health = 40;
+        this.damageTaken = 0;
+
+        this.damage = 10;
     }
 
-    move(targetX, targetY){
-        let newZomPosX = 0;
-        let newZomPosY= 0;
+    move(){
+        if (this.#seesPlayer()){
+            let newZomPosX = 0;
+            let newZomPosY= 0;
 
-        if (this.posX <= targetX){
-            newZomPosX = this.posX + this.speed;
+            if (this.posX <= player.posX){
+                newZomPosX = this.posX + this.speed;
 
-        }else if (this.posX >= targetX){
-            newZomPosX = this.posX - this.speed;
+            }else if (this.posX >= player.posX){
+                newZomPosX = this.posX - this.speed;
+            }
+
+            if (this.posY <= player.posY){
+                newZomPosY = this.posY + this.speed;
+            }else if ((this.posY >= player.posY)){
+                newZomPosY = this.posY - this.speed;
+            }
+
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, newZomPosX, this.posY), walls) === null) {
+                this.posX = newZomPosX;
+            }
+
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, newZomPosY), walls) === null) {
+                this.posY = newZomPosY;
+            }
         }
 
-        if (this.posY <= targetY){
-            newZomPosY = this.posY + this.speed;
-        }else if ((this.posY >= targetY)){
-            newZomPosY = this.posY - this.speed;
-        }
-
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, newZomPosX, this.posY), walls) === null) {
-            this.posX = newZomPosX;
-        }
-
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, newZomPosY), walls) === null) {
-            this.posY = newZomPosY;
-        }
+        if (CollisionDetection.collidesWith(this, player)) player.hit(this.damage);
     }
 
-    hit(){
+    draw(){
+        super.draw();
+        this.#displayHealth();
+    }
+    
+    #displayHealth(){
+        let newHealth = this.health - this.damageTaken;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(this.posX, this.posY, tilesize, 5);
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+    
+        var color;
+    
+        if (newHealth/this.health <= 0.15) color = 'red';
+        else if (newHealth/this.health <= 0.5) color = 'orange';
+        else color = 'lime';
+    
+        ctx.beginPath();
+        ctx.rect(this.posX, this.posY, newHealth/this.health*tilesize, 5);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+    }
+
+    hit(damage){
+        this.damageTaken += damage;
+
+        if (this.health - this.damageTaken <= 0) this.kill();
+    }
+
+    kill(){
         delete zombies[zombies.indexOf(this)];
 
-        zombies.push(new Zombie(zombieImg, 17*tilesize, 11*tilesize, getRandomNumber(2, 9)));
+        let zombie = null;
+
+        do {
+            zombie = new Zombie(
+                zombieImg,
+                getRandomNumberIn(0, tilesX)*tilesize,
+                getRandomNumberIn(0, tilesY)*tilesize,
+                getRandomNumberIn(2, 5));
+        } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
+
+        zombies.push(zombie);
     }
 
-    seesPlayer(){
+    #seesPlayer(){
         let sees = true;
 
         walls.forEach(wall => {
             if (wall.orientation === "vertical"){
-                if (this.visionBlockedByVerticalWall(wall, player.posX, player.posY, this.posX, this.posY)) sees = false;
+                if (this.#visionBlockedByVerticalWall(wall, player.posX, player.posY, this.posX, this.posY)) sees = false;
             } else if (wall.orientation === "horizontal"){
-                if (this.visionBlockedByHorizontalWall(wall)) sees = false;
+                if (this.#visionBlockedByHorizontalWall(wall)) sees = false;
             }
         });
 
         return sees;
     }
 
-    visionBlockedByVerticalWall(wall, playerX, playerY, zomX, zomY){
+    #visionBlockedByVerticalWall(wall, playerX, playerY, zomX, zomY){
         let offsetPlayerX = playerX - wall.fromX;
         let newPlayerY = -playerY;
         let offsetZomX = zomX - wall.fromX;
         let newZomY = -zomY;
 
-        let slope = this.calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
-        let y = this.calculateYIntercept(slope, offsetPlayerX, newPlayerY);
+        let slope = calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
+        let y = calculateYIntercept(slope, offsetPlayerX, newPlayerY);
 
         let viewInterceptsWall = y < -wall.fromY && y > -wall.untilY;
         let playerLeftAndZombieRight = (player.posX < wall.fromX && this.posX > wall.fromX);
@@ -70,9 +122,9 @@ class Zombie extends GameObject{
         return viewInterceptsWall && playerAndZombieOnOppositeSides;
     }
 
-    visionBlockedByHorizontalWall(wall){
-        let slope = this.calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
-        let yIntercept = this.calculateYIntercept(slope, player.posX, -player.posY);
+    #visionBlockedByHorizontalWall(wall){
+        let slope = calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
+        let yIntercept = calculateYIntercept(slope, player.posX, -player.posY);
 
         let x = (-wall.fromY - yIntercept) / slope;
 
@@ -83,17 +135,6 @@ class Zombie extends GameObject{
         let playerAndZombiesOnOppositeSides = playerAboveAndZombieBelow || playerBelowAndZombieAbove;
 
         return viewInterceptsWall && playerAndZombiesOnOppositeSides;
-    }
-
-    calculateYIntercept(slope, playerPosX, playerPosY){
-        return playerPosY - slope * playerPosX;
-    }
-
-    calculateSlope(x1, y1, x2, y2){
-        let deltaY = y2 - y1;
-        let deltaX = x2 - x1;
-
-        return deltaY / deltaX;
     }
 }
 

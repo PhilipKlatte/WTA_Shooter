@@ -23,16 +23,16 @@ function keydownEvent(ev) {
             break;
 
         case 'I':
-            shoot(orientation.up);
+            player.shoot(orientation.up);
             break;
         case 'J':
-            shoot(orientation.left);
+            player.shoot(orientation.left);
             break;
         case 'K':
-            shoot(orientation.down);
+            player.shoot(orientation.down);
             break;
         case 'L':
-            shoot(orientation.right);
+            player.shoot(orientation.right);
             break;
     }
 }
