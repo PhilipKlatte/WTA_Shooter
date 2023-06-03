@@ -41,8 +41,8 @@ class CollisionDetection{
         let czWidth = collideObject.collideZone.untilX - collideObject.collideZone.fromX;
         let czHeight = collideObject.collideZone.untilY - collideObject.collideZone.fromY;
         
-        let rectangleCenterX = collideObject.posX + czWidth/2;
-        let rectangleCenterY = collideObject.posY + czHeight/2;
+        let rectangleCenterX = collideObject.posX + collideObject.collideZone.fromX + czWidth/2;
+        let rectangleCenterY = collideObject.posY + collideObject.collideZone.fromY + czHeight/2;
 
         let circleDistanceX = Math.abs(gameObject.posX - rectangleCenterX);
         let circleDistanceY = Math.abs(gameObject.posY - rectangleCenterY);
