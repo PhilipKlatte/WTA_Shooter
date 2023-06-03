@@ -1,6 +1,8 @@
 var canvas, ctx;
 
 const tilesize = 32;
+var tilesX = 32;
+var tilesY = 24;
 
 var orientation = {
     up: 180,
@@ -28,8 +30,8 @@ var playerOrientation = orientation.down;
 
 function init() {
     canvas = document.getElementById("canvas");
-    canvas.setAttribute("width", (32 * tilesize).toString());
-    canvas.setAttribute("height", (24 * tilesize).toString());
+    canvas.setAttribute("width", (tilesX * tilesize).toString());
+    canvas.setAttribute("height", (tilesY * tilesize).toString());
     // canvas = 1024x768
 
     ctx = canvas.getContext("2d");
