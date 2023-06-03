@@ -3,12 +3,12 @@ class CollisionDetection{
         if (gameObject.collideZone instanceof RectangularCollideZone
             && collideObject.collideZone instanceof RectangularCollideZone){
 
-            return this.#RectangularCZcollidesWithRectangularCZ(gameObject, collideObject);
+            return this.#rectangularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
         if (gameObject.collideZone instanceof CircularCollideZone
             && collideObject.collideZone instanceof RectangularCollideZone){
 
-            return this.#CircularCZcollidesWithRectangularCZ(gameObject, collideObject);
+            return this.#circularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
     }
 
@@ -22,7 +22,7 @@ class CollisionDetection{
         return null;
     }
 
-    static #RectangularCZcollidesWithRectangularCZ(gameObject, collideObject){
+    static #rectangularCZcollidesWithRectangularCZ(gameObject, collideObject){
         let gameObjectCZfromX = gameObject.posX + gameObject.collideZone.fromX;
         let gameObjectCZfromY = gameObject.posY + gameObject.collideZone.fromY;
         let gameObjectCZuntilX = gameObject.posX + gameObject.collideZone.untilX;
@@ -37,7 +37,7 @@ class CollisionDetection{
             gameObjectCZfromY < collideObjectCZuntilY && gameObjectCZuntilY > collideObjectCZfromY;
     }
 
-    static #CircularCZcollidesWithRectangularCZ(gameObject, collideObject){
+    static #circularCZcollidesWithRectangularCZ(gameObject, collideObject){
         let czWidth = collideObject.collideZone.untilX - collideObject.collideZone.fromX;
         let czHeight = collideObject.collideZone.untilY - collideObject.collideZone.fromY;
         
