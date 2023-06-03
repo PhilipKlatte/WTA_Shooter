@@ -24,8 +24,7 @@ const zombies = [];
 const barrels = [];
 const bullets = [];
 
-var mouseX = 0;
-var mouseY = 0;
+var newZombieCount = 4;
 
 var player;
 
@@ -47,10 +46,7 @@ function init() {
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, 4*tilesize, 3*tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 28*tilesize, 5*tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumberIn(2, 9)));
+    spawnZombies(newZombieCount);
 
     barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
 
@@ -81,6 +77,8 @@ function gameLoop() {
     barrels.forEach(barrel => barrel.move());
 
     draw();
+
+    console.log(count(zombies));
 
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;

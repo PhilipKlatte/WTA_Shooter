@@ -78,17 +78,7 @@ class Zombie extends GameObject{
     kill(){
         delete zombies[zombies.indexOf(this)];
 
-        let zombie = null;
-
-        do {
-            zombie = new Zombie(
-                zombieImg,
-                getRandomNumberIn(0, tilesX)*tilesize,
-                getRandomNumberIn(0, tilesY)*tilesize,
-                getRandomNumberIn(2, 5));
-        } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
-
-        zombies.push(zombie);
+        spawnZombies(1);
     }
 
     #seesPlayer(){
