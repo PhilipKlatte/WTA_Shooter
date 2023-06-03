@@ -4,7 +4,7 @@ class Bullet extends GameObject {
 
         this.speed = 20;
 
-        this.damage = 5;
+        this.damage = 14;
 
         this.velocityRight = (direction === orientation.right) ? this.speed : 0;
         this.velocityLeft = (direction === orientation.left) ? this.speed : 0;

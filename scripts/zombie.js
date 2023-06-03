@@ -49,7 +49,7 @@ class Zombie extends GameObject{
 
         ctx.save();
         ctx.beginPath();
-        ctx.rect(this.posX, this.posY, 1.5*tilesize, 5);
+        ctx.rect(this.posX, this.posY, tilesize, 5);
         ctx.strokeStyle = 'black';
         ctx.stroke();
     
@@ -60,7 +60,7 @@ class Zombie extends GameObject{
         else color = 'lime';
     
         ctx.beginPath();
-        ctx.rect(this.posX, this.posY, newHealth/this.health*1.5*tilesize, 5);
+        ctx.rect(this.posX, this.posY, newHealth/this.health*tilesize, 5);
         ctx.fillStyle = color;
         ctx.fill();
         ctx.restore();
@@ -82,7 +82,7 @@ class Zombie extends GameObject{
                 zombieImg,
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
-                getRandomNumberIn(2, 9));
+                getRandomNumberIn(2, 5));
         } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
 
         zombies.push(zombie);
