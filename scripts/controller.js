@@ -87,7 +87,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawFloor()
-    walls.forEach(wall => drawWall(wall));
+    walls.forEach(wall => wall.draw());
     barrels.forEach(barrel => barrel.draw());
     player.draw();
     zombies.forEach(zombie => zombie.draw());
