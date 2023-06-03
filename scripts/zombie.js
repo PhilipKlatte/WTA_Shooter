@@ -7,6 +7,8 @@ class Zombie extends GameObject{
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
         this.health = 40;
+
+        this.damageTaken = 0;
     }
 
     move(){
@@ -39,14 +41,35 @@ class Zombie extends GameObject{
 
     draw(){
         super.draw();
-        ctx.font ="10px";
-        ctx.fillText(this.health, this.posX,this.posY);
+        this.displayHealth();
+    }
+    
+    displayHealth(){
+        let newHealth = this.health - this.damageTaken;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(this.posX, this.posY, 1.5*tilesize, 5);
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+    
+        var color;
+    
+        if (newHealth/this.health <= 0.15) color = 'red';
+        else if (newHealth/this.health <= 0.5) color = 'orange';
+        else color = 'lime';
+    
+        ctx.beginPath();
+        ctx.rect(this.posX, this.posY, newHealth/this.health*1.5*tilesize, 5);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
     }
 
-    hit(){
-        this.health -= 20;
+    hit(damage){
+        this.damageTaken += damage;
 
-        if (this.health <= 0) this.kill();
+        if (this.health - this.damageTaken <= 0) this.kill();
     }
 
     kill(){

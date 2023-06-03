@@ -4,6 +4,8 @@ class Bullet extends GameObject {
 
         this.speed = 20;
 
+        this.damage = 5;
+
         this.velocityRight = (direction === orientation.right) ? this.speed : 0;
         this.velocityLeft = (direction === orientation.left) ? this.speed : 0;
         this.velocityUp = (direction === orientation.up) ? this.speed : 0;
@@ -15,7 +17,7 @@ class Bullet extends GameObject {
     move() {
         let hitZombie = CollisionDetection.collidesWithOneOf(this, zombies);
         if (hitZombie != null){
-            hitZombie.hit();
+            hitZombie.hit(this.damage);
             delete bullets[bullets.indexOf(this)];
             return;
         }
