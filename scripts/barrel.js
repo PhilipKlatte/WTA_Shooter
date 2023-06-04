@@ -43,6 +43,6 @@ class Barrel extends GameObject {
     }
 
     explode(){
-        console.log("barrel exploded")
+        delete barrels[barrels.indexOf(this)];
     }
 }

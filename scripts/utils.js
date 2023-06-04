@@ -26,6 +26,15 @@ function drawAndRotatePlayer() {
     ctx.restore();
 }
 
+function count(array){
+    let count = 0;
+    for (const elem of array){
+        if (elem !== undefined) count++;
+    }
+
+    return count;
+}
+
 function drawLine(fromX, fromY, toX, toY) {
     ctx.beginPath();
     ctx.moveTo(fromX, fromY);

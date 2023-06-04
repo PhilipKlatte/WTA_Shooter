@@ -24,6 +24,8 @@ const zombies = [];
 const barrels = [];
 const bullets = [];
 
+var maxZombieCount = 4;
+
 var player;
 
 var frame = 0;
@@ -44,12 +46,9 @@ function init() {
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, 4*tilesize, 3*tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 28*tilesize, 5*tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 20*tilesize, 20*tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg,7*tilesize, 6*tilesize, getRandomNumberIn(2, 9)));
+    spawnZombies(maxZombieCount);
 
-    barrels.push(new Barrel(barrelImg, 12*tilesize,15*tilesize));
+    spawnBarrels(3);
 
     interval = setInterval(gameLoop,50);
 }
@@ -58,6 +57,8 @@ function reset(){
     frame = 0;
     start = Date.now();
     clock = 0;
+
+    maxZombieCount = 4;
 
     walls.splice(0, walls.length);
     zombies.splice(0, zombies.length);
@@ -93,10 +94,20 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
 
+    drawKillCount();
+
     //showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
+}
+
+function drawKillCount(){
+    let text = "kills: " + player.killCount;
+    ctx.save();
+    ctx.font ="bold 60px serif";
+    ctx.fillText(text, tilesize, 2*tilesize);
+    ctx.restore();
 }
 
 function drawFloor(){
