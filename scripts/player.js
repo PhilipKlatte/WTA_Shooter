@@ -54,10 +54,12 @@ class Player extends GameObject{
     }
 
     drawFrames() {
-        if (frame === 0) this.spriteframe = 0;
-        if (frame % 5 === 0) this.spriteframe++;
-
-        console.log(this.spriteframe);
+        if (this.velocityDown > 0){
+            if (frame === 0) this.spriteframe = 0;
+            if (frame % 5 === 0) this.spriteframe++;
+        } else {
+            this.spriteframe = 1;
+        }
 
         let frames = [2, 1, 0, 3];
 
