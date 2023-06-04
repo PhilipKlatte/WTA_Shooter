@@ -96,8 +96,8 @@ class Player extends GameObject{
 
         bullets.push(new Bullet(
             null,
-            this.posX + this.src.width/2,
-            this.posY + this.src.height/2,
+            this.posX + tilesize/2,
+            this.posY + tilesize,
             direction));
 
         this.lastShot = clock;
