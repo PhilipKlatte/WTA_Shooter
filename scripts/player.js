@@ -57,9 +57,13 @@ class Player extends GameObject{
         if (frame === 0) this.spriteframe = 0;
         if (frame % 5 === 0) this.spriteframe++;
 
+        console.log(this.spriteframe);
+
+        let frames = [2, 1, 0, 3];
+
         ctx.drawImage(
             playerImg,
-            this.spriteframe * tilesize, 0,
+            frames[this.spriteframe -1] * tilesize, 0,
             tilesize, 2*tilesize,
             this.posX, this.posY,
             tilesize, 2*tilesize);

@@ -46,7 +46,7 @@ function init() {
 
     loadWalls();
 
-    spawnZombies(maxZombieCount);
+    //spawnZombies(maxZombieCount);
 
     spawnBarrels(3);
 
