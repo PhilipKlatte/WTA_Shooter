@@ -11,7 +11,7 @@ var orientation = {
     right: 90
 }
 
-var playerImg = AssetLoader.addImage("assets/player32x64.png");
+var playerImg = AssetLoader.addImage("assets/player_gun_down.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
 var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
 var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");

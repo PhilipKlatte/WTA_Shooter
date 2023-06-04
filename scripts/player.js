@@ -22,6 +22,8 @@ class Player extends GameObject{
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
+
+        this.spriteframe = 0;
     }
 
     move() {
@@ -45,8 +47,22 @@ class Player extends GameObject{
     }
 
     draw(){
-        super.draw();
+        //super.draw();
+
+        this.drawFrames()
         this.displayHealth();
+    }
+
+    drawFrames() {
+        if (frame === 0) this.spriteframe = 0;
+        if (frame % 5 === 0) this.spriteframe++;
+
+        ctx.drawImage(
+            playerImg,
+            this.spriteframe * tilesize, 0,
+            tilesize, 2*tilesize,
+            this.posX, this.posY,
+            tilesize, 2*tilesize);
     }
 
     displayHealth(){
