@@ -22,42 +22,42 @@ function loadWalls(){
     });
 }
 
-function drawWalls(){
-    walls.forEach(wall => {
-        drawWall(wall);
-    })
+function spawnNewZombie(){
+    let difference = maxZombieCount - count(zombies);
+
+    spawnZombies(difference);
 }
 
-function drawWall(wall){
-    if (wall.orientation === "horizontal"){
-        let x = wall.fromX;
+function spawnBarrels(count){
+    for (let i = 0; i < count; i++) {
+        let barrel = null;
 
-        while (x < wall.untilX){
-            ctx.drawImage(wall_horizontal_top, x, wall.fromY);
-            x += tilesize;
-        }
+        do {
+            barrel = new Barrel(
+                barrelImg,
+                getRandomNumberIn(0, tilesX)*tilesize,
+                getRandomNumberIn(0, tilesY)*tilesize
+            )
+        } while (CollisionDetection.collidesWithOneOf(barrel, walls) != null
+            && !CollisionDetection.collidesWith(barrel, player));
 
-        x = wall.fromX;
-
-        while (x < wall.untilX){
-            ctx.drawImage(wall_horizontal, x, wall.fromY + tilesize);
-            x += tilesize;
-        }
-
-        x = wall.fromX;
-
-        while (x < wall.untilX){
-            ctx.drawImage(wall_horizontal, x, wall.fromY + 2*tilesize);
-            x += tilesize;
-        }
+        barrels.push(barrel);
     }
-    
-    if (wall.orientation === "vertical"){
-        let y = wall.fromY;
+}
 
-        while (y < wall.untilY){
-            ctx.drawImage(wall_vertical, wall.fromX, y);
-            y += tilesize;
-        }
+function spawnZombies(count){
+    for (let i = 0; i < count; i++) {
+        let zombie = null;
+
+        do {
+            zombie = new Zombie(
+                zombieImg,
+                getRandomNumberIn(0, tilesX)*tilesize,
+                getRandomNumberIn(0, tilesY)*tilesize,
+                getRandomNumberIn(2, 5));
+        } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
+
+        zombies.push(zombie);
     }
+
 }

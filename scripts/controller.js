@@ -1,6 +1,8 @@
 var canvas, ctx;
 
 const tilesize = 32;
+var tilesX = 32;
+var tilesY = 24;
 
 var orientation = {
     up: 180,
@@ -22,9 +24,15 @@ const zombies = [];
 const barrels = [];
 const bullets = [];
 
+var maxZombieCount = 4;
+
 var player;
 
-var playerOrientation = orientation.down;
+var frame = 0;
+var start = Date.now();     // Time at which the game was started
+var clock = 0;              // Time elapsed since game was started
+
+var interval = null;
 
 function pauseUntilKeyPress() {
     return new Promise((resolve) => {
@@ -42,24 +50,40 @@ async function init() {
     console.log("Die Anwendung wird fortgesetzt!");
 
     canvas = document.getElementById("canvas");
-    canvas.setAttribute("width", (32 * tilesize).toString());
-    canvas.setAttribute("height", (24 * tilesize).toString());
+    canvas.setAttribute("width", (tilesX * tilesize).toString());
+    canvas.setAttribute("height", (tilesY * tilesize).toString());
     // canvas = 1024x768
 
     ctx = canvas.getContext("2d");
 
-    player = new Player(playerImg, 3 * tilesize, 20 * tilesize);
+    player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
 
-    zombies.push(new Zombie(zombieImg, 4 * tilesize, 3 * tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 28 * tilesize, 5 * tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 20 * tilesize, 20 * tilesize, getRandomNumberIn(2, 9)));
-    zombies.push(new Zombie(zombieImg, 7 * tilesize, 6 * tilesize, getRandomNumberIn(2, 9)));
+    spawnZombies(maxZombieCount);
 
-    barrels.push(new Barrel(barrelImg, 12 * tilesize, 15 * tilesize));
+    spawnBarrels(3);
 
-    setInterval(gameLoop, 60);
+    interval = setInterval(gameLoop,50);
+}
+
+function reset(){
+    frame = 0;
+    start = Date.now();
+    clock = 0;
+
+    maxZombieCount = 4;
+
+    walls.splice(0, walls.length);
+    zombies.splice(0, zombies.length);
+    barrels.splice(0, barrels.length);
+    bullets.splice(0, bullets.length);
+
+    player = new Player(playerImg, 3*tilesize, 20*tilesize);
+
+    clearInterval(interval);
+
+    init();
 }
 
 function gameLoop() {
@@ -69,30 +93,35 @@ function gameLoop() {
     barrels.forEach(barrel => barrel.move());
 
     draw();
-}
 
-function shoot(direction){
-    bullets.push(new Bullet(
-        null,
-        player.posX + playerImg.width/2,
-        player.posY + playerImg.height/2,
-        direction));
+    (frame === 19) ? frame = 0 : frame ++;
+    clock = Date.now() - start;
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawFloor()
-    walls.forEach(wall => drawWall(wall));
+    walls.forEach(wall => wall.draw());
     barrels.forEach(barrel => barrel.draw());
     player.draw();
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
 
+    drawKillCount();
+
     //showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
+}
+
+function drawKillCount(){
+    let text = "kills: " + player.killCount;
+    ctx.save();
+    ctx.font ="bold 60px serif";
+    ctx.fillText(text, tilesize, 2*tilesize);
+    ctx.restore();
 }
 
 function drawFloor(){

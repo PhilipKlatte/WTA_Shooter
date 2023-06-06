@@ -44,7 +44,7 @@ class GameObject {
             this.posY + this.collideZone.untilY);
     }
 
-    draw (){
+    draw(){
         ctx.drawImage(this.src, this.posX, this.posY);
     }
 }

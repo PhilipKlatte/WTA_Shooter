@@ -36,8 +36,6 @@ class Barrel extends GameObject {
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
 
-        console.log("stuckx: ", this.stuckHorizontally);
-
         if (this.velocityRight > 0) this.velocityRight -= 0.1 * player.speed;
         if (this.velocityLeft > 0) this.velocityLeft -= 0.1 * player.speed;
         if (this.velocityUp > 0) this.velocityUp -= 0.1 * player.speed;
@@ -45,6 +43,6 @@ class Barrel extends GameObject {
     }
 
     explode(){
-        console.log("barrel exploded")
+        delete barrels[barrels.indexOf(this)];
     }
 }
