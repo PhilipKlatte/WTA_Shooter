@@ -54,6 +54,8 @@ class Barrel extends GameObject {
         CollisionDetection.collidesWithAnyOf(explosion, zombies).forEach(zombie => zombie.hit(this.damage));
         if (CollisionDetection.collidesWith(explosion, player)) player.hit(this.damage);
 
+        effects.push(new Explosion(null, centerX, centerY, 1000, 2*tilesize));
+
         delete barrels[barrels.indexOf(this)];
     }
 }
