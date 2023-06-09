@@ -1,7 +1,7 @@
 addEventListener("keydown", (ev) => keydownEvent(ev));
 addEventListener("keyup", (ev) => keyupEvent(ev));
 
-function keydownEvent(ev) {
+async function keydownEvent(ev) {
     const key_pressed = String.fromCharCode(ev.keyCode);
 
     switch(key_pressed){
@@ -34,6 +34,10 @@ function keydownEvent(ev) {
         case 'L':
             player.shoot(orientation.right);
             break;
+    }
+
+    if (ev.keyCode === 27) {
+        (gamePaused) ? resumeGame() : pauseGame();
     }
 }
 

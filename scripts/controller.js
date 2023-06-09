@@ -20,6 +20,7 @@ var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
 var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
+var overlaytest = AssetLoader.addImage("assets/overlaytest.png");
 
 const walls = [];
 const zombies = [];
@@ -36,8 +37,10 @@ var start = Date.now();     // Time at which the game was started
 var clock = 0;              // Time elapsed since game was started
 
 var interval = null;
+var gamePaused = false;
 
 function pauseUntilKeyPress() {
+
     return new Promise((resolve) => {
         const handleKeyPress = (event) => {
             window.removeEventListener('keypress', handleKeyPress);
@@ -48,16 +51,16 @@ function pauseUntilKeyPress() {
 }
 
 async function init() {
-    console.log("Die Anwendung ist pausiert. Drücken Sie eine beliebige Taste, um fortzufahren.");
-    await pauseUntilKeyPress();
-    console.log("Die Anwendung wird fortgesetzt!");
-
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
     canvas.setAttribute("height", (tilesY * tilesize).toString());
     // canvas = 1024x768
-
     ctx = canvas.getContext("2d");
+
+    console.log("Die Anwendung ist pausiert. Drücken Sie eine beliebige Taste, um fortzufahren.");
+    await pauseUntilKeyPress();
+    console.log("Die Anwendung wird fortgesetzt!");
+
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
@@ -70,12 +73,27 @@ async function init() {
     interval = setInterval(gameLoop,50);
 }
 
+function pauseGame(){
+    gamePaused = true;
+    clearInterval(interval);
+
+    ctx.save();
+    ctx.font ="bold 300px serif";
+    ctx.fillText("PAUSE", tilesize, 10*tilesize);
+    ctx.restore();
+}
+
+function resumeGame(){
+    gamePaused = false;
+    interval = setInterval(gameLoop,50);
+}
+
 function reset(){
     frame = 0;
     start = Date.now();
     clock = 0;
 
-    if (player.killCount > highscore) highscore = player.killCount;
+    if (player.kills > highscore) highscore = player.kills;
 
     maxZombieCount = 4;
 
@@ -129,7 +147,7 @@ function drawKillCount(){
 
     ctx.save();
     ctx.font ="bold 60px serif";
-    let killCountText = "kills: " + player.killCount;
+    let killCountText = "kills: " + player.kills;
     ctx.fillText(killCountText, tilesize, 2*tilesize);
     ctx.font ="bold 25px serif";
     let highscoreText = "highscore: " + highscore;
