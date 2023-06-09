@@ -25,6 +25,7 @@ const walls = [];
 const zombies = [];
 const barrels = [];
 const bullets = [];
+const effects = [];
 
 var maxZombieCount = 4;
 
@@ -64,7 +65,7 @@ async function init() {
 
     spawnZombies(maxZombieCount);
 
-    spawnBarrels(3);
+    spawnBarrels(5);
 
     interval = setInterval(gameLoop,50);
 }
@@ -82,6 +83,7 @@ function reset(){
     zombies.splice(0, zombies.length);
     barrels.splice(0, barrels.length);
     bullets.splice(0, bullets.length);
+    effects.splice(0, bullets.length);
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
@@ -95,6 +97,7 @@ function gameLoop() {
     zombies.forEach(zombie => zombie.move(player.posX, player.posY));
     player.move();
     barrels.forEach(barrel => barrel.move());
+    effects.forEach(effect => effect.move());
 
     draw();
 
@@ -111,6 +114,7 @@ function draw() {
     player.draw();
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
+    effects.forEach(effect => effect.draw());
 
     drawKillCount();
 
@@ -121,6 +125,8 @@ function draw() {
 }
 
 function drawKillCount(){
+    let text = "kills: " + player.kills;
+
     ctx.save();
     ctx.font ="bold 60px serif";
     let killCountText = "kills: " + player.killCount;
