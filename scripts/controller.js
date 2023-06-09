@@ -53,6 +53,7 @@ function init() {
     spawnBarrels(3);
 
     music.loop = true;
+    music.volume = 0.5;
     music.play();
 
     interval = setInterval(gameLoop,50);

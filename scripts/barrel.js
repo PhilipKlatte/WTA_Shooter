@@ -43,6 +43,7 @@ class Barrel extends GameObject {
     }
 
     explode(){
+        new Audio("assets/sounds/barrel explosion.mp3").play();
         delete barrels[barrels.indexOf(this)];
     }
 }
