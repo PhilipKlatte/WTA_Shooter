@@ -10,6 +10,8 @@ class Zombie extends GameObject{
         this.damageTaken = 0;
 
         this.damage = 10;
+
+        this.pushedBarrel = null;
     }
 
     move(){

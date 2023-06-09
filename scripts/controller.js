@@ -112,6 +112,7 @@ function pauseUntilKeyPress() {
             resolve(event);
         };
         window.addEventListener('keypress', handleKeyPress);
+        window.addEventListener('mousedown', handleKeyPress);
     });
 }
 

@@ -23,8 +23,6 @@ class Player extends GameObject{
         this.stuckHorizontally = false;
         this.stuckVertically = false;
 
-        this.hitSound = new Audio("")
-
         this.dead = false;
     }
 
@@ -71,10 +69,11 @@ class Player extends GameObject{
     }
 
     kill(){
-        console.log("player killed with", this.killCount, "kills");
         new Audio("assets/sounds/death.mp3").play();
+
         this.dead = true;
         console.log("player killed with", this.kills, "kills");
+
         reset();
     }
 
