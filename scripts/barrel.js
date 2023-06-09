@@ -48,13 +48,10 @@ class Barrel extends GameObject {
         let centerX = this.posX + 0.5*tilesize;
         let centerY = this.posY + 1.5* tilesize;
 
-        let explosion = new GameObject(null, centerX, centerY);
+        let explosion = new Explosion(null, centerX, centerY, 1000, 2*tilesize);
         explosion.collideZone = new CircularCollideZone(2*tilesize);
 
-        CollisionDetection.collidesWithAnyOf(explosion, zombies).forEach(zombie => zombie.hit(this.damage));
-        if (CollisionDetection.collidesWith(explosion, player)) player.hit(this.damage);
-
-        effects.push(new Explosion(null, centerX, centerY, 1000, 2*tilesize));
+        effects.push(explosion);
 
         delete barrels[barrels.indexOf(this)];
     }
