@@ -22,6 +22,8 @@ class Player extends GameObject{
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
+
+        this.dead = false;
     }
 
     move() {
@@ -65,6 +67,7 @@ class Player extends GameObject{
     }
 
     kill(){
+        this.dead = true;
         console.log("player killed with", this.kills, "kills");
         reset();
     }
