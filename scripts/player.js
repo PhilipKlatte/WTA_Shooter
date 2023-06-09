@@ -1,41 +1,87 @@
-class Player extends gameObject{
-    constructor(src, ctx, posX, posY) {
-        super(src, ctx, posX, posY);
-        /*
-        this.playerVelocityRight = 0;
-        this.playerVelocityLeft = 0;
-        this.playerVelocityUp = 0;
-        this.playerVelocityDown = 0;
-        this.playerOrientation = orientation.down;
-        */
+class Player extends GameObject{
+    constructor(src, posX, posY) {
+        super(src, posX, posY);
+
+        this.velocityRight = 0;
+        this.velocityLeft = 0;
+        this.velocityUp = 0;
+        this.velocityDown = 0;
+
+        this.speed = 10;
+        this.health = 100;
+        this.damageTaken = 0;
+        this.lastDamage = 0;
+        this.killCount = 0;
+
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+
+        this.orientation = orientation.up;
+
+        this.pushedBarrel = null;
+        this.lastShot = 0;
+
+        this.stuckHorizontally = false;
+        this.stuckVertically = false;
     }
 
-    movePlayer(playerVelocityRight, playerVelocityLeft, playerVelocityUp, playerVelocityDown) {
-        if (this.posX + playerVelocityRight < canvas.width + 1) {
-            this.posX += playerVelocityRight;
-        } else {
-            this.posX = canvas.width - playerImg.width;
-        }
-        if (this.posX - playerVelocityLeft > -1) {
-            this.posX -= playerVelocityLeft;
-        } else {
-            this.posX = 0;
-        }
-        if (this.posY - playerVelocityUp > -1) {
-            this.posY -= playerVelocityUp;
-        } else {
-            this.posY = 0;
-        }
-        if (this.posY + playerVelocityDown < canvas.height - playerImg.height) {
-            this.posY += playerVelocityDown;
-        } else {
-            this.posY = canvas.height - playerImg.height;
+    move() {
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
+
+        if (this.pushedBarrel != null){
+            if (this.pushedBarrel.stuckHorizontally) this.stuckHorizontally = true;
+            if (this.pushedBarrel.stuckVertically) this.stuckVertically = true;
         }
 
-        //logData();
+        if (!this.stuckHorizontally) {
+            this.posX = this.posX + this.velocityRight - this.velocityLeft;
+        }
+
+        if (!this.stuckVertically) {
+            this.posY = this.posY - this.velocityUp + this.velocityDown;
+        }
+
+        this.displayHealth();
     }
 
-    logData(){
+    draw(){
+        super.draw();
+        this.displayHealth();
+    }
+
+    displayHealth(){
+        let newHealth = this.health-this.damageTaken;
+        ctx.fillText(newHealth.toString(), this.posX,this.posY);
+    }
+
+    hit(damage) {
+        if (clock - this.lastDamage < 200) return;
+
+        this.damageTaken += damage;
+
+        if (this.health - this.damageTaken <= 0) this.kill();
+
+        this.lastDamage = clock;
+    }
+
+    kill(){
+        console.log("player killed with", this.killCount, "kills");
+        reset();
+    }
+
+    shoot(direction){
+        if (clock - this.lastShot < 200) return;
+
+        bullets.push(new Bullet(
+            null,
+            this.posX + this.src.width/2,
+            this.posY + this.src.height/2,
+            direction));
+
+        this.lastShot = clock;
+    }
+
+    logCoordinates(){
         console.log("X", this.posX);
         console.log("Y", this.posY);
     }
