@@ -11,6 +11,8 @@ class Barrel extends GameObject {
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
+
+        this.damage = 40;
     }
 
     move(){
@@ -44,6 +46,15 @@ class Barrel extends GameObject {
 
     explode(){
         new Audio("assets/sounds/barrel explosion.mp3").play();
+
+        let centerX = this.posX + 0.5*tilesize;
+        let centerY = this.posY + 1.5* tilesize;
+
+        let explosion = new Explosion(null, centerX, centerY, 100, 2*tilesize);
+        explosion.collideZone = new CircularCollideZone(2*tilesize);
+
+        effects.push(explosion);
+
         delete barrels[barrels.indexOf(this)];
     }
 }
