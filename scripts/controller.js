@@ -20,7 +20,7 @@ var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
 var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
-var overlaytest = AssetLoader.addImage("assets/overlaytest.png");
+var pauseOverlay = AssetLoader.addImage("assets/pause_overlay.png");
 
 const walls = [];
 const zombies = [];
@@ -39,35 +39,21 @@ var clock = 0;              // Time elapsed since game was started
 var interval = null;
 var gamePaused = false;
 
-function pauseUntilKeyPress() {
+var mouseX = 0;
+var mouseY = 0;
 
-    return new Promise((resolve) => {
-        const handleKeyPress = (event) => {
-            window.removeEventListener('keypress', handleKeyPress);
-            resolve(event);
-        };
-        window.addEventListener('keypress', handleKeyPress);
-    });
-}
-
-async function init() {
+function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
     canvas.setAttribute("height", (tilesY * tilesize).toString());
     // canvas = 1024x768
+
     ctx = canvas.getContext("2d");
-
-    console.log("Die Anwendung ist pausiert. Drücken Sie eine beliebige Taste, um fortzufahren.");
-    await pauseUntilKeyPress();
-    console.log("Die Anwendung wird fortgesetzt!");
-
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-
     spawnZombies(maxZombieCount);
-
     spawnBarrels(5);
 
     interval = setInterval(gameLoop,50);
@@ -75,17 +61,10 @@ async function init() {
 
 function pauseGame(){
     gamePaused = true;
-    clearInterval(interval);
-
-    ctx.save();
-    ctx.font ="bold 300px serif";
-    ctx.fillText("PAUSE", tilesize, 10*tilesize);
-    ctx.restore();
 }
 
 function resumeGame(){
     gamePaused = false;
-    interval = setInterval(gameLoop,50);
 }
 
 function reset(){
@@ -116,11 +95,10 @@ function gameLoop() {
     player.move();
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
-
-    draw();
-
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
+
+    draw();
 }
 
 function draw() {
@@ -134,12 +112,14 @@ function draw() {
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
 
-    drawKillCount();
 
+    drawKillCount();
     //showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
+
+    if (gamePaused) ctx.drawImage(pauseOverlay, 0, 0);
 }
 
 function drawKillCount(){

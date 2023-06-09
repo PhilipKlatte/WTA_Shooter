@@ -1,5 +1,7 @@
 addEventListener("keydown", (ev) => keydownEvent(ev));
 addEventListener("keyup", (ev) => keyupEvent(ev));
+addEventListener("mousedown", mouseClicked);
+addEventListener("mousemove", mouseMoved);
 
 async function keydownEvent(ev) {
     const key_pressed = String.fromCharCode(ev.keyCode);
@@ -58,4 +60,13 @@ function keyupEvent(ev){
             player.velocityRight = 0;
             break;
     }
+}
+
+function mouseMoved(ev) {
+    mouseX = ev.clientX - canvas.offsetLeft;
+    mouseY = ev.clientY - canvas.offsetTop;
+}
+
+function mouseClicked(ev) {
+    console.log("mouse clicked", mouseX, mouseY);
 }
