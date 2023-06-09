@@ -47,17 +47,36 @@ function init() {
     // walls.push(new Wall(24*tilesize,16*tilesize,7*tilesize,8*tilesize));
     // walls.push(new Wall(24*tilesize,6*tilesize,21*tilesize,22*tilesize));
 
-    zombies.push(new Zombie(zombieImg, ctx, 20*tilesize, 20*tilesize, 0.9));
+    //zombies.push(new Zombie(zombieImg, ctx, 10*tilesize, 20*tilesize, 0.9));
     zombies.push(new Zombie(zombieImg, ctx,7*tilesize, 6*tilesize, 1.5));
 
     barrels.push(new Barrel(barrelImg, ctx, 12*tilesize,15*tilesize));
 
     preloadAssets();
 
+    //findeDenWeg();
     setInterval(gameLoop,60);
 }
 
+/*
+function findeDenWeg(){
+    const grid = [
+        [new Cell(0, 0, false), new Cell(1, 0, false), new Cell(2, 0, false)],
+        [new Cell(0, 1, true), new Cell(1, 1, true), new Cell(2, 1, false)],
+        [new Cell(0, 2, false), new Cell(1, 2, false), new Cell(2, 2, false)]
+      ];
+      
+      const start = { x: 0, y: 0 };
+      const end = { x: 2, y: 2 };
+      
+      new findeDenWeg(grid,start,end);
+      const path = findeDenWeg.astar(grid, start, end);
+      console.log(path); // Gib den gefundenen Pfad aus
+    }
+*/
+
 function gameLoop() {
+    
     moveBullets();
     moveZombies();
     player.move();
@@ -88,7 +107,17 @@ function shoot(direction){
 
 function moveZombies(){
     zombies.forEach(zombie => {
-        if (zombie.seesPlayer()) zombie.move(player.posX, player.posY);
+        if (zombie.seesPlayer()){
+
+         zombie.move(player.posX, player.posY);
+        }
+        else{
+
+            //const start = { x: math.floor(zombie.posX/tilesize), y: math.floor(zombie.posY/tilesize) };
+            //console.log(start);
+            const end = { x: 3, y: 8 };
+            findeDenWeg(1,2,end)
+        }
     });
 }
 
@@ -225,6 +254,147 @@ function drawRotatedRect(x, y, width, height, degrees) {
     ctx.fillRect(-width / 2, -height / 2, width, height);
     ctx.restore();
 }
+//----------------------
+function findeDenWeg(startX, startY,end){
+    const grid = [
+        [new Cell(0, 0, false), new Cell(1, 0, false), new Cell(2, 0, false),new Cell(3, 0, false),new Cell(4, 0, false),new Cell(5, 0, false),new Cell(6, 0, false),new Cell(7, 0, false),new Cell(8, 0, false),new Cell(9, 0, false),new Cell(10, 0, false)],
+        [new Cell(0, 1, false), new Cell(1, 1, false), new Cell(2, 1, false),new Cell(3, 1, false),new Cell(4, 1, false),new Cell(5, 1, false),new Cell(6, 1, false),new Cell(7, 1, false),new Cell(8, 1, false),new Cell(9, 1, false),new Cell(10, 1, false)],
+        [new Cell(0, 2, false), new Cell(1, 2, false), new Cell(2, 2, false),new Cell(3, 2, false),new Cell(4, 2, false),new Cell(5, 2, false),new Cell(6, 2, false),new Cell(7, 2, false),new Cell(8, 2, false),new Cell(9, 2, false),new Cell(10, 2, false)],
+        [new Cell(0, 3, false), new Cell(1, 3, false), new Cell(2, 3, false),new Cell(3, 3, false),new Cell(4, 3, false),new Cell(5, 3, false),new Cell(6, 3, false),new Cell(7, 3, false),new Cell(8, 3, false),new Cell(9, 3, false),new Cell(10, 3, false)],
+        [new Cell(0, 4, false), new Cell(1, 4, false), new Cell(2, 4, false),new Cell(3, 4, false),new Cell(4, 4, false),new Cell(5, 4, false),new Cell(6, 4, false),new Cell(7, 4, false),new Cell(8, 4, false),new Cell(9, 4, false),new Cell(10, 4, false)],
+        [new Cell(0, 5, false), new Cell(1, 5, false), new Cell(2, 5, false),new Cell(3, 5, false),new Cell(4, 5, false),new Cell(5, 5, false),new Cell(6, 5, false),new Cell(7, 5, false),new Cell(8, 5, false),new Cell(9, 5, false),new Cell(10, 5, false)],
+        [new Cell(0, 6, false), new Cell(1, 6, false), new Cell(2, 6, false),new Cell(3, 6, false),new Cell(4, 6, false),new Cell(5, 6, false),new Cell(6, 6, false),new Cell(7, 6, false),new Cell(8, 6, false),new Cell(9, 6, false),new Cell(10, 6, false)],
+        [new Cell(0, 7, false), new Cell(1, 7, false), new Cell(2, 7, false),new Cell(3, 7, false),new Cell(4, 7, false),new Cell(5, 7, false),new Cell(6, 7, false),new Cell(7, 7, false),new Cell(8, 7, false),new Cell(9, 7, false),new Cell(10, 7, false)],
+        [new Cell(0, 8, false), new Cell(1, 8, false), new Cell(2, 8, false),new Cell(3, 8, false),new Cell(4, 8, false),new Cell(5, 8, false),new Cell(6, 8, false),new Cell(7, 8, false),new Cell(8, 8, false),new Cell(9, 8, false),new Cell(10, 8, false)],
+        [new Cell(0, 9, false), new Cell(1, 9, false), new Cell(2, 9, false),new Cell(3, 9, false),new Cell(4, 9, false),new Cell(5, 9, false),new Cell(6, 9, false),new Cell(7, 9, false),new Cell(8, 9, false),new Cell(9, 9, false),new Cell(10, 9, false)],
+        [new Cell(0, 10, false), new Cell(1, 10, false), new Cell(2, 10, false),new Cell(3, 10, false),new Cell(4, 10, false),new Cell(5, 10, false),new Cell(6, 10, false),new Cell(7, 10, false),new Cell(8, 10, false),new Cell(9, 10, false),new Cell(10, 10, false)],
+
+    
+    ];
+
+      //const start = { x: 8, y: 7 };
+      //const end = { x: 3, y: 8 };
+      
+      const path = astar(grid, startX, startY, end);
+      console.log(path); // Gib den gefundenen Pfad aus
+      console.log(path[0]);
+      console.log(path[1]);
+      console.log(path[2]);
+      console.log(path[3]);
+    }
+    //
+    
+    // Hilfsfunktion, um eine Zelle im Gitter darzustellen
+    function Cell(x, y, isWall) {
+        this.x = x;
+        this.y = y;
+        this.g = 0; // Entfernung vom Startpunkt
+        this.h = 0; // Heuristische Entfernung zum Zielpunkt
+        this.f = 0; // Gesamtkosten: f = g + h
+        this.visited = false;
+        this.closed = false;
+        this.parent = null;
+        this.isWall = isWall;
+      }
+      
+      // A* Pfadfindungsalgorithmus
+      function astar(grid, startX, startY, end) {
+        const openList = [];
+        const closedList = [];
+      
+        console.log("Moin");
+    
+        // Initialisierung des Startpunkts
+        const startCell = grid[startX][startY];
+        startCell.visited = true;
+        openList.push(startCell);
+      
+        while (openList.length > 0) {
+          // Finde Zelle mit niedrigsten Gesamtkosten (f)
+          let lowestCostIndex = 0;
+          for (let i = 1; i < openList.length; i++) {
+            if (openList[i].f < openList[lowestCostIndex].f) {
+              lowestCostIndex = i;
+            }
+          }
+      
+          const currentCell = openList[lowestCostIndex];
+      
+          // Ziel erreicht
+          if (currentCell === grid[end.x][end.y]) {
+            const path = [];
+            let temp = currentCell;
+            while (temp.parent) {
+              path.push(temp);
+              temp = temp.parent;
+            }
+            return path.reverse();
+          }
+      
+          // Aktuelle Zelle aus der Open-Liste entfernen und zur Closed-Liste hinzufügen
+          openList.splice(lowestCostIndex, 1);
+          closedList.push(currentCell);
+          currentCell.closed = true;
+      
+          // Nachbarn der aktuellen Zelle überprüfen
+          const neighbors = getNeighbors(grid, currentCell.x, currentCell.y);
+          for (let i = 0; i < neighbors.length; i++) {
+            const neighbor = neighbors[i];
+      
+            if (neighbor.closed || neighbor.isWall) {
+              continue;
+            }
+      
+            const gScore = currentCell.g + 1; // Die Entfernung zum Nachbarn beträgt 1
+      
+            // Überprüfen, ob der Nachbar bereits in der Open-Liste ist
+            const inOpenList = openList.includes(neighbor);
+            if (!inOpenList || gScore < neighbor.g) {
+              neighbor.g = gScore;
+              neighbor.h = heuristic(neighbor, grid[end.x][end.y]);
+              neighbor.f = neighbor.g + neighbor.h;
+              neighbor.parent = currentCell;
+      
+              if (!inOpenList) {
+                openList.push(neighbor);
+                neighbor.visited = true;
+              }
+            }
+          }
+        }
+      
+        // Kein Pfad gefunden
+        return [];
+      }
+      
+      // Hilfsfunktion, um die Nachbarn einer Zelle zu erhalten
+      function getNeighbors(grid, x, y) {
+        const neighbors = [];
+        const numRows = grid.length;
+        const numCols = grid[0].length;
+      
+        if (x > 0) neighbors.push(grid[x - 1][y]); // Links
+        if (x < numRows - 1) neighbors.push(grid[x + 1][y]); // Rechts
+        if (y > 0) neighbors.push(grid[x][y - 1]); // Oben
+        if (y < numCols - 1) neighbors.push(grid[x][y + 1]); // Unten
+      
+        return neighbors;
+      }
+      
+      // Hilfsfunktion, um die heuristische Entfernung zwischen zwei Zellen zu berechnen
+      function heuristic(cellA, cellB) {
+        const dx = Math.abs(cellA.x - cellB.x);
+        const dy = Math.abs(cellA.y - cellB.y);
+        return dx + dy; // Manhattan-Distanz
+      }
+      
+    
+    
+    //
+//______________________
+
+
+
 
 function preloadAssets() {
     var _toPreload = 0;
@@ -261,5 +431,6 @@ function preloadAssets() {
     }
     checkResources();
 }
+
 
 document.addEventListener("DOMContentLoaded", init);
