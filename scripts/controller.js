@@ -34,10 +34,14 @@ var clock = 0;              // Time elapsed since game was started
 
 var interval = null;
 
+var music = new Audio("assets/sounds/music.mp3");
+
 function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
     canvas.setAttribute("height", (tilesY * tilesize).toString());
+
+    shotAudio = document.getElementById("shotAudio");
     // canvas = 1024x768
 
     ctx = canvas.getContext("2d");
@@ -49,6 +53,9 @@ function init() {
     spawnZombies(maxZombieCount);
 
     spawnBarrels(3);
+
+    music.loop = true;
+    music.play();
 
     interval = setInterval(gameLoop,50);
 }
@@ -68,6 +75,9 @@ function reset(){
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     clearInterval(interval);
+
+    music.pause();
+    music.currentTime = 0;
 
     init();
 }
