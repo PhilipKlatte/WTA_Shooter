@@ -22,12 +22,6 @@ function loadWalls(){
     });
 }
 
-function spawnNewZombie(){
-    let difference = maxZombieCount - count(zombies);
-
-    spawnZombies(difference);
-}
-
 function spawnBarrels(count){
     for (let i = 0; i < count; i++) {
         let barrel = null;
@@ -45,6 +39,12 @@ function spawnBarrels(count){
     }
 }
 
+function spawnNewZombie(){
+    let difference = maxZombieCount - count(zombies);
+
+    spawnZombies(difference);
+}
+
 function spawnZombies(count){
     for (let i = 0; i < count; i++) {
         let zombie = null;
@@ -59,5 +59,4 @@ function spawnZombies(count){
 
         zombies.push(zombie);
     }
-
 }

@@ -49,7 +49,7 @@ function init() {
 
     spawnZombies(maxZombieCount);
 
-    spawnBarrels(3);
+    spawnBarrels(5);
 
     interval = setInterval(gameLoop,50);
 }
@@ -107,7 +107,7 @@ function draw() {
 }
 
 function drawKillCount(){
-    let text = "kills: " + player.killCount;
+    let text = "kills: " + player.kills;
     ctx.save();
     ctx.font ="bold 60px serif";
     ctx.fillText(text, tilesize, 2*tilesize);
