@@ -11,6 +11,8 @@ class Barrel extends GameObject {
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
+
+        this.damage = 40;
     }
 
     move(){
@@ -43,6 +45,15 @@ class Barrel extends GameObject {
     }
 
     explode(){
+        let centerX = this.posX + 0.5*tilesize;
+        let centerY = this.posY + 1.5* tilesize;
+
+        let explosion = new GameObject(null, centerX, centerY);
+        explosion.collideZone = new CircularCollideZone(2*tilesize);
+
+        CollisionDetection.collidesWithAnyOf(explosion, zombies).forEach(zombie => zombie.hit(this.damage));
+        if (CollisionDetection.collidesWith(explosion, player)) player.hit(this.damage);
+
         delete barrels[barrels.indexOf(this)];
     }
 }
