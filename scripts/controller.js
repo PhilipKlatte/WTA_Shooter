@@ -40,8 +40,6 @@ function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
     canvas.setAttribute("height", (tilesY * tilesize).toString());
-
-    shotAudio = document.getElementById("shotAudio");
     // canvas = 1024x768
 
     ctx = canvas.getContext("2d");

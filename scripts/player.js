@@ -92,4 +92,8 @@ class Player extends GameObject{
         console.log("X", this.posX);
         console.log("Y", this.posY);
     }
+
+    walking(){
+        return this.velocityUp + this.velocityDown + this.velocityLeft + this.velocityRight > 0;
+    }
 }
