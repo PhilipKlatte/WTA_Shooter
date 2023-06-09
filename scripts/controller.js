@@ -58,6 +58,7 @@ function init() {
     spawnZombies(maxZombieCount);
     spawnBarrels(5);
 
+    music.currentTime = 0;
     music.loop = true;
     music.volume = 0.5;
     music.play();
@@ -75,6 +76,9 @@ function resumeGame(){
 
 async function reset(){
     clearInterval(interval);
+
+    music.pause();
+
     await pauseUntilKeyPress();
 
     frame = 0;
