@@ -22,6 +22,8 @@ class Player extends GameObject{
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
+
+        this.hitSound = new Audio("")
     }
 
     move() {

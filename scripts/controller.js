@@ -11,13 +11,13 @@ var orientation = {
     right: 90
 }
 
-var playerImg = AssetLoader.addImage("assets/player32x64.png");
-var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
-var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
-var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
-var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
-var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
-var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
+var playerImg = AssetLoader.addImage("assets/sprites/player32x64.png");
+var barrelImg = AssetLoader.addImage("assets/sprites/barrell32x64.png");
+var zombieImg = AssetLoader.addImage("assets/sprites/zombie32x64.png");
+var floorImg = AssetLoader.addImage("assets/sprites/floorpanel2_32x32.png");
+var wall_horizontal = AssetLoader.addImage("assets/sprites/wall_horizontal4_32x32.png");
+var wall_horizontal_top = AssetLoader.addImage("assets/sprites/wall_horizontal_top_32x32.png");
+var wall_vertical = AssetLoader.addImage("assets/sprites/wall_vertical2_32x32.png");
 
 const walls = [];
 const zombies = [];
