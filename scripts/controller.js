@@ -11,6 +11,8 @@ var orientation = {
     right: 90
 }
 
+let highscore = 0;
+
 var playerImg = AssetLoader.addImage("assets/player32x64.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
 var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
@@ -35,7 +37,21 @@ var clock = 0;              // Time elapsed since game was started
 
 var interval = null;
 
-function init() {
+function pauseUntilKeyPress() {
+    return new Promise((resolve) => {
+        const handleKeyPress = (event) => {
+            window.removeEventListener('keypress', handleKeyPress);
+            resolve(event);
+        };
+        window.addEventListener('keypress', handleKeyPress);
+    });
+}
+
+async function init() {
+    console.log("Die Anwendung ist pausiert. Drücken Sie eine beliebige Taste, um fortzufahren.");
+    await pauseUntilKeyPress();
+    console.log("Die Anwendung wird fortgesetzt!");
+
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
     canvas.setAttribute("height", (tilesY * tilesize).toString());
@@ -58,6 +74,8 @@ function reset(){
     frame = 0;
     start = Date.now();
     clock = 0;
+
+    if (player.killCount > highscore) highscore = player.killCount;
 
     maxZombieCount = 4;
 
@@ -108,9 +126,14 @@ function draw() {
 
 function drawKillCount(){
     let text = "kills: " + player.kills;
+
     ctx.save();
     ctx.font ="bold 60px serif";
-    ctx.fillText(text, tilesize, 2*tilesize);
+    let killCountText = "kills: " + player.killCount;
+    ctx.fillText(killCountText, tilesize, 2*tilesize);
+    ctx.font ="bold 25px serif";
+    let highscoreText = "highscore: " + highscore;
+    if (highscore > 0) ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
     ctx.restore();
 }
 
