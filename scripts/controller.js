@@ -20,7 +20,7 @@ var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
 var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
-var pauseOverlay = AssetLoader.addImage("assets/pause_overlay.png");
+var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
 
 const walls = [];
 const zombies = [];
@@ -67,7 +67,10 @@ function resumeGame(){
     gamePaused = false;
 }
 
-function reset(){
+async function reset(){
+    clearInterval(interval);
+    await pauseUntilKeyPress();
+
     frame = 0;
     start = Date.now();
     clock = 0;
@@ -84,9 +87,17 @@ function reset(){
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
-    clearInterval(interval);
-
     init();
+}
+
+function pauseUntilKeyPress() {
+    return new Promise((resolve) => {
+        const handleKeyPress = (event) => {
+            window.removeEventListener('keypress', handleKeyPress);
+            resolve(event);
+        };
+        window.addEventListener('keypress', handleKeyPress);
+    });
 }
 
 function gameLoop() {
@@ -119,12 +130,10 @@ function draw() {
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
 
-    if (gamePaused) ctx.drawImage(pauseOverlay, 0, 0);
+    if (player.dead) ctx.drawImage(game_over_overlay, 0, 0);
 }
 
 function drawKillCount(){
-    let text = "kills: " + player.kills;
-
     ctx.save();
     ctx.font ="bold 60px serif";
     let killCountText = "kills: " + player.kills;
