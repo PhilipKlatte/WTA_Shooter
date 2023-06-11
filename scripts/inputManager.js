@@ -36,6 +36,9 @@ async function keydownEvent(ev) {
         case 'L':
             player.shoot(orientation.right);
             break;
+        case 'R':
+            reset();
+            break;
     }
 
     if (ev.keyCode === 27) {
