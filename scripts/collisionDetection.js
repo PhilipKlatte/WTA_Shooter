@@ -22,6 +22,19 @@ class CollisionDetection{
         return null;
     }
 
+    static collidesWithAnyOf(gameObject, collideObjects){
+        const collidingObjects = [];
+
+        for (const collideObject of collideObjects) {
+            if (collideObject === undefined) continue;
+
+
+            if (this.collidesWith(gameObject, collideObject)) collidingObjects.push(collideObject);
+        }
+
+        return collidingObjects;
+    }
+
     static #rectangularCZcollidesWithRectangularCZ(gameObject, collideObject){
         let gameObjectCZfromX = gameObject.posX + gameObject.collideZone.fromX;
         let gameObjectCZfromY = gameObject.posY + gameObject.collideZone.fromY;

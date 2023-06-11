@@ -2,7 +2,7 @@ var wallDefinitions = [
     [0,0,0,24],
     [31,0,31,24],
     [7, 16, 7, 23],
-    [21, 6, 21, 23],
+    [21, 6, 21, 21],
     [14, 9, 14, 16],
     [1, 0, 31, 0],
     [1, 23, 31, 23],
@@ -22,12 +22,6 @@ function loadWalls(){
     });
 }
 
-function spawnNewZombie(){
-    let difference = maxZombieCount - count(zombies);
-
-    spawnZombies(difference);
-}
-
 function spawnBarrels(count){
     for (let i = 0; i < count; i++) {
         let barrel = null;
@@ -45,6 +39,12 @@ function spawnBarrels(count){
     }
 }
 
+function spawnNewZombie(){
+    let difference = maxZombieCount - count(zombies);
+
+    spawnZombies(difference);
+}
+
 function spawnZombies(count){
     for (let i = 0; i < count; i++) {
         let zombie = null;
@@ -59,5 +59,4 @@ function spawnZombies(count){
 
         zombies.push(zombie);
     }
-
 }

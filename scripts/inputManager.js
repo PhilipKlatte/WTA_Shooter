@@ -1,7 +1,9 @@
 addEventListener("keydown", (ev) => keydownEvent(ev));
 addEventListener("keyup", (ev) => keyupEvent(ev));
+addEventListener("mousedown", mouseClicked);
+addEventListener("mousemove", mouseMoved);
 
-function keydownEvent(ev) {
+async function keydownEvent(ev) {
     const key_pressed = String.fromCharCode(ev.keyCode);
 
     switch(key_pressed){
@@ -35,6 +37,10 @@ function keydownEvent(ev) {
             player.shoot(orientation.right);
             break;
     }
+
+    if (ev.keyCode === 27) {
+        (gamePaused) ? resumeGame() : pauseGame();
+    }
 }
 
 function keyupEvent(ev){
@@ -54,4 +60,13 @@ function keyupEvent(ev){
             player.velocityRight = 0;
             break;
     }
+}
+
+function mouseMoved(ev) {
+    mouseX = ev.clientX - canvas.offsetLeft;
+    mouseY = ev.clientY - canvas.offsetTop;
+}
+
+function mouseClicked(ev) {
+    console.log("mouse clicked", mouseX, mouseY);
 }

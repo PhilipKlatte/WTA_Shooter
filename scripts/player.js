@@ -11,7 +11,7 @@ class Player extends GameObject{
         this.health = 100;
         this.damageTaken = 0;
         this.lastDamage = 0;
-        this.killCount = 0;
+        this.kills = 0;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
@@ -24,6 +24,8 @@ class Player extends GameObject{
         this.stuckVertically = false;
 
         this.spriteframe = 0;
+
+        this.dead = false;
     }
 
     move() {
@@ -87,7 +89,8 @@ class Player extends GameObject{
     }
 
     kill(){
-        console.log("player killed with", this.killCount, "kills");
+        this.dead = true;
+        console.log("player killed with", this.kills, "kills");
         reset();
     }
 

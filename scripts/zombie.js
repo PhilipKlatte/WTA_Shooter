@@ -82,7 +82,7 @@ class Zombie extends GameObject{
             maxZombieCount++;
         }
 
-        player.killCount++;
+        player.kills++;
 
         spawnNewZombie();
     }
