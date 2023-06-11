@@ -23,8 +23,6 @@ class Player extends GameObject{
         this.stuckHorizontally = false;
         this.stuckVertically = false;
 
-        this.spriteframe = 0;
-
         this.dead = false;
     }
 
@@ -56,46 +54,61 @@ class Player extends GameObject{
     }
 
     drawWalkingAnimation(){
-        return;
+        let row = 0;
 
-        if (this.velocityDown > 0){
-            if (frame === 0) this.spriteframe = 0;
-            if (frame % 5 === 0) this.spriteframe++;
-        } else {
-            this.spriteframe = 1;
+        switch(this.orientation){
+            case orientation.right:
+                row = 0;
+                break;
+            case orientation.left:
+                row = 1;
+                break;
+            case orientation.down:
+                row = 2;
+                break;
+            case orientation.up:
+                row = 3;
+                break;
+        }
+        
+        let column = 1;
+
+        if (this.velocityUp > 0){
+            if (frame === 0) column = 1;
+            if (frame % 5 === 0) column++;
         }
 
-        let frames = [2, 1, 0, 3];
+        let frames = [0, 1, 2, 3, 4];
 
         ctx.drawImage(
             playerImg,
-            frames[this.spriteframe -1] * tilesize, 0,
+            column*tilesize, row*2*tilesize,
             tilesize, 2*tilesize,
             this.posX, this.posY,
             tilesize, 2*tilesize);
     }
 
     drawIdleAnimation(){
-        let y = 0;
+        let row = 0;
 
         switch(this.orientation){
             case orientation.right:
-                y = 0;
+                row = 0;
                 break;
             case orientation.left:
-                y = 1;
+                row = 1;
                 break;
             case orientation.down:
-                y = 2;
+                row = 2;
                 break;
             case orientation.up:
-                y = 3;
+                row = 3;
                 break;
         }
 
         ctx.drawImage(
             playerImg,
-            0, y*2*tilesize,
+            0, row*2*tilesize,
             tilesize, 2*tilesize,
             this.posX, this.posY,
             tilesize, 2*tilesize);
