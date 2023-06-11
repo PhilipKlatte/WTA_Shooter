@@ -49,13 +49,15 @@ class Player extends GameObject{
     }
 
     draw(){
-        //super.draw();
+        if (this.walking()) this.drawWalkingAnimation();
+        else this.drawIdleAnimation();
 
-        this.drawFrames()
         this.displayHealth();
     }
 
-    drawFrames() {
+    drawWalkingAnimation(){
+        return;
+
         if (this.velocityDown > 0){
             if (frame === 0) this.spriteframe = 0;
             if (frame % 5 === 0) this.spriteframe++;
@@ -68,6 +70,32 @@ class Player extends GameObject{
         ctx.drawImage(
             playerImg,
             frames[this.spriteframe -1] * tilesize, 0,
+            tilesize, 2*tilesize,
+            this.posX, this.posY,
+            tilesize, 2*tilesize);
+    }
+
+    drawIdleAnimation(){
+        let y = 0;
+
+        switch(this.orientation){
+            case orientation.right:
+                y = 0;
+                break;
+            case orientation.left:
+                y = 1;
+                break;
+            case orientation.down:
+                y = 2;
+                break;
+            case orientation.up:
+                y = 3;
+                break;
+        }
+
+        ctx.drawImage(
+            playerImg,
+            0, y*2*tilesize,
             tilesize, 2*tilesize,
             this.posX, this.posY,
             tilesize, 2*tilesize);
@@ -109,5 +137,9 @@ class Player extends GameObject{
     logCoordinates(){
         console.log("X", this.posX);
         console.log("Y", this.posY);
+    }
+
+    walking(){
+        return this.velocityUp + this.velocityDown + this.velocityLeft + this.velocityRight > 0;
     }
 }

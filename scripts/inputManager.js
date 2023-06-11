@@ -9,7 +9,7 @@ async function keydownEvent(ev) {
     switch(key_pressed){
         case 'W':
             player.velocityUp = player.speed;
-            player.orientation = orientation.down;
+            player.orientation = orientation.up;
             break;
         case 'A':
             player.velocityLeft = player.speed;
@@ -17,7 +17,7 @@ async function keydownEvent(ev) {
             break;
         case 'S':
             player.velocityDown = player.speed;
-            player.orientation = orientation.up;
+            player.orientation = orientation.down;
             break;
         case 'D':
             player.velocityRight = player.speed;

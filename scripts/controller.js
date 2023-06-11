@@ -13,7 +13,7 @@ var orientation = {
 
 let highscore = 0;
 
-var playerImg = AssetLoader.addImage("assets/player_gun_down.png");
+var playerImg = AssetLoader.addImage("assets/player/player_full.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
 var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
 var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
