@@ -13,9 +13,9 @@ var orientation = {
 
 let highscore = 0;
 
-var playerImg = AssetLoader.addImage("assets/player32x64.png");
+var playerImg = AssetLoader.addImage("assets/player/player_full.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
-var zombieImg = AssetLoader.addImage("assets/zombie32x64.png");
+var zombieImg = AssetLoader.addImage("assets/zombie/zombie_full.png");
 var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
 var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
@@ -29,6 +29,10 @@ const bullets = [];
 const effects = [];
 
 var maxZombieCount = 4;
+var lastBarrelDrop = 0;
+
+var zombieMinSpeed = 2;
+var zombieMaxSpeed = 4.5;
 
 var player;
 
@@ -53,8 +57,8 @@ function init() {
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    spawnZombies(maxZombieCount);
-    spawnBarrels(5);
+    spawnZombies(1);
+    spawnBarrels(1);
 
     interval = setInterval(gameLoop,50);
 }
@@ -106,8 +110,13 @@ function gameLoop() {
     player.move();
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
+
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
+    if (clock - lastBarrelDrop > 30000 && count(barrels) < 10) {
+        spawnBarrels(2);
+        lastBarrelDrop = clock;
+    }
 
     draw();
 }

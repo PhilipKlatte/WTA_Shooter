@@ -12,18 +12,18 @@ class Player extends GameObject{
         this.damageTaken = 0;
         this.lastDamage = 0;
         this.kills = 0;
+        this.dead = false;
+        this.lastShot = 0;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
-
         this.orientation = orientation.up;
 
         this.pushedBarrel = null;
-        this.lastShot = 0;
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
 
-        this.dead = false;
+        this.animationFrame = 1;
     }
 
     move() {
@@ -31,8 +31,12 @@ class Player extends GameObject{
         this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
 
         if (this.pushedBarrel != null){
-            if (this.pushedBarrel.stuckHorizontally) this.stuckHorizontally = true;
-            if (this.pushedBarrel.stuckVertically) this.stuckVertically = true;
+            if (CollisionDetection.collidesWithOneOf(new Barrel(this.pushedBarrel.src, this.pushedBarrel.posX + this.pushedBarrel.velocityRight - this.pushedBarrel.velocityLeft, this.pushedBarrel.posY), walls) != null) {
+                this.stuckHorizontally = true;
+            }
+            if (CollisionDetection.collidesWithOneOf(new Barrel(this.pushedBarrel.src, this.pushedBarrel.posX, this.pushedBarrel.posY + this.pushedBarrel.velocityDown - this.pushedBarrel.velocityUp), walls) != null) {
+                this.stuckVertically = true;
+            }
         }
 
         if (!this.stuckHorizontally) {
@@ -43,12 +47,73 @@ class Player extends GameObject{
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
 
+        if (this.velocityDown > 0) this.orientation = orientation.down;
+        if (this.velocityUp > 0) this.orientation = orientation.up;
+        if (this.velocityRight > 0) this.orientation = orientation.right;
+        if (this.velocityLeft > 0) this.orientation = orientation.left;
+    }
+
+
+    draw(){
+        if (this.walking()) this.drawWalkingAnimation();
+        else this.drawIdleAnimation();
+
         this.displayHealth();
     }
 
-    draw(){
-        super.draw();
-        this.displayHealth();
+    drawWalkingAnimation(){
+        let row = 0;
+
+        switch(this.orientation){
+            case orientation.right:
+                row = 0;
+                break;
+            case orientation.left:
+                row = 1;
+                break;
+            case orientation.down:
+                row = 2;
+                break;
+            case orientation.up:
+                row = 3;
+                break;
+        }
+
+        if (this.animationFrame === 4) this.animationFrame = 1;
+        else if (frame % 2 === 0) this.animationFrame++;
+
+        ctx.drawImage(
+            playerImg,
+            this.animationFrame*tilesize, row*2*tilesize,
+            tilesize, 2*tilesize,
+            this.posX, this.posY,
+            tilesize, 2*tilesize);
+    }
+
+    drawIdleAnimation(){
+        let row = 0;
+
+        switch(this.orientation){
+            case orientation.right:
+                row = 0;
+                break;
+            case orientation.left:
+                row = 1;
+                break;
+            case orientation.down:
+                row = 2;
+                break;
+            case orientation.up:
+                row = 3;
+                break;
+        }
+
+        ctx.drawImage(
+            playerImg,
+            0, row*2*tilesize,
+            tilesize, 2*tilesize,
+            this.posX, this.posY,
+            tilesize, 2*tilesize);
     }
 
     displayHealth(){
@@ -77,8 +142,8 @@ class Player extends GameObject{
 
         bullets.push(new Bullet(
             null,
-            this.posX + this.src.width/2,
-            this.posY + this.src.height/2,
+            this.posX + tilesize/2,
+            this.posY + tilesize,
             direction));
 
         this.lastShot = clock;
@@ -87,5 +152,9 @@ class Player extends GameObject{
     logCoordinates(){
         console.log("X", this.posX);
         console.log("Y", this.posY);
+    }
+
+    walking(){
+        return Math.abs(this.velocityDown - this.velocityUp) + Math.abs(this.velocityRight - this.velocityLeft) !== 0;
     }
 }

@@ -2,7 +2,7 @@ class Bullet extends GameObject {
     constructor(src, posX, posY, direction) {
         super(src, posX, posY);
 
-        this.speed = 20;
+        this.speed = 40;
 
         this.damage = 14;
 
