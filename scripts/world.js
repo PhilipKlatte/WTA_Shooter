@@ -2,7 +2,7 @@ var wallDefinitions = [
     [0,0,0,24],
     [31,0,31,24],
     [7, 16, 7, 23],
-    [21, 6, 21, 21],
+    [21, 6, 21, 20],
     [14, 9, 14, 16],
     [1, 0, 31, 0],
     [1, 23, 31, 23],
@@ -58,7 +58,7 @@ function spawnZombies(count){
                 zombieImg,
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
-                getRandomNumberIn(2, 5));
+                getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
         } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
 
         zombies.push(zombie);
