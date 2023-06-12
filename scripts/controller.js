@@ -56,11 +56,13 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    spawnZombies(1);
-    spawnBarrels(1);
+    spawnZombies(4);
+    spawnBarrels(5);
 
     music.currentTime = 0;
     music.loop = true;
@@ -97,13 +99,12 @@ async function reset(){
     zombies.splice(0, zombies.length);
     barrels.splice(0, barrels.length);
     bullets.splice(0, bullets.length);
-    effects.splice(0, bullets.length);
+    effects.splice(0, effects.length);
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     clearInterval(interval);
 
-    music.pause();
     music.currentTime = 0;
 
     init();
