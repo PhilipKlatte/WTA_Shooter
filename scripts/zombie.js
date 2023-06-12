@@ -41,18 +41,11 @@ class Zombie extends GameObject{
                 this.velocityDown = 0;
             }
 
-            // console.log("up", this.velocityUp);
-            // console.log("down", this.velocityDown);
-            // console.log("right", this.velocityRight);
-            // console.log("left", this.velocityLeft);
-
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null
-                && CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), barrels) === null) {
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
                 this.posX = this.posX + this.velocityRight - this.velocityLeft;
             }
 
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null
-                && CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), barrels) === null) {
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
                 this.posY += this.velocityDown - this.velocityUp;
             }
         }
@@ -61,11 +54,6 @@ class Zombie extends GameObject{
         if (this.velocityUp > 0) this.orientation = orientation.up;
         if (this.velocityRight > 0) this.orientation = orientation.right;
         if (this.velocityLeft > 0) this.orientation = orientation.left;
-
-        // if (this.orientation === 0) console.log("down");
-        // if (this.orientation === 180) console.log("up");
-        // if (this.orientation === 270) console.log("left");
-        // if (this.orientation === 90) console.log("right");
 
         if (CollisionDetection.collidesWith(this, player)) player.hit(this.damage);
     }
