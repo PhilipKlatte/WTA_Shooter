@@ -53,7 +53,7 @@ function init() {
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    spawnZombies(maxZombieCount);
+    spawnZombies(1);
     spawnBarrels(5);
 
     interval = setInterval(gameLoop,50);

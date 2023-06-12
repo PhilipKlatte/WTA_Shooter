@@ -43,9 +43,6 @@ class Player extends GameObject{
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
 
-        // (this.velocityRight - this.velocityLeft > 0) ? this.orientation = orientation.right : this.orientation = orientation.left;
-        // (this.velocityDown - this.velocityUp > 0) ? this.orientation = orientation.down : this.orientation = orientation.up;
-
         if (this.velocityDown > 0) this.orientation = orientation.down;
         if (this.velocityUp > 0) this.orientation = orientation.up;
         if (this.velocityRight > 0) this.orientation = orientation.right;
