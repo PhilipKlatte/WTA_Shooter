@@ -31,8 +31,12 @@ class Player extends GameObject{
         this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
 
         if (this.pushedBarrel != null){
-            if (this.pushedBarrel.stuckHorizontally) this.stuckHorizontally = true;
-            if (this.pushedBarrel.stuckVertically) this.stuckVertically = true;
+            if (CollisionDetection.collidesWithOneOf(new Barrel(this.pushedBarrel.src, this.pushedBarrel.posX + this.pushedBarrel.velocityRight - this.pushedBarrel.velocityLeft, this.pushedBarrel.posY), walls) != null) {
+                this.stuckHorizontally = true;
+            }
+            if (CollisionDetection.collidesWithOneOf(new Barrel(this.pushedBarrel.src, this.pushedBarrel.posX, this.pushedBarrel.posY + this.pushedBarrel.velocityDown - this.pushedBarrel.velocityUp), walls) != null) {
+                this.stuckVertically = true;
+            }
         }
 
         if (!this.stuckHorizontally) {
