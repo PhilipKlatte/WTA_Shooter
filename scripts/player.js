@@ -12,18 +12,18 @@ class Player extends GameObject{
         this.damageTaken = 0;
         this.lastDamage = 0;
         this.kills = 0;
+        this.dead = false;
+        this.lastShot = 0;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
-
         this.orientation = orientation.up;
 
         this.pushedBarrel = null;
-        this.lastShot = 0;
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
 
-        this.dead = false;
+        this.animationFrame = 1;
     }
 
     move() {
@@ -43,8 +43,15 @@ class Player extends GameObject{
             this.posY = this.posY - this.velocityUp + this.velocityDown;
         }
 
-        this.displayHealth();
+        // (this.velocityRight - this.velocityLeft > 0) ? this.orientation = orientation.right : this.orientation = orientation.left;
+        // (this.velocityDown - this.velocityUp > 0) ? this.orientation = orientation.down : this.orientation = orientation.up;
+
+        if (this.velocityDown > 0) this.orientation = orientation.down;
+        if (this.velocityUp > 0) this.orientation = orientation.up;
+        if (this.velocityRight > 0) this.orientation = orientation.right;
+        if (this.velocityLeft > 0) this.orientation = orientation.left;
     }
+
 
     draw(){
         if (this.walking()) this.drawWalkingAnimation();
@@ -70,19 +77,16 @@ class Player extends GameObject{
                 row = 3;
                 break;
         }
-        
-        let column = 1;
 
-        if (this.velocityUp > 0){
-            if (frame === 0) column = 1;
-            if (frame % 5 === 0) column++;
-        }
+        if (this.animationFrame === 4) this.animationFrame = 1;
+        else if (frame % 2 === 0) this.animationFrame++;
 
-        let frames = [0, 1, 2, 3, 4];
+
+        console.log("column: ", this.animationFrame);
 
         ctx.drawImage(
             playerImg,
-            column*tilesize, row*2*tilesize,
+            this.animationFrame*tilesize, row*2*tilesize,
             tilesize, 2*tilesize,
             this.posX, this.posY,
             tilesize, 2*tilesize);
@@ -153,6 +157,6 @@ class Player extends GameObject{
     }
 
     walking(){
-        return this.velocityUp + this.velocityDown + this.velocityLeft + this.velocityRight > 0;
+        return Math.abs(this.velocityDown - this.velocityUp) + Math.abs(this.velocityRight - this.velocityLeft) !== 0;
     }
 }
