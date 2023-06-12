@@ -8,7 +8,7 @@ class Player extends GameObject{
         this.velocityDown = 0;
 
         this.speed = 10;
-        this.health = 20;
+        this.health = 100;
         this.damageTaken = 0;
         this.lastDamage = 0;
         this.kills = 0;

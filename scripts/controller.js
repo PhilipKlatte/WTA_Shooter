@@ -61,8 +61,8 @@ function init() {
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-   // spawnZombies(4);
-    spawnBarrels(1);
+    spawnZombies(4);
+    spawnBarrels(5);
 
     music.currentTime = 0;
     music.loop = true;
