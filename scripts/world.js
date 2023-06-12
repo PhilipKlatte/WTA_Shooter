@@ -54,7 +54,7 @@ function spawnZombies(count){
                 zombieImg,
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
-                getRandomNumberIn(2, 5));
+                getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
         } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
 
         zombies.push(zombie);
