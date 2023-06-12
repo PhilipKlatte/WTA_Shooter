@@ -6,6 +6,7 @@ class Zombie extends GameObject{
         this.velocityLeft = 0;
         this.velocityUp = 0;
         this.velocityDown = 0;
+        this.orientation = orientation.right;
 
         this.speed = speed;
 
@@ -15,22 +16,17 @@ class Zombie extends GameObject{
         this.damageTaken = 0;
 
         this.damage = 10;
+
+        this.animationFrame = 1;
     }
 
     move(){
-        this.velocityDown = 0;
-        this.velocityUp = 0;
-        this.velocityLeft = 0;
-        this.velocityRight = 0;
-
         if (this.#seesPlayer()){
-
             (this.posX < player.posX) ? this.velocityRight = this.speed : this.velocityLeft = this.speed;
             (this.posY < player.posY) ? this.velocityDown = this.speed : this.velocityUp = this.speed;
 
             if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null
-            && CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), barrels) === null) {
-                console.log("move x")
+                && CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), barrels) === null) {
                 this.posX = this.posX + this.velocityRight - this.velocityLeft;
             }
 
@@ -38,14 +34,84 @@ class Zombie extends GameObject{
                 && CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), barrels) === null) {
                 this.posY += this.velocityDown - this.velocityUp;
             }
+        } else {
+            this.velocityDown = 0;
+            this.velocityUp = 0;
+            this.velocityLeft = 0;
+            this.velocityRight = 0;
         }
 
+        if (this.velocityDown > 0) this.orientation = orientation.down;
+        if (this.velocityUp > 0) this.orientation = orientation.up;
+        if (this.velocityRight > 0) this.orientation = orientation.right;
+        if (this.velocityLeft > 0) this.orientation = orientation.left;
+
+        console.log(this.velocityLeft, this.velocityRight, this.velocityDown, this.velocityUp);
+
         if (CollisionDetection.collidesWith(this, player)) player.hit(this.damage);
+
     }
 
     draw(){
-        super.draw();
+        if (this.walking()) this.drawWalkingAnimation();
+        else this.drawIdleAnimation();
+
         this.#displayHealth();
+    }
+
+    drawWalkingAnimation(){
+        let row = 0;
+
+        switch(this.orientation){
+            case orientation.right:
+                row = 0;
+                break;
+            case orientation.left:
+                row = 1;
+                break;
+            case orientation.down:
+                row = 2;
+                break;
+            case orientation.up:
+                row = 3;
+                break;
+        }
+
+        if (this.animationFrame === 4) this.animationFrame = 1;
+        else if (frame % 2 === 0) this.animationFrame++;
+
+        ctx.drawImage(
+            this.src,
+            this.animationFrame*tilesize, row*2*tilesize,
+            tilesize, 2*tilesize,
+            this.posX, this.posY,
+            tilesize, 2*tilesize);
+    }
+
+    drawIdleAnimation(){
+        let row = 0;
+
+        switch(this.orientation){
+            case orientation.right:
+                row = 0;
+                break;
+            case orientation.left:
+                row = 1;
+                break;
+            case orientation.down:
+                row = 2;
+                break;
+            case orientation.up:
+                row = 3;
+                break;
+        }
+
+        ctx.drawImage(
+            this.src,
+            0, row*2*tilesize,
+            tilesize, 2*tilesize,
+            this.posX, this.posY,
+            tilesize, 2*tilesize);
     }
 
     #displayHealth(){
@@ -132,6 +198,10 @@ class Zombie extends GameObject{
         let playerAndZombiesOnOppositeSides = playerAboveAndZombieBelow || playerBelowAndZombieAbove;
 
         return viewInterceptsWall && playerAndZombiesOnOppositeSides;
+    }
+
+    walking(){
+        return Math.abs(this.velocityDown - this.velocityUp) + Math.abs(this.velocityRight - this.velocityLeft) !== 0;
     }
 }
 
