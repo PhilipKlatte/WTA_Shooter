@@ -81,9 +81,6 @@ class Player extends GameObject{
         if (this.animationFrame === 4) this.animationFrame = 1;
         else if (frame % 2 === 0) this.animationFrame++;
 
-
-        console.log("column: ", this.animationFrame);
-
         ctx.drawImage(
             playerImg,
             this.animationFrame*tilesize, row*2*tilesize,
