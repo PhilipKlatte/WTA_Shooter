@@ -29,6 +29,7 @@ const bullets = [];
 const effects = [];
 
 var maxZombieCount = 4;
+var lastBarrelDrop = 0;
 
 var player;
 
@@ -53,7 +54,7 @@ function init() {
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    //spawnZombies(1);
+    spawnZombies(4);
     spawnBarrels(1);
 
     interval = setInterval(gameLoop,50);
@@ -106,8 +107,13 @@ function gameLoop() {
     player.move();
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
+
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
+    if (clock - lastBarrelDrop > 20000) {
+        spawnBarrels(2);
+        lastBarrelDrop = clock;
+    }
 
     draw();
 }
