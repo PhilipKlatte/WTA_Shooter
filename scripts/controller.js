@@ -46,6 +46,8 @@ var gamePaused = false;
 var mouseX = 0;
 var mouseY = 0;
 
+var music = new Audio("assets/sounds/music.mp3");
+
 function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
@@ -60,6 +62,11 @@ function init() {
     spawnZombies(1);
     spawnBarrels(1);
 
+    music.currentTime = 0;
+    music.loop = true;
+    music.volume = 0.5;
+    music.play();
+
     interval = setInterval(gameLoop,50);
 }
 
@@ -73,6 +80,9 @@ function resumeGame(){
 
 async function reset(){
     clearInterval(interval);
+
+    music.pause();
+
     await pauseUntilKeyPress();
 
     frame = 0;
@@ -91,6 +101,11 @@ async function reset(){
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
+    clearInterval(interval);
+
+    music.pause();
+    music.currentTime = 0;
+
     init();
 }
 
@@ -101,6 +116,7 @@ function pauseUntilKeyPress() {
             resolve(event);
         };
         window.addEventListener('keypress', handleKeyPress);
+        window.addEventListener('mousedown', handleKeyPress);
     });
 }
 
@@ -131,7 +147,6 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
-
 
     drawKillCount();
     //showCollideZones();
