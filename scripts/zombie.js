@@ -8,6 +8,10 @@ class Zombie extends GameObject{
         this.velocityDown = 0;
         this.orientation = orientation.right;
 
+        this.hasSeenPlayer = false;
+        this.lastKnownPlayerPositionX = null;
+        this.lastKnownPlayerPositionY = null;
+
         this.speed = speed;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
@@ -38,6 +42,28 @@ class Zombie extends GameObject{
             if (this.posY < player.posY) this.velocityDown = this.speed;
             if (this.posY > player.posY) this.velocityUp = this.speed;
             if (this.posY === player.posY){
+                this.velocityUp = 0;
+                this.velocityDown = 0;
+            }
+
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
+                this.posX = this.posX + this.velocityRight - this.velocityLeft;
+            }
+
+            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
+                this.posY += this.velocityDown - this.velocityUp;
+            }
+        } else if (this.hasSeenPlayer && this.lastKnownPlayerPositionX != null && this.lastKnownPlayerPositionY != null){
+            if (this.posX < this.lastKnownPlayerPositionX - zombieMaxSpeed) this.velocityRight = this.speed;
+            if (this.posX > this.lastKnownPlayerPositionX + zombieMaxSpeed) this.velocityLeft = this.speed;
+            if (this.posX === this.lastKnownPlayerPositionX){
+                this.velocityRight = 0;
+                this.velocityLeft = 0;
+            }
+
+            if (this.posY < this.lastKnownPlayerPositionY) this.velocityDown = this.speed;
+            if (this.posY > this.lastKnownPlayerPositionY) this.velocityUp = this.speed;
+            if (this.posY === this.lastKnownPlayerPositionY){
                 this.velocityUp = 0;
                 this.velocityDown = 0;
             }
@@ -175,6 +201,17 @@ class Zombie extends GameObject{
                 if (this.#visionBlockedByHorizontalWall(wall)) sees = false;
             }
         });
+
+        if (sees) {
+            this.hasSeenPlayer = true;
+            this.lastKnownPlayerPositionX = null;
+            this.lastKnownPlayerPositionY = null;
+        }
+
+        if (!sees && this.lastKnownPlayerPositionX === null && this.lastKnownPlayerPositionY === null){
+            this.lastKnownPlayerPositionX = player.posX;
+            this.lastKnownPlayerPositionY = player.posY;
+        }
 
         return sees;
     }
