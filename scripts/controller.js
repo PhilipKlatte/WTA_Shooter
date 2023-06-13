@@ -17,6 +17,7 @@ var playerImg = AssetLoader.addImage("assets/player/player_full.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
 var zombieImg = AssetLoader.addImage("assets/zombie/zombie_full.png");
 var floorImg = AssetLoader.addImage("assets/floorpanel2_32x32.png");
+var explosionImg = AssetLoader.addImage("assets/explosion_full.png");
 var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
