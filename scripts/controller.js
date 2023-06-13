@@ -47,6 +47,8 @@ var gamePaused = false;
 var mouseX = 0;
 var mouseY = 0;
 
+var music = new Audio("assets/sounds/music.mp3");
+
 function init() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
@@ -55,11 +57,18 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
     spawnZombies(4);
     spawnBarrels(5);
+
+    music.currentTime = 0;
+    music.loop = true;
+    music.volume = 0.5;
+    music.play();
 
     interval = setInterval(gameLoop,50);
 }
@@ -74,6 +83,9 @@ function resumeGame(){
 
 async function reset(){
     clearInterval(interval);
+
+    music.pause();
+
     await pauseUntilKeyPress();
 
     frame = 0;
@@ -88,9 +100,13 @@ async function reset(){
     zombies.splice(0, zombies.length);
     barrels.splice(0, barrels.length);
     bullets.splice(0, bullets.length);
-    effects.splice(0, bullets.length);
+    effects.splice(0, effects.length);
 
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
+
+    clearInterval(interval);
+
+    music.currentTime = 0;
 
     init();
 }
@@ -102,6 +118,7 @@ function pauseUntilKeyPress() {
             resolve(event);
         };
         window.addEventListener('keypress', handleKeyPress);
+        window.addEventListener('mousedown', handleKeyPress);
     });
 }
 
@@ -132,7 +149,6 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
-
 
     drawKillCount();
     //showCollideZones();

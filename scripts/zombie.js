@@ -14,9 +14,10 @@ class Zombie extends GameObject{
 
         this.health = 40;
         this.damageTaken = 0;
-
         this.damage = 10;
-
+      
+        this.pushedBarrel = null;
+      
         this.animationFrame = 1;
     }
 
@@ -146,6 +147,8 @@ class Zombie extends GameObject{
 
     hit(damage){
         this.damageTaken += damage;
+
+        new Audio("assets/sounds/zombie hit.mp3").play();
 
         if (this.health - this.damageTaken <= 0) this.kill();
     }
