@@ -31,7 +31,7 @@ const effects = [];
 var maxZombieCount = 4;
 var lastBarrelDrop = 0;
 
-var zombieMinSpeed = 2;
+var zombieMinSpeed = 1;
 var zombieMaxSpeed = 4.5;
 
 var player;
@@ -61,7 +61,7 @@ function init() {
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    spawnZombies(4);
+    spawnZombies(5);
     spawnBarrels(5);
 
     music.currentTime = 0;
