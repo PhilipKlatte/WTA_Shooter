@@ -1,13 +1,14 @@
 class Explosion extends GameObject{
-    constructor(src, posX, posY, duration, radius){
+    constructor(src, posX, posY, radius){
         super(src, posX, posY);
 
         this.radius = radius;
-        this.duration = duration;
         this.start = clock;
         this.damage = 40;
 
         this.firstMoveCall = true;
+
+        this.animationFrame = 0;
     }
 
     hurt(){
@@ -22,10 +23,6 @@ class Explosion extends GameObject{
             this.hurt();
             this.firstMoveCall = false;
         }
-
-        if (this.start + this.duration < clock){
-            this.end();
-        }
     }
 
     end(){
@@ -33,12 +30,14 @@ class Explosion extends GameObject{
     }
 
     draw(){
-        ctx.save();
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(this.posX, this.posY, this.radius,0, 2* Math.PI);
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
+        if (this.animationFrame === 4) this.end();
+        else if (frame % 1 === 0) this.animationFrame++;
+
+        ctx.drawImage(
+            this.src,
+            this.animationFrame*5*tilesize, 0,
+            5*tilesize, 5*tilesize,
+            this.posX-2.5*tilesize, this.posY-2.5*tilesize,
+            5*tilesize, 5*tilesize);
     }
 }

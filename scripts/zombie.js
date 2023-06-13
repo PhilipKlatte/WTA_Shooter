@@ -141,8 +141,6 @@ class Zombie extends GameObject{
         if (this.animationFrame === 4) this.animationFrame = 1;
         else if (frame % 5 === 0) this.animationFrame++;
 
-        //console.log("column", this.animationFrame);
-
         ctx.drawImage(
             this.src,
             this.animationFrame*tilesize, row*2*tilesize,
