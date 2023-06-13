@@ -1,23 +1,23 @@
 # Undead Revenge
 der beste shooter wo gibt
 
-#Autoren
+# Autoren
 Moritz Hegmann
 Philip Klatte
 
-#Erstelldatum 
+# Erstelldatum 
 15.05.2023-
 
-#Version
+# Version
 1.0
 
-#Bugs
+# Bugs
 1. Es kann vorkommen, dass Barrels im Player hängen bleiben
 2. Es kann vorkommen, dass Zombies unterhalb der Map spawnen
 
-#Browserkompatabilität
+# Browserkompatabilität
 Chrome, Edge, Firefox
 Safari hat mitunter Performanceprobleme
 
-#Lizenz
+# Lizenz
 MIT
