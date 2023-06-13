@@ -54,6 +54,12 @@ function init() {
 
     preloadAssets();
 
+    startX=0;
+    startY=0;
+    const end = { x: 3, y: 8 };
+    findeDenWeg(startX,startY,end);
+
+
     //findeDenWeg();
     setInterval(gameLoop,60);
 }
@@ -115,8 +121,9 @@ function moveZombies(){
 
             //const start = { x: math.floor(zombie.posX/tilesize), y: math.floor(zombie.posY/tilesize) };
             //console.log(start);
-            const end = { x: 3, y: 8 };
-            findeDenWeg(1,2,end)
+            //const end = { x: 3, y: 8 };
+            
+            //findeDenWeg(1,2,end)
         }
     });
 }
@@ -256,7 +263,7 @@ function drawRotatedRect(x, y, width, height, degrees) {
 }
 //----------------------
 function findeDenWeg(startX, startY,end){
-    const grid = [
+   /* const grid = [
         [new Cell(0, 0, false), new Cell(1, 0, false), new Cell(2, 0, false),new Cell(3, 0, false),new Cell(4, 0, false),new Cell(5, 0, false),new Cell(6, 0, false),new Cell(7, 0, false),new Cell(8, 0, false),new Cell(9, 0, false),new Cell(10, 0, false)],
         [new Cell(0, 1, false), new Cell(1, 1, false), new Cell(2, 1, false),new Cell(3, 1, false),new Cell(4, 1, false),new Cell(5, 1, false),new Cell(6, 1, false),new Cell(7, 1, false),new Cell(8, 1, false),new Cell(9, 1, false),new Cell(10, 1, false)],
         [new Cell(0, 2, false), new Cell(1, 2, false), new Cell(2, 2, false),new Cell(3, 2, false),new Cell(4, 2, false),new Cell(5, 2, false),new Cell(6, 2, false),new Cell(7, 2, false),new Cell(8, 2, false),new Cell(9, 2, false),new Cell(10, 2, false)],
@@ -271,8 +278,19 @@ function findeDenWeg(startX, startY,end){
 
     
     ];
+*/
+
+const grid = [
+    [new Cell(0, 0, false), new Cell(1, 0, false), new Cell(2, 0, false)],
+    [new Cell(0, 1, true), new Cell(1, 1, true), new Cell(2, 1, false)],
+    [new Cell(0, 2, false), new Cell(1, 2, false), new Cell(2, 2, false)]
+  ];
 
       //const start = { x: 8, y: 7 };
+      //startX=0;
+      //startY=0;
+      endX
+      end
       //const end = { x: 3, y: 8 };
       
       const path = astar(grid, startX, startY, end);
