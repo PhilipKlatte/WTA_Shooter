@@ -31,50 +31,37 @@ class Zombie extends GameObject{
         this.velocityLeft = 0;
         this.velocityRight = 0;
 
+        let approachX;
+        let approachY;
+
         if (this.#seesPlayer()){
-            if (this.posX < player.posX - zombieMaxSpeed) this.velocityRight = this.speed;
-            if (this.posX > player.posX + zombieMaxSpeed) this.velocityLeft = this.speed;
-            if (this.posX === player.posX){
-                this.velocityRight = 0;
-                this.velocityLeft = 0;
-            }
-
-            if (this.posY < player.posY) this.velocityDown = this.speed;
-            if (this.posY > player.posY) this.velocityUp = this.speed;
-            if (this.posY === player.posY){
-                this.velocityUp = 0;
-                this.velocityDown = 0;
-            }
-
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
-                this.posX = this.posX + this.velocityRight - this.velocityLeft;
-            }
-
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
-                this.posY += this.velocityDown - this.velocityUp;
-            }
+            approachX = player.posX;
+            approachY = player.posY;
         } else if (this.hasSeenPlayer && this.lastKnownPlayerPositionX != null && this.lastKnownPlayerPositionY != null){
-            if (this.posX < this.lastKnownPlayerPositionX - zombieMaxSpeed) this.velocityRight = this.speed;
-            if (this.posX > this.lastKnownPlayerPositionX + zombieMaxSpeed) this.velocityLeft = this.speed;
-            if (this.posX === this.lastKnownPlayerPositionX){
-                this.velocityRight = 0;
-                this.velocityLeft = 0;
-            }
+            approachX = this.lastKnownPlayerPositionX;
+            approachY = this.lastKnownPlayerPositionY;
+        }
 
-            if (this.posY < this.lastKnownPlayerPositionY) this.velocityDown = this.speed;
-            if (this.posY > this.lastKnownPlayerPositionY) this.velocityUp = this.speed;
-            if (this.posY === this.lastKnownPlayerPositionY){
-                this.velocityUp = 0;
-                this.velocityDown = 0;
-            }
+        if (this.posX < approachX - zombieMaxSpeed) this.velocityRight = this.speed;
+        if (this.posX > approachX + zombieMaxSpeed) this.velocityLeft = this.speed;
+        if (this.posX === approachX){
+            this.velocityRight = 0;
+            this.velocityLeft = 0;
+        }
 
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
-                this.posX = this.posX + this.velocityRight - this.velocityLeft;
-            }
+        if (this.posY < approachY) this.velocityDown = this.speed;
+        if (this.posY > approachY) this.velocityUp = this.speed;
+        if (this.posY === approachY){
+            this.velocityUp = 0;
+            this.velocityDown = 0;
+        }
 
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
-                this.posY += this.velocityDown - this.velocityUp;
-            }
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
+            this.posX = this.posX + this.velocityRight - this.velocityLeft;
+        }
+
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
+            this.posY += this.velocityDown - this.velocityUp;
         }
 
         if (this.velocityDown > 0) this.orientation = orientation.down;
