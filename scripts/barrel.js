@@ -48,7 +48,7 @@ class Barrel extends GameObject {
         let centerX = this.posX + 0.5*tilesize;
         let centerY = this.posY + 1.5* tilesize;
 
-        let explosion = new Explosion(null, centerX, centerY, 100, 2*tilesize);
+        let explosion = new Explosion(explosionImg, centerX, centerY, 2.5*tilesize);
         explosion.collideZone = new CircularCollideZone(2*tilesize);
 
         effects.push(explosion);
