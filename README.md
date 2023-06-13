@@ -2,8 +2,7 @@
 der beste shooter wo gibt
 
 # Autoren
-Moritz Hegmann
-Philip Klatte
+Moritz Hegmann, Philip Klatte
 
 # Erstelldatum 
 15.05.2023-
