@@ -27,6 +27,8 @@ class Zombie extends GameObject{
         this.laufeInEineRichtungFuer=0;
         this.laufeInRichtungX=0;
         this.laufeInRichtungY=0;
+
+        this.timeLastSeenPlayer=null;
     }
 
     move(){
@@ -39,12 +41,17 @@ class Zombie extends GameObject{
         let approachY;
 
         if (this.#seesPlayer()){
-            //this.speed= this.speed*2;
+            //this.lastKnownPlayerPositionX = player.posX;
+            //this.lastKnownPlayerPositionY = player.posY;
+            this.timeLastSeenPlayer = clock;
             approachX = player.posX;
             approachY = player.posY;
         } else if (this.hasSeenPlayer && this.lastKnownPlayerPositionX != null && this.lastKnownPlayerPositionY != null){
             approachX = this.lastKnownPlayerPositionX;
             approachY = this.lastKnownPlayerPositionY;
+            if(clock - this.timeLastSeenPlayer > 10000){
+                this.hasSeenPlayer= false;
+            }
         } else if (!this.hasSeenPlayer){
             //this.speed= this.speed/2;
             //console.log("Hey");
