@@ -29,7 +29,7 @@ const zombies = [];
 const barrels = [];
 const bullets = [];
 const effects = [];
-const boss = [];
+
 
 var maxZombieCount = 4;
 var lastBarrelDrop = 0;
@@ -134,7 +134,7 @@ function gameLoop() {
     player.move();
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
-    boss.forEach(boss => boss.move());
+
 
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
@@ -161,7 +161,7 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
-    boss.forEach(boss => boss.draw());
+
 
     drawKillCount();
     //showCollideZones();

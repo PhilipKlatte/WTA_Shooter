@@ -42,18 +42,7 @@ class Bullet extends GameObject {
         return false;
     }
 
-    #hitBoss(){
-        let hitBoss = CollisionDetection.collidesWithOneOf(this, boss);
 
-        if (hitBoss != null){
-            hitBoss.hit(this.damage);
-            delete bullets[bullets.indexOf(this)];
-
-            return true;
-        }
-
-        return false;
-    }
 
 
 

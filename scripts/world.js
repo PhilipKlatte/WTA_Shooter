@@ -75,7 +75,7 @@ function spawnStarkerZombie(){
         1);
 
 
-        boss.push(starkerzombie);
+        zombies.push(starkerzombie);
 
 
 }
