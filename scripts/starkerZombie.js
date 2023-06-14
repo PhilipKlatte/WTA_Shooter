@@ -1,0 +1,223 @@
+class StarkerZombie extends GameObject{
+    constructor(src, posX, posY, speed){
+        super(src, posX, posY);
+
+        this.velocityRight = 0;
+        this.velocityLeft = 0;
+        this.velocityUp = 0;
+        this.velocityDown = 0;
+        this.orientation = orientation.right;
+
+        this.hasSeenPlayer = false;
+        this.lastKnownPlayerPositionX = null;
+        this.lastKnownPlayerPositionY = null;
+
+        this.speed = speed;
+        //this.idlespeed= getRandomNumberIn(1,2);
+        this.idlespeed= 0.5;
+
+        this.collideZone = new RectangularCollideZone(0,0, 2*tilesize, 2*tilesize);
+
+        this.health = 400;
+        this.damageTaken = 0;
+        this.damage = 30;
+
+        this.pushedBarrel = null;
+
+        this.animationFrame = 1;
+        this.laufeInEineRichtungFuer=0;
+        this.laufeInRichtungX=0;
+        this.laufeInRichtungY=0;
+
+        this.timeLastSeenPlayer=null;
+    }
+
+    move(){
+        this.velocityDown = 0;
+        this.velocityUp = 0;
+        this.velocityLeft = 0;
+        this.velocityRight = 0;
+
+        let approachX;
+        let approachY;
+
+        if (this.#seesPlayer()){
+            //this.lastKnownPlayerPositionX = player.posX;
+            //this.lastKnownPlayerPositionY = player.posY;
+            this.timeLastSeenPlayer = clock;
+            approachX = player.posX;
+            approachY = player.posY;
+        } else if (this.hasSeenPlayer && this.lastKnownPlayerPositionX != null && this.lastKnownPlayerPositionY != null){
+            approachX = this.lastKnownPlayerPositionX;
+            approachY = this.lastKnownPlayerPositionY;
+            if(clock - this.timeLastSeenPlayer > 5000){
+                this.hasSeenPlayer= false;
+            }
+        } else if (!this.hasSeenPlayer){
+            //this.speed= this.speed/2;
+            //console.log("Hey");
+            //console.log(this.laufeInEineRichtungFuer);
+            if (this.laufeInEineRichtungFuer<0){
+                if(getRandomNumberIn(1,10)>3) {
+                    this.laufeInRichtungX = getRandomNumberIn(0, canvas.width);
+                    this.laufeInRichtungY = getRandomNumberIn(0, canvas.height);
+                }else{
+                    this.laufeInRichtungX = this.posX;
+                    this.laufeInRichtungY = this.posY;
+                }
+                this.laufeInEineRichtungFuer = getRandomNumberIn(20,50);
+            }
+            approachX=this.laufeInRichtungX;
+            approachY=this.laufeInRichtungY;
+
+            this.laufeInEineRichtungFuer-=1;
+        }
+
+        if (!this.hasSeenPlayer){
+            if (this.posX < approachX - zombieMaxSpeed) this.velocityRight = this.idlespeed;
+            if (this.posX > approachX + zombieMaxSpeed) this.velocityLeft = this.idlespeed;
+            if (this.posY < approachY) this.velocityDown = this.idlespeed;
+            if (this.posY > approachY) this.velocityUp = this.idlespeed;
+        } else {
+            if (this.posX < approachX - zombieMaxSpeed) this.velocityRight = this.speed;
+            if (this.posX > approachX + zombieMaxSpeed) this.velocityLeft = this.speed;
+            if (this.posY < approachY) this.velocityDown = this.speed;
+            if (this.posY > approachY) this.velocityUp = this.speed;
+        }
+
+
+
+        if (this.posX === approachX){
+            this.velocityRight = 0;
+            this.velocityLeft = 0;
+        }
+
+
+        if (this.posY === approachY){
+            this.velocityUp = 0;
+            this.velocityDown = 0;
+        }
+
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
+            this.posX = this.posX + this.velocityRight - this.velocityLeft;
+        }
+
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
+            this.posY += this.velocityDown - this.velocityUp;
+        }
+
+        if (this.velocityDown > 0) this.orientation = orientation.down;
+        if (this.velocityUp > 0) this.orientation = orientation.up;
+        if (this.velocityRight > 0) this.orientation = orientation.right;
+        if (this.velocityLeft > 0) this.orientation = orientation.left;
+
+        if (CollisionDetection.collidesWith(this, player)) player.hit(this.damage);
+    }
+
+draw() {
+    super.draw();
+    this.#displayHealth();
+}
+
+    #displayHealth(){
+        let newHealth = this.health - this.damageTaken;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(this.posX, this.posY, tilesize, 5);
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+
+        var color;
+
+        if (newHealth/this.health <= 0.15) color = 'red';
+        else if (newHealth/this.health <= 0.5) color = 'orange';
+        else color = 'lime';
+
+        ctx.beginPath();
+        ctx.rect(this.posX, this.posY, newHealth/this.health*tilesize, 5);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+    }
+
+    hit(damage){
+        this.damageTaken += damage;
+
+        new Audio("assets/sounds/zombie hit.mp3").play();
+
+        if (this.health - this.damageTaken <= 0) this.kill();
+    }
+
+    kill(){
+        delete boss[boss.indexOf(this)];
+
+            maxZombieCount+=5;
+
+        player.kills+=5;
+
+        spawnNewZombie();
+    }
+
+    #seesPlayer(){
+        let sees = true;
+
+        walls.forEach(wall => {
+            if (wall.orientation === "vertical"){
+                if (this.#visionBlockedByVerticalWall(wall, player.posX, player.posY, this.posX, this.posY)) sees = false;
+            } else if (wall.orientation === "horizontal"){
+                if (this.#visionBlockedByHorizontalWall(wall)) sees = false;
+            }
+        });
+
+        if (sees) {
+            this.hasSeenPlayer = true;
+            this.lastKnownPlayerPositionX = null;
+            this.lastKnownPlayerPositionY = null;
+        }
+
+        if (!sees && this.lastKnownPlayerPositionX === null && this.lastKnownPlayerPositionY === null){
+            this.lastKnownPlayerPositionX = player.posX;
+            this.lastKnownPlayerPositionY = player.posY;
+        }
+
+        return sees;
+    }
+
+    #visionBlockedByVerticalWall(wall, playerX, playerY, zomX, zomY){
+        let offsetPlayerX = playerX - wall.fromX;
+        let newPlayerY = -playerY;
+        let offsetZomX = zomX - wall.fromX;
+        let newZomY = -zomY;
+
+        let slope = calculateSlope(offsetPlayerX, newPlayerY, offsetZomX, newZomY);
+        let y = calculateYIntercept(slope, offsetPlayerX, newPlayerY);
+
+        let viewInterceptsWall = y < -wall.fromY && y > -wall.untilY;
+        let playerLeftAndZombieRight = (player.posX < wall.fromX && this.posX > wall.fromX);
+        let playerRightAndZombieLeft = (player.posX > wall.fromX && this.posX < wall.fromX);
+        let playerAndZombieOnOppositeSides = playerRightAndZombieLeft || playerLeftAndZombieRight;
+
+        return viewInterceptsWall && playerAndZombieOnOppositeSides;
+    }
+
+    #visionBlockedByHorizontalWall(wall){
+        let slope = calculateSlope(player.posX, -player.posY, this.posX, -this.posY);
+        let yIntercept = calculateYIntercept(slope, player.posX, -player.posY);
+
+        let x = (-wall.fromY - yIntercept) / slope;
+
+        let viewInterceptsWall = x > wall.fromX && x < wall.untilX;
+        let playerAboveAndZombieBelow = (-player.posY > -wall.fromY && -this.posY < -wall.fromY);
+        let playerBelowAndZombieAbove = (-player.posY < -wall.fromY && -this.posY > -wall.fromY);
+
+        let playerAndZombiesOnOppositeSides = playerAboveAndZombieBelow || playerBelowAndZombieAbove;
+
+        return viewInterceptsWall && playerAndZombiesOnOppositeSides;
+    }
+
+    walking(){
+        return Math.abs(this.velocityDown - this.velocityUp) + Math.abs(this.velocityRight - this.velocityLeft) !== 0;
+    }
+}
+

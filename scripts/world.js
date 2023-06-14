@@ -65,3 +65,19 @@ function spawnZombies(count){
     }
 
 }
+
+function spawnStarkerZombie(){
+
+    let starkerzombie = new StarkerZombie(
+        starkerzombieImg,
+        18*tilesize,
+        8*tilesize,
+        1);
+
+
+        boss.push(starkerzombie);
+
+
+}
+
+

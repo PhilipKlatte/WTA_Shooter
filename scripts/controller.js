@@ -22,12 +22,14 @@ var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
+var starkerzombieImg = AssetLoader.addImage("assets/starker_zombie.png");
 
 const walls = [];
 const zombies = [];
 const barrels = [];
 const bullets = [];
 const effects = [];
+const boss = [];
 
 var maxZombieCount = 4;
 var lastBarrelDrop = 0;
@@ -48,6 +50,8 @@ var mouseX = 0;
 var mouseY = 0;
 
 var music = new Audio("assets/sounds/music.mp3");
+
+var bossHasSpawned = false;
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -108,6 +112,8 @@ async function reset(){
 
     music.currentTime = 0;
 
+    bossHasSpawned = false;
+
     init();
 }
 
@@ -128,12 +134,18 @@ function gameLoop() {
     player.move();
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
+    boss.forEach(boss => boss.move());
 
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
     if (clock - lastBarrelDrop > 30000 && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
+    }
+
+    if (player.kills>1 && !bossHasSpawned){
+        spawnStarkerZombie();
+        bossHasSpawned= true;
     }
 
     draw();
@@ -149,6 +161,7 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
+    boss.forEach(boss => boss.draw());
 
     drawKillCount();
     //showCollideZones();
