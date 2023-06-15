@@ -66,6 +66,13 @@ function calculateSlope(x1, y1, x2, y2){
 
     return deltaY / deltaX;
 }
+/*
+function createZombieHitZone(zombies){
+    let zombieHitZone= [];
+
+    zombies.forEach(zombie =>);
+}
+*/
 
 function drawGrid(spacing) {
     let x = 0;

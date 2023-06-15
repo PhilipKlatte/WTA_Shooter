@@ -1,12 +1,12 @@
 class CollisionDetection{
     static collidesWith(gameObject, collideObject){
-        if (gameObject.collideZone instanceof RectangularCollideZone
-            && collideObject.collideZone instanceof RectangularCollideZone){
+        if (gameObject.collideZone instanceof RectangularZone
+            && collideObject.collideZone instanceof RectangularZone){
 
             return this.#rectangularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
         if (gameObject.collideZone instanceof CircularCollideZone
-            && collideObject.collideZone instanceof RectangularCollideZone){
+            && collideObject.collideZone instanceof RectangularZone){
 
             return this.#circularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }

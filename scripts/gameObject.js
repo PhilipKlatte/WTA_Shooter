@@ -8,7 +8,7 @@ class GameObject {
     }
 
     showCollideZone(){
-         if (this.collideZone instanceof RectangularCollideZone) this.showRectangularCollideZone();
+         if (this.collideZone instanceof RectangularZone) this.showRectangularCollideZone();
     }
 
     showRectangularCollideZone(){

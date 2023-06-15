@@ -1,6 +1,5 @@
-class RectangularCollideZone extends RectangularZone{
+class RectangularZone {
     constructor(fromX, fromY, untilX, untilY) {
-        super();
         this.fromX = fromX;
         this.fromY = fromY;
         this.untilX = untilX;
