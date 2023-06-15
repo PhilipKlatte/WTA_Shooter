@@ -30,7 +30,7 @@ class Bullet extends GameObject {
     }
 
     #hitZombie(){
-        let hitZombie = CollisionDetection.collidesWithOneOf(this, CircularCollideZone, zombies, RectangularCollideZone);
+        let hitZombie = CollisionDetection.collidesWithOneOf(this, CircularHitZone, zombies, RectangularHitZone);
 
         if (hitZombie != null){
             hitZombie.hit(this.damage);
