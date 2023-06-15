@@ -15,7 +15,9 @@ class Player extends GameObject{
         this.dead = false;
         this.lastShot = 0;
 
-        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
+        this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
+
         this.orientation = orientation.up;
 
         this.pushedBarrel = null;
@@ -27,14 +29,28 @@ class Player extends GameObject{
     }
 
     move() {
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls, RectangularCollideZone) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls, RectangularCollideZone) != null;
+        let movedPlayerHorizontally = new Player(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
+        let movedPlayerVertically = new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown);
+        
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedPlayerHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedPlayerVertically, RectangularCollideZone,  walls, RectangularCollideZone) != null;
 
         if (this.pushedBarrel != null){
-            if (CollisionDetection.collidesWithOneOf(new Barrel(this.pushedBarrel.src, this.pushedBarrel.posX + this.pushedBarrel.velocityRight - this.pushedBarrel.velocityLeft, this.pushedBarrel.posY), walls) != null) {
+            let movedBarrelHorizontally = new Barrel(
+                this.pushedBarrel.src,
+                this.pushedBarrel.posX + this.pushedBarrel.velocityRight - this.pushedBarrel.velocityLeft,
+                this.pushedBarrel.posY);
+
+            if (CollisionDetection.collidesWithOneOf(movedBarrelHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null) {
                 this.stuckHorizontally = true;
             }
-            if (CollisionDetection.collidesWithOneOf(new Barrel(this.pushedBarrel.src, this.pushedBarrel.posX, this.pushedBarrel.posY + this.pushedBarrel.velocityDown - this.pushedBarrel.velocityUp), walls) != null) {
+
+            let movedBarrelVertically = new Barrel(
+                this.pushedBarrel.src,
+                this.pushedBarrel.posX,
+                this.pushedBarrel.posY + this.pushedBarrel.velocityDown - this.pushedBarrel.velocityUp);
+
+            if (CollisionDetection.collidesWithOneOf(movedBarrelVertically, RectangularCollideZone, walls, RectangularCollideZone) != null) {
                 this.stuckVertically = true;
             }
         }

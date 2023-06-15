@@ -131,6 +131,7 @@ function gameLoop() {
 
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
+
     if (clock - lastBarrelDrop > 30000 && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;

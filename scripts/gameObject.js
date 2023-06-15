@@ -4,7 +4,7 @@ class GameObject {
         this.posX = posX;
         this.posY = posY;
 
-        this.collideZone = null;
+        this.zones = new Set();
     }
 
     showCollideZone(){

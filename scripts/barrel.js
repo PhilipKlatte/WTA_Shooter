@@ -7,7 +7,8 @@ class Barrel extends GameObject {
         this.velocityUp = 0;
         this.velocityDown = 0;
 
-        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
+        this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
@@ -27,8 +28,11 @@ class Barrel extends GameObject {
             player.pushedBarrel = null;
         }
 
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
+        let movedBarrelHorizontally = new Barrel(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
+        let movedBarrelVertically = new Barrel(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown);
+            
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedBarrelHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedBarrelVertically,RectangularCollideZone , walls, RectangularCollideZone) != null;
 
         if (!this.stuckHorizontally) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;

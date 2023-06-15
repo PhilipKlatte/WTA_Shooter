@@ -23,7 +23,7 @@ class CollisionDetection{
         gameObject.zones.forEach(elem => {
             if (elem instanceof zoneType) zone = elem;
         });
-        
+
         return zone;
     }
 
