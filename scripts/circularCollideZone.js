@@ -1,5 +1,6 @@
-class CircularCollideZone {
+class CircularCollideZone extends CircularZone{
     constructor(radius) {
-        this.radius = radius;
+        super(radius);
+
     }
 }

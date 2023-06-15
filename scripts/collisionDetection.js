@@ -1,7 +1,12 @@
 class CollisionDetection{
-    static collidesWith(gameObject, collideObject){
-        if (gameObject.collideZone instanceof RectangularZone
-            && collideObject.collideZone instanceof RectangularZone){
+
+    static collidesWith(gameObject, collideObject, zoneType){ // RectangularHitZone.class
+        
+        let gameObjectZone = this.#getZone(gameObject, zoneType);
+        let collideObjectZone = this.#getZone(collideObject, zoneType);
+
+        if (gameObjectZone instanceof RectangularZone
+            && collideObjectZone instanceof RectangularZone){
 
             return this.#rectangularCZcollidesWithRectangularCZ(gameObject, collideObject);
         }
@@ -22,7 +27,7 @@ class CollisionDetection{
         return null;
     }
 
-    static collidesWithAnyOf(gameObject, collideObjects){
+    static collidesWithAnyOf(gameObject, collideObjects, zoneType){
         const collidingObjects = [];
 
         for (const collideObject of collideObjects) {
