@@ -8,7 +8,12 @@ class Zombie extends GameObject{
         this.velocityDown = 0;
         this.orientation = orientation.right;
 
+        this.hasSeenPlayer = false;
+        this.lastKnownPlayerPositionX = null;
+        this.lastKnownPlayerPositionY = null;
+
         this.speed = speed;
+        this.idlespeed= getRandomNumberIn(1,3);
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
 
@@ -19,6 +24,11 @@ class Zombie extends GameObject{
         this.pushedBarrel = null;
       
         this.animationFrame = 1;
+        this.laufeInEineRichtungFuer=0;
+        this.laufeInRichtungX=0;
+        this.laufeInRichtungY=0;
+
+        this.timeLastSeenPlayer=null;
     }
 
     move(){
@@ -27,28 +37,72 @@ class Zombie extends GameObject{
         this.velocityLeft = 0;
         this.velocityRight = 0;
 
+        let approachX;
+        let approachY;
+
         if (this.#seesPlayer()){
-            if (this.posX < player.posX - zombieMaxSpeed) this.velocityRight = this.speed;
-            if (this.posX > player.posX + zombieMaxSpeed) this.velocityLeft = this.speed;
-            if (this.posX === player.posX){
-                this.velocityRight = 0;
-                this.velocityLeft = 0;
+            //this.lastKnownPlayerPositionX = player.posX;
+            //this.lastKnownPlayerPositionY = player.posY;
+            this.timeLastSeenPlayer = clock;
+            approachX = player.posX;
+            approachY = player.posY;
+        } else if (this.hasSeenPlayer && this.lastKnownPlayerPositionX != null && this.lastKnownPlayerPositionY != null){
+            approachX = this.lastKnownPlayerPositionX;
+            approachY = this.lastKnownPlayerPositionY;
+            if(clock - this.timeLastSeenPlayer > 10000){
+                this.hasSeenPlayer= false;
             }
+        } else if (!this.hasSeenPlayer){
+            //this.speed= this.speed/2;
+            //console.log("Hey");
+            //console.log(this.laufeInEineRichtungFuer);
+            if (this.laufeInEineRichtungFuer<0){
+                if(getRandomNumberIn(1,10)>3) {
+                    this.laufeInRichtungX = getRandomNumberIn(0, canvas.width);
+                    this.laufeInRichtungY = getRandomNumberIn(0, canvas.height);
+                }else{
+                    this.laufeInRichtungX = this.posX;
+                    this.laufeInRichtungY = this.posY;
+                }
+                this.laufeInEineRichtungFuer = getRandomNumberIn(10,25);
+            }
+            approachX=this.laufeInRichtungX;
+            approachY=this.laufeInRichtungY;
 
-            if (this.posY < player.posY) this.velocityDown = this.speed;
-            if (this.posY > player.posY) this.velocityUp = this.speed;
-            if (this.posY === player.posY){
-                this.velocityUp = 0;
-                this.velocityDown = 0;
-            }
+            this.laufeInEineRichtungFuer-=1;
+        }
 
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
-                this.posX = this.posX + this.velocityRight - this.velocityLeft;
-            }
+        if (!this.hasSeenPlayer){
+            if (this.posX < approachX - zombieMaxSpeed) this.velocityRight = this.idlespeed;
+            if (this.posX > approachX + zombieMaxSpeed) this.velocityLeft = this.idlespeed;
+            if (this.posY < approachY) this.velocityDown = this.idlespeed;
+            if (this.posY > approachY) this.velocityUp = this.idlespeed;
+        } else {
+            if (this.posX < approachX - zombieMaxSpeed) this.velocityRight = this.speed;
+            if (this.posX > approachX + zombieMaxSpeed) this.velocityLeft = this.speed;
+            if (this.posY < approachY) this.velocityDown = this.speed;
+            if (this.posY > approachY) this.velocityUp = this.speed;
+        }
 
-            if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
-                this.posY += this.velocityDown - this.velocityUp;
-            }
+
+
+        if (this.posX === approachX){
+            this.velocityRight = 0;
+            this.velocityLeft = 0;
+        }
+
+
+        if (this.posY === approachY){
+            this.velocityUp = 0;
+            this.velocityDown = 0;
+        }
+
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
+            this.posX = this.posX + this.velocityRight - this.velocityLeft;
+        }
+
+        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
+            this.posY += this.velocityDown - this.velocityUp;
         }
 
         if (this.velocityDown > 0) this.orientation = orientation.down;
@@ -86,8 +140,6 @@ class Zombie extends GameObject{
 
         if (this.animationFrame === 4) this.animationFrame = 1;
         else if (frame % 5 === 0) this.animationFrame++;
-
-        console.log("column", this.animationFrame);
 
         ctx.drawImage(
             this.src,
@@ -175,6 +227,17 @@ class Zombie extends GameObject{
                 if (this.#visionBlockedByHorizontalWall(wall)) sees = false;
             }
         });
+
+        if (sees) {
+            this.hasSeenPlayer = true;
+            this.lastKnownPlayerPositionX = null;
+            this.lastKnownPlayerPositionY = null;
+        }
+
+        if (!sees && this.lastKnownPlayerPositionX === null && this.lastKnownPlayerPositionY === null){
+            this.lastKnownPlayerPositionX = player.posX;
+            this.lastKnownPlayerPositionY = player.posY;
+        }
 
         return sees;
     }
