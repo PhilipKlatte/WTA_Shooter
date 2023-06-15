@@ -16,7 +16,7 @@ class Barrel extends GameObject {
     }
 
     move(){
-        if (CollisionDetection.collidesWith(this, player)){
+        if (CollisionDetection.collidesWith(this, RectangularCollideZone, player, RectangularCollideZone)){
             this.velocityRight = player.velocityRight;
             this.velocityLeft = player.velocityLeft;
             this.velocityUp = player.velocityUp;
@@ -51,7 +51,6 @@ class Barrel extends GameObject {
         let centerY = this.posY + 1.5* tilesize;
 
         let explosion = new Explosion(explosionImg, centerX, centerY, 2.5*tilesize);
-        explosion.collideZone = new CircularCollideZone(2*tilesize);
 
         effects.push(explosion);
 

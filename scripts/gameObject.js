@@ -8,40 +8,49 @@ class GameObject {
     }
 
     showCollideZone(){
-         if (this.collideZone instanceof RectangularZone) this.showRectangularCollideZone();
+        let zone = null;
+
+        this.zones.forEach(elem => {
+            if (elem instanceof RectangularCollideZone){
+                zone = elem;
+            }
+        })
+
+        if (zone === null) console.error("No CollideZone!");
+        else this.showRectangularCollideZone(zone);
     }
 
-    showRectangularCollideZone(){
+    showRectangularCollideZone(zone){
         drawLine(
-            this.posX + this.collideZone.untilX,
-            this.posY + this.collideZone.fromY,
-            this.posX + this.collideZone.fromX,
-            this.posY + this.collideZone.untilY);
+            this.posX + zone.untilX,
+            this.posY + zone.fromY,
+            this.posX + zone.fromX,
+            this.posY + zone.untilY);
         drawLine(
-            this.posX + this.collideZone.fromX,
-            this.posY + this.collideZone.fromY,
-            this.posX + this.collideZone.untilX,
-            this.posY + this.collideZone.untilY);
+            this.posX + zone.fromX,
+            this.posY + zone.fromY,
+            this.posX + zone.untilX,
+            this.posY + zone.untilY);
         drawLine(
-            this.posX + this.collideZone.fromX,
-            this.posY + this.collideZone.untilY,
-            this.posX + this.collideZone.untilX,
-            this.posY + this.collideZone.untilY);
+            this.posX + zone.fromX,
+            this.posY + zone.untilY,
+            this.posX + zone.untilX,
+            this.posY + zone.untilY);
         drawLine(
-            this.posX + this.collideZone.fromX,
-            this.posY + this.collideZone.fromY,
-            this.posX + this.collideZone.untilX,
-            this.posY + this.collideZone.fromY);
+            this.posX + zone.fromX,
+            this.posY + zone.fromY,
+            this.posX + zone.untilX,
+            this.posY + zone.fromY);
         drawLine(
-            this.posX + this.collideZone.untilX,
-            this.posY + this.collideZone.fromY,
-            this.posX + this.collideZone.untilX,
-            this.posY + this.collideZone.untilY);
+            this.posX + zone.untilX,
+            this.posY + zone.fromY,
+            this.posX + zone.untilX,
+            this.posY + zone.untilY);
         drawLine(
-            this.posX + this.collideZone.fromX,
-            this.posY + this.collideZone.fromY,
-            this.posX + this.collideZone.fromX,
-            this.posY + this.collideZone.untilY);
+            this.posX + zone.fromX,
+            this.posY + zone.fromY,
+            this.posX + zone.fromX,
+            this.posY + zone.untilY);
     }
 
     draw(){
