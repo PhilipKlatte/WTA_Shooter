@@ -23,7 +23,6 @@ var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
 var titlescreen = AssetLoader.addImage("assets/game/titlescreen.png");
-var presskey = AssetLoader.addImage("assets/game/presskey.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
 
 const walls = [];
@@ -104,10 +103,22 @@ function buildCanvas(){
 
 function pauseGame(){
     gamePaused = true;
+
+    music.pause();
+
+    clearInterval(interval);
+
+    ctx.save();
+    ctx.font ="bold 300px serif";
+    ctx.fillText("PAUSE", tilesize, 15*tilesize);
+    ctx.restore();
 }
 
 function resumeGame(){
     gamePaused = false;
+
+    music.play();
+    interval = setInterval(gameLoop,50);
 }
 
 async function reset(){
@@ -160,6 +171,7 @@ function gameLoop() {
 
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
+
     if (clock - lastBarrelDrop > 30000 && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
