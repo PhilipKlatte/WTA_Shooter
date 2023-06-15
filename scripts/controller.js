@@ -22,6 +22,9 @@ var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
+var titlescreen = AssetLoader.addImage("assets/game/titlescreen.png");
+var presskey = AssetLoader.addImage("assets/game/presskey.png");
+var controls = AssetLoader.addImage("assets/game/controls.png");
 
 const walls = [];
 const zombies = [];
@@ -49,7 +52,46 @@ var mouseY = 0;
 
 var music = new Audio("assets/sounds/music.mp3");
 
+async function startGame(){
+    buildCanvas();
+
+    ctx.save();
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, tilesX*tilesize, tilesY*tilesize);
+    ctx.font ="bold 48px serif";
+    ctx.fillStyle = "white";
+    ctx.fillText("press any key to start game", 8*tilesize, 12*tilesize);
+    ctx.restore();
+    await pauseUntilKeyPress();
+
+    music.loop = true;
+    music.volume = 0.5;
+    music.play();
+
+    ctx.drawImage(titlescreen, 0, 0);
+    await pauseUntilKeyPress();
+
+    ctx.drawImage(controls, 0, 0);
+    await pauseUntilKeyPress();
+
+    init();
+}
+
 function init() {
+    buildCanvas();
+
+    player = new Player(playerImg, 3*tilesize, 20*tilesize);
+
+    loadWalls();
+    spawnZombies(5);
+    spawnBarrels(5);
+
+    if (music.paused) music.play();
+
+    interval = setInterval(gameLoop,50);
+}
+
+function buildCanvas(){
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
     canvas.setAttribute("height", (tilesY * tilesize).toString());
@@ -58,19 +100,6 @@ function init() {
     ctx = canvas.getContext("2d");
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    player = new Player(playerImg, 3*tilesize, 20*tilesize);
-
-    loadWalls();
-    spawnZombies(5);
-    spawnBarrels(5);
-
-    music.currentTime = 0;
-    music.loop = true;
-    music.volume = 0.5;
-    music.play();
-
-    interval = setInterval(gameLoop,50);
 }
 
 function pauseGame(){
@@ -191,4 +220,4 @@ function drawFloor(){
     }
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", startGame);
