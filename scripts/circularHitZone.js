@@ -1,4 +1,4 @@
-class CircularCollideZone extends CircularZone{
+class CircularHitZone extends CircularZone{
     constructor(radius) {
         super(radius);
 

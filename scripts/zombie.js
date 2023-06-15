@@ -15,7 +15,11 @@ class Zombie extends GameObject{
         this.speed = speed;
         this.idlespeed= getRandomNumberIn(1,3);
 
-        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+
+        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
+
+        this.zones.add(new RectangularHitZone(0, 0, tilesize, 2*tilesize));
+
 
         this.health = 40;
         this.damageTaken = 0;
@@ -97,11 +101,13 @@ class Zombie extends GameObject{
             this.velocityDown = 0;
         }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) === null) {
+        let movedZombieHorizontally = new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
+        if (CollisionDetection.collidesWithOneOf(movedZombieHorizontally, RectangularCollideZone, walls, RectangularCollideZone) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
         }
 
-        if (CollisionDetection.collidesWithOneOf(new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp), walls) === null) {
+        let movedZombieVertically = new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp);
+        if (CollisionDetection.collidesWithOneOf(movedZombieVertically, RectangularCollideZone, walls, RectangularCollideZone) === null) {
             this.posY += this.velocityDown - this.velocityUp;
         }
 
@@ -110,7 +116,7 @@ class Zombie extends GameObject{
         if (this.velocityRight > 0) this.orientation = orientation.right;
         if (this.velocityLeft > 0) this.orientation = orientation.left;
 
-        if (CollisionDetection.collidesWith(this, player)) player.hit(this.damage);
+        if (CollisionDetection.collidesWith(this,RectangularHitZone, player,RectangularHitZone)) player.hit(this.damage);
     }
 
     draw(){

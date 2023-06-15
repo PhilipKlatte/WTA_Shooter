@@ -192,7 +192,7 @@ function draw() {
     effects.forEach(effect => effect.draw());
 
     drawKillCount();
-    //showCollideZones();
+    showCollideZones();
     //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
