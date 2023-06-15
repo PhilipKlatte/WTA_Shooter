@@ -1,9 +1,9 @@
 class CollisionDetection{
 
-    static collidesWith(gameObject, collideObject, zoneType){
+    static collidesWith(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType){
 
-        let gameObjectZone = this.#getZone(gameObject, zoneType);
-        let collideObjectZone = this.#getZone(collideObject, zoneType);
+        let gameObjectZone = this.#getZone(gameObject, gameObjectZoneType);
+        let collideObjectZone = this.#getZone(collideObject, collideObjectZoneType);
 
         if (gameObjectZone instanceof RectangularZone
             && collideObjectZone instanceof RectangularZone){
@@ -27,24 +27,23 @@ class CollisionDetection{
         return zone;
     }
 
-    static collidesWithOneOf(gameObject, collideObjects, zoneType){
+    static collidesWithOneOf(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
-            if (this.collidesWith(gameObject, collideObject, zoneType)) return collideObject;
+            if (this.collidesWith(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType)) return collideObject;
         }
 
         return null;
     }
 
-    static collidesWithAnyOf(gameObject, collideObjects, zoneType){
+    static collidesWithAnyOf(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
         const collidingObjects = [];
 
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
-
-            if (this.collidesWith(gameObject, collideObject, zoneType)) collidingObjects.push(collideObject);
+            if (this.collidesWith(gamegameObject, gameObjectZoneType, collideObject, collideObjectZoneType)) collidingObjects.push(collideObject);
         }
 
         return collidingObjects;
