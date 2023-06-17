@@ -42,6 +42,10 @@ async function keydownEvent(ev) {
             break;
         case '1':
             (music.muted) ? unmuteMusic() : muteMusic();
+            break;
+        case '2':
+            soundsMuted = !soundsMuted;
+            break;
     }
 
     if (ev.keyCode === 27) {

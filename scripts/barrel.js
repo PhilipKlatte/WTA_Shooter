@@ -45,7 +45,7 @@ class Barrel extends GameObject {
     }
 
     explode(){
-        new Audio("assets/sounds/barrel explosion.mp3").play();
+        if (!soundsMuted) new Audio("assets/sounds/barrel explosion.mp3").play();
 
         let centerX = this.posX + 0.5*tilesize;
         let centerY = this.posY + 1.5* tilesize;

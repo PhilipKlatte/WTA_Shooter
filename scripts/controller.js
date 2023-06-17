@@ -45,6 +45,7 @@ var clock = 0;              // Time elapsed since game was started
 
 var interval = null;
 var gamePaused = false;
+var soundsMuted = false;
 
 var mouseX = 0;
 var mouseY = 0;
