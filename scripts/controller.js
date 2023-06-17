@@ -76,6 +76,14 @@ async function startGame(){
     init();
 }
 
+function muteMusic(){
+    music.muted = true;
+}
+
+function unmuteMusic(){
+    music.muted = false;
+}
+
 function init() {
     buildCanvas();
 
