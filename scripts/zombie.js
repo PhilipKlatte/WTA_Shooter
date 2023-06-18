@@ -206,7 +206,7 @@ class Zombie extends GameObject{
     hit(damage){
         this.damageTaken += damage;
 
-        new Audio("assets/sounds/zombie hit.mp3").play();
+        if (!soundsMuted) new Audio("assets/sounds/zombie hit.mp3").play();
 
         if (this.health - this.damageTaken <= 0) this.kill();
     }
