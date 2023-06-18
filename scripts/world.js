@@ -1,12 +1,17 @@
 var wallDefinitions = [
-    [0,0,0,24],
-    [31,0,31,24],
-    [7, 16, 7, 23],
-    [21, 6, 21, 20],
-    [14, 9, 14, 16],
+    [0,0,0,27],
+    [31,0,31,27],
+    [5, 15, 5, 23],
+    [21, 13, 21, 21],
+    [22, 13, 27, 13],
+    [27, 9, 27, 16],
+    [13, 6, 24, 6],
+    [23, 6, 23, 10],
+    [10, 9, 10, 15],
+    [10, 18, 21, 18],
     [1, 0, 31, 0],
     [1, 23, 31, 23],
-    [1, 9, 14, 9]
+    [1, 9, 10, 9]
 ];
 
 function loadWalls(){
@@ -27,7 +32,7 @@ function spawnNewZombie(){
 
     let spawnSound = new Audio("assets/sounds/spawn.mp3");
     spawnSound.volume = 0.5;
-    spawnSound.play();
+    if (!soundsMuted) spawnSound.play();
 
     spawnZombies(difference);
 }
@@ -42,8 +47,8 @@ function spawnBarrels(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize
             )
-        } while (CollisionDetection.collidesWithOneOf(barrel, walls) != null
-            && !CollisionDetection.collidesWith(barrel, player));
+        } while (CollisionDetection.collidesWithOneOf(barrel, RectangularCollideZone, walls, RectangularCollideZone) != null
+            && !CollisionDetection.collidesWith(barrel, RectangularCollideZone, player, RectangularCollideZone));
 
         barrels.push(barrel);
     }
@@ -59,7 +64,7 @@ function spawnZombies(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
                 getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
-        } while (CollisionDetection.collidesWithOneOf(zombie, walls) != null);
+        } while (CollisionDetection.collidesWithOneOf(zombie, RectangularCollideZone, walls, RectangularCollideZone) != null);
 
         zombies.push(zombie);
     }

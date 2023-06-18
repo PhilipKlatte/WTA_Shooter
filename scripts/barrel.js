@@ -7,7 +7,8 @@ class Barrel extends GameObject {
         this.velocityUp = 0;
         this.velocityDown = 0;
 
-        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
+        this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
 
         this.stuckHorizontally = false;
         this.stuckVertically = false;
@@ -16,7 +17,7 @@ class Barrel extends GameObject {
     }
 
     move(){
-        if (CollisionDetection.collidesWith(this, player)){
+        if (CollisionDetection.collidesWith(this, RectangularCollideZone, player, RectangularCollideZone)){
             this.velocityRight = player.velocityRight;
             this.velocityLeft = player.velocityLeft;
             this.velocityUp = player.velocityUp;
@@ -27,8 +28,11 @@ class Barrel extends GameObject {
             player.pushedBarrel = null;
         }
 
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY), walls) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(new Barrel(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown), walls) != null;
+        let movedBarrelHorizontally = new Barrel(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
+        let movedBarrelVertically = new Barrel(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown);
+            
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedBarrelHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedBarrelVertically,RectangularCollideZone , walls, RectangularCollideZone) != null;
 
         if (!this.stuckHorizontally) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
@@ -45,13 +49,12 @@ class Barrel extends GameObject {
     }
 
     explode(){
-        new Audio("assets/sounds/barrel explosion.mp3").play();
+        if (!soundsMuted) new Audio("assets/sounds/barrel explosion.mp3").play();
 
         let centerX = this.posX + 0.5*tilesize;
         let centerY = this.posY + 1.5* tilesize;
 
         let explosion = new Explosion(explosionImg, centerX, centerY, 2.5*tilesize);
-        explosion.collideZone = new CircularCollideZone(2*tilesize);
 
         effects.push(explosion);
 
