@@ -70,6 +70,7 @@ Moritz Hegmann & Philip Klatte: <br />
 - universal collision
 
 Felix Winkelbach: <br />
+- titlescreen
 - zombie sprites
 - player sprites
 - explosion sprites
