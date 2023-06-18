@@ -27,7 +27,7 @@ function spawnNewZombie(){
 
     let spawnSound = new Audio("assets/sounds/spawn.mp3");
     spawnSound.volume = 0.5;
-    spawnSound.play();
+    if (!soundsMuted) spawnSound.play();
 
     spawnZombies(difference);
 }

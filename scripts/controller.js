@@ -45,6 +45,7 @@ var clock = 0;              // Time elapsed since game was started
 
 var interval = null;
 var gamePaused = false;
+var soundsMuted = false;
 
 var mouseX = 0;
 var mouseY = 0;
@@ -74,6 +75,14 @@ async function startGame(){
     await pauseUntilKeyPress();
 
     init();
+}
+
+function muteMusic(){
+    music.muted = true;
+}
+
+function unmuteMusic(){
+    music.muted = false;
 }
 
 function init() {
