@@ -22,7 +22,7 @@ var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
-var titlescreen = AssetLoader.addImage("assets/game/titlescreen.png");
+var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
 
 const walls = [];
