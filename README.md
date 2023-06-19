@@ -37,6 +37,9 @@ Key  | Function
 - You can strategically place barrels by running into them
 - Every 30 seconds 2 new barrels will appear
 
+## Impressions
+![controls](assets/game/Title-Screen.png)
+
 ## Bugs
 1. Barrels can get stuck in the player if pushed diagonally against walls
 2. Zombies can spawn underneath the map
