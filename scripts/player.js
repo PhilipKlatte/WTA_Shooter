@@ -133,8 +133,14 @@ class Player extends GameObject{
     }
 
     displayHealth(){
+        ctx.save();
         let newHealth = this.health-this.damageTaken;
+        ctx.font ="bold 25px serif";
         ctx.fillText(newHealth.toString(), this.posX,this.posY);
+        ctx.font ="bold 60px serif";
+        let newHealthAnzeige = "health: " + newHealth;
+        ctx.fillText(newHealthAnzeige.toString(), 22*tilesize, 2*tilesize);
+        ctx.restore();
     }
 
     hit(damage) {
