@@ -38,7 +38,9 @@ Key  | Function
 - Every 30 seconds 2 new barrels will appear
 
 ## Impressions
-![controls](assets/game/Title-Screen.png)
+![titlescreen](assets/game/Title-Screen.png)
+![demo1](assets/demo1.png)
+![demo2](assets/demo2.png)
 
 ## Bugs
 1. Barrels can get stuck in the player if pushed diagonally against walls
