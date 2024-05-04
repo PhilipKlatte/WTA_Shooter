@@ -203,7 +203,7 @@ function draw() {
     drawKillCount();
 
     //showCollideZones();
-    drawGrid(tilesize);
+    //drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
 
@@ -213,7 +213,7 @@ function draw() {
 function drawKillCount(){
     ctx.save();
     ctx.font ="bold 60px serif";
-    let killCountText = "killaaaaa: " + player.kills;
+    let killCountText = "kills: " + player.kills;
     ctx.fillText(killCountText, tilesize, 2*tilesize);
     ctx.font ="bold 25px serif";
     let highscoreText = "highscore: " + highscore;
