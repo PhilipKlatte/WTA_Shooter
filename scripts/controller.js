@@ -203,7 +203,7 @@ function draw() {
     drawKillCount();
 
     //showCollideZones();
-    //drawGrid(tilesize);
+    drawGrid(tilesize);
     //drawLineFromZombieToPlayer();
     //drawLineForWall();
 
