@@ -213,7 +213,7 @@ function draw() {
 function drawKillCount(){
     ctx.save();
     ctx.font ="bold 60px serif";
-    let killCountText = "kills: " + player.kills;
+    let killCountText = "killaaaaa: " + player.kills;
     ctx.fillText(killCountText, tilesize, 2*tilesize);
     ctx.font ="bold 25px serif";
     let highscoreText = "highscore: " + highscore;
