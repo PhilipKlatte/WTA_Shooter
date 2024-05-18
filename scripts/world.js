@@ -68,5 +68,4 @@ function spawnZombies(count){
 
         zombies.push(zombie);
     }
-
 }

@@ -24,6 +24,7 @@ var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
 var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
+var press_key = AssetLoader.addImage("assets/game/controls.png");
 
 const walls = [];
 const zombies = [];
@@ -44,12 +45,12 @@ var frame = 0;
 var start = Date.now();     // Time at which the game was started
 var clock = 0;              // Time elapsed since game was started
 
-var interval = null;
+var interval = null;        // the Id of the interval that calls the gameLoop() function
 var gamePaused = false;
 var soundsMuted = false;
 
-var mouseX = 0;
-var mouseY = 0;
+var mouseX = 0;             // mouse position X coordinate; currently unused
+var mouseY = 0;             // mouse position Y coordinate; currently unused
 
 var debugMode = false;
 
@@ -58,18 +59,9 @@ var music = new Audio("assets/sounds/music.mp3");
 async function startGame(){
     buildCanvas();
 
-    ctx.save();
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, tilesX*tilesize, tilesY*tilesize);
-    ctx.font ="bold 48px serif";
-    ctx.fillStyle = "white";
-    ctx.fillText("press any key to start game", 8*tilesize, 12*tilesize);
-    ctx.restore();
-    await pauseUntilKeyPress();
+    pressKeyToStartGame();
 
-    music.loop = true;
-    music.volume = 0.5;
-    music.play();
+    startMusic();
 
     ctx.drawImage(titlescreen, 0, 0);
     await pauseUntilKeyPress();
@@ -78,14 +70,6 @@ async function startGame(){
     await pauseUntilKeyPress();
 
     init();
-}
-
-function muteMusic(){
-    music.muted = true;
-}
-
-function unmuteMusic(){
-    music.muted = false;
 }
 
 function init() {
@@ -99,9 +83,12 @@ function init() {
 
     if (music.paused) music.play();
 
-    interval = setInterval(gameLoop,50);
+    interval = setInterval(gameLoop,50);        // create interval that calls gameLoop() function every 50ms
 }
 
+/**
+ * Gets the canvas element from the DOM and initializes it
+ */
 function buildCanvas(){
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
