@@ -3,7 +3,7 @@ a fun zombie shooter reminiscent of early internet flash games <br /><br />
 
 kill as many zombies in one go as you can <br /><br />
 
-the latest stable release can be found [here](http://undeadrevenge.dasallergroesstehaus.com/)
+the latest stable release can be found [here](http://dev.dasallergroesstehaus.com/)
 
 ## Version
 1.0
