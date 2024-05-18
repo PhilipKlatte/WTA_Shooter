@@ -27,7 +27,7 @@ function loadWalls(){
     });
 }
 
-function spawnNewZombie(){
+function spawnNewZombies(){
     let difference = maxZombieCount - count(zombies);
 
     let spawnSound = new Audio("assets/sounds/spawn.mp3");

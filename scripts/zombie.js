@@ -214,13 +214,13 @@ class Zombie extends GameObject{
     kill(){
         delete zombies[zombies.indexOf(this)];
 
-        if (getRandomNumberIn(0, 100) < 10) {
+        if (getRandomNumberIn(0, 100) < increaseZombieCountProbability) {
             maxZombieCount++;
         }
 
         player.kills++;
 
-        spawnNewZombie();
+        spawnNewZombies();
     }
 
     #seesPlayer(){

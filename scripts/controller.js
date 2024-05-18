@@ -31,7 +31,8 @@ const barrels = [];
 const bullets = [];
 const effects = [];
 
-var maxZombieCount = 4;
+var maxZombieCount = 5;
+var increaseZombieCountProbability = 10; // Probalitity that the ZombieCount increases by one after every killed Zombie
 var lastBarrelDrop = 0;
 
 var zombieMinSpeed = 1;
@@ -93,7 +94,7 @@ function init() {
     player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    spawnZombies(5);
+    spawnNewZombies();
     spawnBarrels(5);
 
     if (music.paused) music.play();
