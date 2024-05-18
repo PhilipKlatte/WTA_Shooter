@@ -22,7 +22,6 @@ function loadWalls(){
             wall[0] * tilesize,
             (wall[0] === wall[2]) ? wall[2] * tilesize + tilesize: wall[2] * tilesize
         );
-
         walls.push(w);
     });
 }
@@ -47,8 +46,7 @@ function spawnBarrels(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize
             )
-        } while (CollisionDetection.collidesWithOneOf(barrel, RectangularCollideZone, walls, RectangularCollideZone) != null
-            && !CollisionDetection.collidesWith(barrel, RectangularCollideZone, player, RectangularCollideZone));
+        } while (isNotFreeSpace(barrel));
 
         barrels.push(barrel);
     }
@@ -64,8 +62,27 @@ function spawnZombies(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
                 getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
-        } while (CollisionDetection.collidesWithOneOf(zombie, RectangularCollideZone, walls, RectangularCollideZone) != null);
+        } while (isNotFreeSpace(zombie));
 
         zombies.push(zombie);
     }
+}
+/**
+ * Checks if an object can be spawned
+ * @param {*} spawnObject the object you want to spawn
+ * @returns true as long as the space is already occupied
+ */
+function isNotFreeSpace(spawnObject){
+    
+    if(CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, walls) != null
+        || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, zombies) != null
+        || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, barrels) != null
+        || CollisionDetection.collidesWith(spawnObject,RectangularCollideZone, player, RectangularCollideZone)
+    ){
+        return true;
+    }
+    else{
+        return false;
+    }
+
 }
