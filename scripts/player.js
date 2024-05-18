@@ -161,7 +161,7 @@ class Player extends GameObject{
         this.dead = true;
         console.log("player killed with", this.kills, "kills");
 
-        reset();
+        resetGame();
     }
 
     shoot(direction){

@@ -38,7 +38,7 @@ async function keydownEvent(ev) {
             break;
 
         case 'R':
-            reset();
+            resetGame();
             break;
         case '1':
             (music.muted) ? unmuteMusic() : muteMusic();

@@ -120,7 +120,7 @@ function resumeGame(){
     interval = setInterval(gameLoop,50);
 }
 
-async function reset(){
+async function resetGame(){
     clearInterval(interval);
 
     music.pause();
