@@ -47,12 +47,13 @@ function spawnBarrels(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize
             )
-        } while (CollisionDetection.collidesWithOneOf(barrel, RectangularCollideZone, walls, RectangularCollideZone) != null
-            && !CollisionDetection.collidesWith(barrel, RectangularCollideZone, player, RectangularCollideZone));
+        } while (isNotFreeSpace(barrel));
 
         barrels.push(barrel);
     }
 }
+
+
 
 function spawnZombies(count){
     for (let i = 0; i < count; i++) {
@@ -64,8 +65,22 @@ function spawnZombies(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
                 getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
-        } while (CollisionDetection.collidesWithOneOf(zombie, RectangularCollideZone, walls, RectangularCollideZone) != null);
+        } while (isNotFreeSpace(zombie));
 
         zombies.push(zombie);
     }
+}
+function isNotFreeSpace(spawnObject){
+    
+    if(CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, walls, RectangularCollideZone) != null
+        || CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, zombies, RectangularCollideZone) != null
+        || CollisionDetection.collidesWith(spawnObject, RectangularCollideZone, player, RectangularCollideZone)
+        || CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, barrels, RectangularCollideZone) != null
+    ){
+        return true;
+    }
+    else{
+        return false;
+    }
+
 }
