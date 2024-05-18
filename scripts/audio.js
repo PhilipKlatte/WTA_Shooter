@@ -1,3 +1,9 @@
+var music = new Audio("assets/sounds/music.mp3");
+
+function playSound(sound){
+    if (!soundsMuted) new Audio(sound).play()
+}
+
 function muteMusic() {
     music.muted = true;
 }

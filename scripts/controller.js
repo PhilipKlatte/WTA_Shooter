@@ -52,8 +52,6 @@ var mouseY = 0;             // mouse position Y coordinate; currently unused
 
 var debugMode = false;
 
-var music = new Audio("assets/sounds/music.mp3");
-
 async function startGame(){
     buildCanvas();
 

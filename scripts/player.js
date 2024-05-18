@@ -160,7 +160,7 @@ class Player extends GameObject{
     hit(damage) {
         if (clock - this.lastDamage < 200) return;
 
-        if (!soundsMuted) new Audio("assets/sounds/player hit.mp3").play();
+        playSound("assets/sounds/player hit.mp3");
 
         this.damageTaken += damage;
 
@@ -170,7 +170,7 @@ class Player extends GameObject{
     }
 
     kill(){
-        if (!soundsMuted) new Audio("assets/sounds/death.mp3").play();
+        playSound("assets/sounds/death.mp3");
 
         this.dead = true;
         this.updateHighscore();
@@ -187,7 +187,7 @@ class Player extends GameObject{
     shoot(direction){
         if (clock - this.lastShot < 200) return;
 
-        if (!soundsMuted) new Audio("assets/sounds/shot.mp3").play();
+        playSound("assets/sounds/shot.mp3");
 
         bullets.push(new Bullet(
             null,
