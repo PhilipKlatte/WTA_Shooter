@@ -1,5 +1,6 @@
 class Player extends GameObject{
-    constructor(src, posX, posY) {
+
+    constructor(src, posX, posY, highscore = 0) {
         super(src, posX, posY);
 
         this.velocityRight = 0;
@@ -12,9 +13,10 @@ class Player extends GameObject{
         this.damageTaken = 0;
         this.lastDamage = 0;
         this.kills = 0;
+        this.highscore = highscore;
         this.dead = false;
         this.lastShot = 0;
-
+        
         this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
         this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
 
@@ -132,6 +134,18 @@ class Player extends GameObject{
             tilesize, 2*tilesize);
     }
 
+    drawKillCount(){
+        ctx.save();
+        ctx.font ="bold 60px serif";
+        let killCountText = "kills: " + player.kills;
+        ctx.fillText(killCountText, tilesize, 2*tilesize);
+    
+        ctx.font ="bold 25px serif";
+        let highscoreText = "highscore: " + player.highscore;
+        ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
+        ctx.restore();
+    }
+
     displayHealth(){
         ctx.save();
         let newHealth = this.health-this.damageTaken;
@@ -159,9 +173,15 @@ class Player extends GameObject{
         if (!soundsMuted) new Audio("assets/sounds/death.mp3").play();
 
         this.dead = true;
+        this.updateHighscore();
+        this.kills = 0;
         console.log("player killed with", this.kills, "kills");
 
         resetGame();
+    }
+
+    updateHighscore() {
+        if (this.kills > this.highscore) this.highscore = this.kills;
     }
 
     shoot(direction){
