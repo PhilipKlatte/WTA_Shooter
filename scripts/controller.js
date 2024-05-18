@@ -22,7 +22,7 @@ var wall_horizontal = AssetLoader.addImage("assets/wall_horizontal4_32x32.png");
 var wall_horizontal_top = AssetLoader.addImage("assets/wall_horizontal_top_32x32.png");
 var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
-var titlescreen = AssetLoader.addImage("assets/game/titlescreen-presskey.png");
+var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
 
 const walls = [];
@@ -49,6 +49,8 @@ var soundsMuted = false;
 
 var mouseX = 0;
 var mouseY = 0;
+
+var debugMode = false;
 
 var music = new Audio("assets/sounds/music.mp3");
 
@@ -202,12 +204,9 @@ function draw() {
 
     drawKillCount();
 
-    //showCollideZones();
-    //drawGrid(tilesize);
-    //drawLineFromZombieToPlayer();
-    //drawLineForWall();
-
     if (player.dead) ctx.drawImage(game_over_overlay, 0, 0);
+
+    if (debugMode) drawDebugMode();
 }
 
 function drawKillCount(){
@@ -219,6 +218,13 @@ function drawKillCount(){
     let highscoreText = "highscore: " + highscore;
     if (highscore > 0) ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
     ctx.restore();
+}
+
+function drawDebugMode() {
+    showCollideZones();
+    drawGrid(tilesize);
+    drawLineFromZombieToPlayer();
+    drawLineForWall();
 }
 
 function drawFloor(){
@@ -240,6 +246,10 @@ function drawFloor(){
             ctx.drawImage(floorImg, i, j);
         }
     }
+}
+
+function toggleDebugMode() {
+    this.debugMode = !debugMode;
 }
 
 document.addEventListener("DOMContentLoaded", startGame);
