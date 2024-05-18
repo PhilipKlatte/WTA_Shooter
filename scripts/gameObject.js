@@ -1,10 +1,11 @@
 class GameObject {
-    constructor(src, posX, posY) {
+    constructor(src, posX, posY, hitZone, collideZone) {
         this.src = src;
         this.posX = posX;
         this.posY = posY;
 
-        this.zones = new Set();
+        this.hitZone= hitZone;
+        this.collideZone= collideZone;
     }
 
     showCollideZone(){

@@ -24,6 +24,7 @@ class Barrel extends GameObject {
             this.velocityDown = player.velocityDown;
 
             player.pushedBarrel = this;
+            this.explode();
         } else {
             player.pushedBarrel = null;
         }
