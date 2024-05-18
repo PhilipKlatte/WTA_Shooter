@@ -37,6 +37,16 @@ class CollisionDetection{
         return null;
     }
 
+    static collidesWithOneOfRecColideZone(gameObject, collideObjects){
+        for (const collideObject of collideObjects) {
+            if (collideObject === undefined) continue;
+
+            if (this.collidesWith(gameObject, RectangularCollideZone, collideObject, RectangularCollideZone)) return collideObject;
+        }
+
+        return null;
+    }
+
     static collidesWithAnyOf(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
         const collidingObjects = [];
 

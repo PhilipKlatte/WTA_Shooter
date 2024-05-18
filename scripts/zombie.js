@@ -58,8 +58,6 @@ class Zombie extends GameObject{
             }
         } else if (!this.hasSeenPlayer){
             //this.speed= this.speed/2;
-            //console.log("Hey");
-            //console.log(this.laufeInEineRichtungFuer);
             if (this.laufeInEineRichtungFuer<0){
                 if(getRandomNumberIn(1,10)>3) {
                     this.laufeInRichtungX = getRandomNumberIn(0, canvas.width);

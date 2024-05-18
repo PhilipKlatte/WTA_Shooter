@@ -22,7 +22,6 @@ function loadWalls(){
             wall[0] * tilesize,
             (wall[0] === wall[2]) ? wall[2] * tilesize + tilesize: wall[2] * tilesize
         );
-
         walls.push(w);
     });
 }
@@ -53,8 +52,6 @@ function spawnBarrels(count){
     }
 }
 
-
-
 function spawnZombies(count){
     for (let i = 0; i < count; i++) {
         let zombie = null;
@@ -77,10 +74,10 @@ function spawnZombies(count){
  */
 function isNotFreeSpace(spawnObject){
     
-    if(CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, walls, RectangularCollideZone) != null
-        || CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, zombies, RectangularCollideZone) != null
-        || CollisionDetection.collidesWith(spawnObject, RectangularCollideZone, player, RectangularCollideZone)
-        || CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, barrels, RectangularCollideZone) != null
+    if(CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, walls) != null
+        || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, zombies) != null
+        || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, barrels) != null
+        || CollisionDetection.collidesWith(spawnObject,RectangularCollideZone, player, RectangularCollideZone)
     ){
         return true;
     }
