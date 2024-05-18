@@ -99,6 +99,8 @@ function init() {
     interval = setInterval(gameLoop,50);
 }
 
+// test
+
 function buildCanvas(){
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
