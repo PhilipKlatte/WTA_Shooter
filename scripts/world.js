@@ -70,6 +70,11 @@ function spawnZombies(count){
         zombies.push(zombie);
     }
 }
+/**
+ * Checks if an object can be spawned
+ * @param {*} spawnObject the object you want to spawn
+ * @returns true as long as the space is already occupied
+ */
 function isNotFreeSpace(spawnObject){
     
     if(CollisionDetection.collidesWithOneOf(spawnObject, RectangularCollideZone, walls, RectangularCollideZone) != null
