@@ -48,7 +48,7 @@ async function keydownEvent(ev) {
             break;
     }
 
-    if (ev.keyCode === 27) {
+    if (ev.keyCode === 27) {                        // ESC key pressed
         (gamePaused) ? resumeGame() : pauseGame();
     }
 }

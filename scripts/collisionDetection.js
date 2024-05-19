@@ -2,48 +2,50 @@ class CollisionDetection{
 
     /**
      * @deprecated collides() should be utlilzed instead
+     * 
+     * Checks if specific zones of gameobjects collide.
+     * 
+     * @param {*} object1 - the object that is tested for collision with the object2
+     * @param {*} object1Zone - the specific zone of object1 that should be tested for collision
+     * @param {*} object2 - the object that is tested for collision with the object1
+     * @param {*} object2Zone - the specific zone of object2 that should be tested for collision
+     * @returns true if gameobjects collide; false if not.
      */
-    static collidesWithSpecifyZones(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType){
+    static collidesWithSpecifyZones(object1, object1Zone, object2, object2Zone){
 
-        let gameObjectZone = this.#getZone(gameObject, gameObjectZoneType);
-        let collideObjectZone = this.#getZone(collideObject, collideObjectZoneType);
+        if (object1Zone instanceof RectangularZone
+            && object2Zone instanceof RectangularZone){
 
-        if (gameObjectZone instanceof RectangularZone
-            && collideObjectZone instanceof RectangularZone){
-
-            return this.#rectangularCZcollidesWithRectangularCZ(gameObject, gameObjectZone, collideObject, collideObjectZone);
+            return this.#rectangularCZcollidesWithRectangularCZ(object1, object1Zone, object2, object2Zone);
         }
-        if (gameObjectZone instanceof CircularZone
-            && collideObjectZone instanceof RectangularZone){
+        if (object1Zone instanceof CircularZone
+            && object2Zone instanceof RectangularZone){
 
-            return this.#circularCZcollidesWithRectangularCZ(gameObject, gameObjectZone, collideObject, collideObjectZone);
+            return this.#circularCZcollidesWithRectangularCZ(object1, object1Zone, object2, object2Zone);
         }
     }
 
-    static collides(gameObject, collideObject){
-        let gameObjectZone = gameObject.collideZone;
-        let collideObjectZone = collideObject.collideZone;
+    /**
+     * Checks if two gameobjects collide, by checking if their collideZones overlap.
+     * 
+     * @param {GameObject} object1 - the object that is tested for collision with the object2
+     * @param {GameObject} object2 - the object that is tested for collision with the object1
+     * @returns true if collideZones of gameobjects overlap; false if not.
+     */
+    static collides(object1, object2){
+        let object1CollideZone = object1.collideZone;
+        let object2CollideZone = object2.collideZone;
 
-        if (gameObjectZone instanceof RectangularZone
-            && collideObjectZone instanceof RectangularZone){
+        if (object1CollideZone instanceof RectangularZone
+            && object2CollideZone instanceof RectangularZone){
 
-            return this.#rectangularCZcollidesWithRectangularCZ(gameObject, gameObjectZone, collideObject, collideObjectZone);
+            return this.#rectangularCZcollidesWithRectangularCZ(object1, object1CollideZone, object2, object2CollideZone);
         }
-        if (gameObjectZone instanceof CircularZone
-            && collideObjectZone instanceof RectangularZone){
+        if (object1CollideZone instanceof CircularZone
+            && object2CollideZone instanceof RectangularZone){
 
-            return this.#circularCZcollidesWithRectangularCZ(gameObject, gameObjectZone, collideObject, collideObjectZone);
+            return this.#circularCZcollidesWithRectangularCZ(object1, object1CollideZone, object2, object2CollideZone);
         }
-    }
-    
-    static #getZone(gameObject, zoneType){
-        let zone = null;
-        
-        gameObject.zones.forEach(elem => {
-            if (elem instanceof zoneType) zone = elem;
-        });
-
-        return zone;
     }
 
     /**
