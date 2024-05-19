@@ -58,7 +58,6 @@ class Zombie extends GameObject{
                 this.hasSeenPlayer= false;
             }
         } else if (!this.hasSeenPlayer){
-            //this.speed= this.speed/2;
             if (this.laufeInEineRichtungFuer<0){
                 if(getRandomNumberIn(1,10)>3) {
                     this.laufeInRichtungX = getRandomNumberIn(0, canvas.width);
@@ -101,12 +100,12 @@ class Zombie extends GameObject{
         }
 
         let movedZombieHorizontally = new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
-        if (CollisionDetection.collidesWithOneOf(movedZombieHorizontally, RectangularCollideZone, walls, RectangularCollideZone) === null) {
+        if (CollisionDetection.collidesWithOneOf2(movedZombieHorizontally, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
         }
 
         let movedZombieVertically = new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp);
-        if (CollisionDetection.collidesWithOneOf(movedZombieVertically, RectangularCollideZone, walls, RectangularCollideZone) === null) {
+        if (CollisionDetection.collidesWithOneOf2(movedZombieVertically, walls) === null) {
             this.posY += this.velocityDown - this.velocityUp;
         }
 
@@ -115,7 +114,7 @@ class Zombie extends GameObject{
         if (this.velocityRight > 0) this.orientation = orientation.right;
         if (this.velocityLeft > 0) this.orientation = orientation.left;
 
-        if (CollisionDetection.collidesWith(this,RectangularHitZone, player,RectangularHitZone)) player.hit(this.damage);
+        if (CollisionDetection.collidesWith2(this, player)) player.hit(this.damage);
     }
 
     draw(){
