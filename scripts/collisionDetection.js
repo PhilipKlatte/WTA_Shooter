@@ -99,7 +99,7 @@ class CollisionDetection{
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
-            if (this.collidesWith(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType)) collidingObjects.push(collideObject);
+            if (this.collidesWithSpecifyZones(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType)) collidingObjects.push(collideObject);
         }
 
         return collidingObjects;
