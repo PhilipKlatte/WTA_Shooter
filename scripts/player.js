@@ -137,12 +137,15 @@ class Player extends GameObject{
     drawKillCount(){
         ctx.save();
         ctx.font ="bold 60px serif";
-        let killCountText = "kills: " + player.kills;
+        let killCountText = "kills: " + this.kills;
         ctx.fillText(killCountText, tilesize, 2*tilesize);
-    
-        ctx.font ="bold 25px serif";
-        let highscoreText = "highscore: " + player.highscore;
-        ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
+
+        if (this.highscore > 0){
+            ctx.font ="bold 25px serif";
+            let highscoreText = "highscore: " + this.highscore;
+            ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
+        }
+
         ctx.restore();
     }
 
