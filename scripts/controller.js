@@ -165,12 +165,21 @@ function gameLoop() {
     (frame === 19) ? frame = 0 : frame ++;
     clock = Date.now() - start;
 
-    if (clock - lastBarrelDrop > 30000 && count(barrels) < 10) {
+    spawnBarrelsEvery(30000);
+
+    draw();
+}
+
+/**
+ * drops new barrels after a certain period of time
+ * 
+ * @param {int} milliseconds - the time in milliseconds after which new barrels should drop
+ */
+function spawnBarrelsEvery(milliseconds) {
+    if (clock - lastBarrelDrop > milliseconds && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
     }
-
-    draw();
 }
 
 function draw() {
