@@ -46,8 +46,8 @@ function spawnBarrels(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize
             )
-        } while (CollisionDetection.collidesWithOneOf(barrel, RectangularCollideZone, walls, RectangularCollideZone) != null
-        && !CollisionDetection.collidesWith(barrel, RectangularCollideZone, player, RectangularCollideZone));
+        } while (CollisionDetection.collidesWithOneOf2(barrel, walls) != null
+        && !CollisionDetection.collidesWith2(barrel, player));
 
         barrels.push(barrel);
     }
@@ -64,7 +64,6 @@ function spawnZombies(count){
                 getRandomNumberIn(0, tilesY)*tilesize,
                 getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
         } while (CollisionDetection.isNotFreeSpace(zombie));
-        //} while (CollisionDetection.collidesWithOneOf(zombie, RectangularCollideZone, walls, RectangularCollideZone) != null);
 
         zombies.push(zombie);
     }

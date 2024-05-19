@@ -1,26 +1,18 @@
 class GameObject {
-    constructor(src, posX, posY, hitZone, collideZone) {
+    constructor(src, posX, posY) {
         this.src = src;
         this.posX = posX;
         this.posY = posY;
 
-        this.hitZone= hitZone;
-        this.collideZone= collideZone;
+        this.hitZone;
+        this.collideZone;
 
         this.zones = new Set();
     }
 
     showCollideZone(){
-        let zone = null;
-
-        this.zones.forEach(elem => {
-            if (elem instanceof RectangularCollideZone){
-                zone = elem;
-            }
-        })
-
-        if (zone === null) console.error("No CollideZone!");
-        else this.showRectangularCollideZone(zone);
+        if (this.collideZone === null) console.error("No CollideZone!");
+        else this.showRectangularCollideZone(this.collideZone);
     }
 
     showRectangularCollideZone(zone){
