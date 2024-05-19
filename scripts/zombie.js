@@ -114,7 +114,7 @@ class Zombie extends GameObject{
         if (this.velocityRight > 0) this.orientation = orientation.right;
         if (this.velocityLeft > 0) this.orientation = orientation.left;
 
-        if (CollisionDetection.collidesWith2(this, player)) player.hit(this.damage);
+        if (CollisionDetection.collides(this, player)) player.hit(this.damage);
     }
 
     draw(){

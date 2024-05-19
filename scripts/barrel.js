@@ -20,7 +20,7 @@ class Barrel extends GameObject {
     }
 
     move(){
-        if (CollisionDetection.collidesWith2(this, player)){
+        if (CollisionDetection.collides(this, player)){
             this.velocityRight = player.velocityRight;
             this.velocityLeft = player.velocityLeft;
             this.velocityUp = player.velocityUp;

@@ -1,7 +1,7 @@
 class CollisionDetection{
 
     /**
-     * @deprecated collidesWith2() should be utlilzed instead
+     * @deprecated collides() should be utlilzed instead
      */
     static collidesWithSpecifyZones(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType){
 
@@ -20,7 +20,7 @@ class CollisionDetection{
         }
     }
 
-    static collidesWith2(gameObject, collideObject){
+    static collides(gameObject, collideObject){
         let gameObjectZone = gameObject.collideZone;
         let collideObjectZone = collideObject.collideZone;
 
@@ -63,7 +63,7 @@ class CollisionDetection{
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
-            if (this.collidesWith2(gameObject, collideObject)) return collideObject;
+            if (this.collides(gameObject, collideObject)) return collideObject;
         }
 
         return null;
@@ -90,7 +90,7 @@ class CollisionDetection{
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
-            if (this.collidesWith2(gameObject, collideObject)) collidingObjects.push(collideObject);
+            if (this.collides(gameObject, collideObject)) collidingObjects.push(collideObject);
         }
 
         return collidingObjects;
@@ -106,7 +106,7 @@ class CollisionDetection{
         if(CollisionDetection.collidesWithOneOf2(spawnObject, walls) != null
             || CollisionDetection.collidesWithOneOf2(spawnObject, zombies) != null
             || CollisionDetection.collidesWithOneOf2(spawnObject, barrels) != null
-            || CollisionDetection.collidesWith2(spawnObject, player)
+            || CollisionDetection.collides(spawnObject, player)
         ){
             return true;
         }
