@@ -6,7 +6,9 @@ class Explosion extends GameObject{
         this.start = clock;
         this.damage = 40;
 
-        this.collideZone=new CircularCollideZone(2*tilesize);
+        this.collideZone = new CircularCollideZone(2*tilesize);
+
+        this.zones.add(new CircularCollideZone(2*tilesize));
 
         this.firstMoveCall = true;
 

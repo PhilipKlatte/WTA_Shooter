@@ -63,27 +63,9 @@ function spawnZombies(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize,
                 getRandomNumberIn(zombieMinSpeed, zombieMaxSpeed));
-        } while (CollisionDetection.collidesWithOneOf(zombie, RectangularCollideZone, walls, RectangularCollideZone) != null);
+        } while (CollisionDetection.isNotFreeSpace(zombie));
+        //} while (CollisionDetection.collidesWithOneOf(zombie, RectangularCollideZone, walls, RectangularCollideZone) != null);
 
         zombies.push(zombie);
     }
-}
-/**
- * Checks if an object can be spawned
- * @param {*} spawnObject the object you want to spawn
- * @returns true as long as the space is already occupied
- */
-function isNotFreeSpace(spawnObject){
-    
-    if(CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, walls) != null
-        || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, zombies) != null
-        || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, barrels) != null
-    //    || CollisionDetection.collidesWith(spawnObject,RectangularCollideZone, player, RectangularCollideZone)
-    ){
-        return true;
-    }
-    else{
-        return false;
-    }
-
 }

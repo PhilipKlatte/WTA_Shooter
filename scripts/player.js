@@ -37,8 +37,8 @@ class Player extends GameObject{
         let movedPlayerHorizontally = new Player(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
         let movedPlayerVertically = new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown);
         
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedPlayerHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedPlayerVertically, RectangularCollideZone,  walls, RectangularCollideZone) != null;
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf2(movedPlayerHorizontally, walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf2(movedPlayerVertically, walls) != null;
 
         if (this.pushedBarrel != null){
             let movedBarrelHorizontally = new Barrel(
