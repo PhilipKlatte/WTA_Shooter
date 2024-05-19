@@ -3,7 +3,7 @@ class CollisionDetection{
     /**
      * @deprecated collidesWith2() should be utlilzed instead
      */
-    static collidesWith(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType){
+    static collidesWithSpecifyZones(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType){
 
         let gameObjectZone = this.#getZone(gameObject, gameObjectZoneType);
         let collideObjectZone = this.#getZone(collideObject, collideObjectZoneType);
@@ -49,7 +49,7 @@ class CollisionDetection{
     /**
      * @deprecated collidesWithOneOf2() should be utlilzed instead
      */
-    static collidesWithOneOf(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
+    static collidesWithOneOfSpecifyZones(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
@@ -72,7 +72,7 @@ class CollisionDetection{
     /**
      * @deprecated collidesWithAllOf() should be utlilzed instead
      */
-    static collidesWithAnyOf(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
+    static collidesWithAnyOfSpecifyZones(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
         const collidingObjects = [];
 
         for (const collideObject of collideObjects) {
@@ -103,10 +103,10 @@ class CollisionDetection{
      */
     static isNotFreeSpace(spawnObject){
         
-        if(CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, walls) != null
-            || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, zombies) != null
-            || CollisionDetection.collidesWithOneOfRecColideZone(spawnObject, barrels) != null
-            || CollisionDetection.collidesWith(spawnObject,RectangularCollideZone, player, RectangularCollideZone)
+        if(CollisionDetection.collidesWithOneOf2(spawnObject, walls) != null
+            || CollisionDetection.collidesWithOneOf2(spawnObject, zombies) != null
+            || CollisionDetection.collidesWithOneOf2(spawnObject, barrels) != null
+            || CollisionDetection.collidesWith2(spawnObject, player)
         ){
             return true;
         }
