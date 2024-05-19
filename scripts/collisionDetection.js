@@ -5,9 +5,9 @@ class CollisionDetection{
      * 
      * Checks if specific zones of gameobjects collide.
      * 
-     * @param {*} object1 - the object that is tested for collision with the object2
+     * @param {GameObject} object1 - the object that is tested for collision with the object2
      * @param {*} object1Zone - the specific zone of object1 that should be tested for collision
-     * @param {*} object2 - the object that is tested for collision with the object1
+     * @param {GameObject} object2 - the object that is tested for collision with the object1
      * @param {*} object2Zone - the specific zone of object2 that should be tested for collision
      * @returns true if gameobjects collide; false if not.
      */
@@ -51,11 +51,12 @@ class CollisionDetection{
     /**
      * @deprecated collidesWithOneOf() should be utlilzed instead
      * 
-     * Checks if specific zones of gameobjects collide.
-     * 
+     * DOES NOT WORK! Checks if specific zones of gameobjects collide. Does not work because collideObjectsZone is not 
+     * the general zoneType of all collideObjects.
+     *  
      * @param {*} object - the object that is tested for collision with the object2
      * @param {*} objectZone - the specific zone of object1 that should be tested for collision
-     * @param {*} collideObjects - the object that is tested for collision with the object1
+     * @param {*} collideObjects - Set() of gameobjects that are tested for collision with the gameObject
      * @param {*} collideObjectsZone - the specific zone of object2 that should be tested for collision
      * @returns the first gameobject of collideObjetcs of which the collideObjectsZone overlaps with the objectZone
      */
@@ -69,6 +70,14 @@ class CollisionDetection{
         return null;
     }
 
+    /**
+     * Checks if a gameobject collides with one of a Set() of other gameObjects, by checking if the collideZone of that 
+     * gameobject overlaps with one of the other objects collideZones
+     * 
+     * @param {GameObject} gameObject - the gameobject that is tested for collision with the of the gameobjects
+     * @param {Set<GameObject>} collideObjects - the Set() of gameobjetcs of which each one is tested for collision with the gameobject
+     * @returns the first gameobject the gameObject collides with
+     */
     static collidesWithOneOf(gameObject, collideObjects){
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
@@ -80,6 +89,8 @@ class CollisionDetection{
     }
 
     /**
+     * DOES NOT WORK!
+     * 
      * @deprecated collidesWithAllOf() should be utlilzed instead
      */
     static collidesWithAnyOfSpecifyZones(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
@@ -94,6 +105,14 @@ class CollisionDetection{
         return collidingObjects;
     }
 
+    /**
+     * Checks with which of the Set() of gameObjects the gameObject collides with
+     * gameobject overlaps with one of the other objects collideZones
+     * 
+     * @param {GameObject} gameObject - the gameobject that is tested for collision with the all of the gameobjects
+     * @param {Set<GameObject>} collideObjects - the Set() of gameobjetcs of which each one is tested for collision with the gameobject
+     * @returns all of the collideObjects the gameObject collides with
+     */
     static collidesWithAllOf(gameObject, collideObjects){
         const collidingObjects = [];
 
