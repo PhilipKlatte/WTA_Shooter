@@ -39,9 +39,9 @@ var zombieMaxSpeed = 4.5;
 
 var player;
 
-var frame = 0;
+var frame = 0;              // numbers gameloops cyclically from 0-20; gets updated per gameloop
 var start = Date.now();     // Time at which the game was started
-var clock = 0;              // Time elapsed since game was started
+var clock = 0;              // Time elapsed since game was started; gets updated per gameloop
 
 var interval = null;        // the Id of the interval that calls the gameLoop() function
 var gamePaused = false;
@@ -162,8 +162,7 @@ function gameLoop() {
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
 
-    (frame === 19) ? frame = 0 : frame ++;
-    clock = Date.now() - start;
+    advanceTime();
 
     spawnBarrelsEvery(30000);
 
@@ -180,6 +179,14 @@ function spawnBarrelsEvery(milliseconds) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
     }
+}
+
+/**
+ * advances the time variables like clock and frame
+ */
+function advanceTime(){
+    (frame === 19) ? frame = 0 : frame ++;
+    clock = Date.now() - start;
 }
 
 function draw() {
