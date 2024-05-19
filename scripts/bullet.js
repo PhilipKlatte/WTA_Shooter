@@ -11,7 +11,7 @@ class Bullet extends GameObject {
         this.velocityUp = (direction === orientation.up) ? this.speed : 0;
         this.velocityDown = (direction === orientation.down) ? this.speed : 0;
 
-        this.collideZone = new CircularCollideZone(4);
+        this.collideZone = new CircularCollideZone(8);
         this.hitZone = new CircularHitZone(4);
     }
 
