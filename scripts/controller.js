@@ -24,12 +24,6 @@ var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
 var press_key = AssetLoader.addImage("assets/game/controls.png");
 
-const walls = [];
-const zombies = [];
-const barrels = [];
-const bullets = [];
-const effects = [];
-
 var maxZombieCount = 5;
 var increaseZombieCountProbability = 10; // Probalitity that the ZombieCount increases by one after every killed Zombie
 var lastBarrelDrop = 0;

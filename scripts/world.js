@@ -14,6 +14,12 @@ var wallDefinitions = [
     [1, 9, 10, 9]
 ];
 
+const walls = [];
+const zombies = [];
+const barrels = [];
+const bullets = [];
+const effects = [];
+
 function loadWalls(){
     wallDefinitions.forEach(wall => {
         let w = new Wall(
