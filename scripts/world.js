@@ -46,8 +46,7 @@ function spawnBarrels(count){
                 getRandomNumberIn(0, tilesX)*tilesize,
                 getRandomNumberIn(0, tilesY)*tilesize
             )
-        } while (CollisionDetection.collidesWithOneOf2(barrel, walls) != null
-        && !CollisionDetection.collides(barrel, player));
+        } while (CollisionDetection.isNotFreeSpace(barrel));
 
         barrels.push(barrel);
     }

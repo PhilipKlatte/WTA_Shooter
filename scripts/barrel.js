@@ -34,8 +34,8 @@ class Barrel extends GameObject {
         let movedBarrelHorizontally = new Barrel(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
         let movedBarrelVertically = new Barrel(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown);
             
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf2(movedBarrelHorizontally, walls) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf2(movedBarrelVertically, walls) != null;
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedBarrelHorizontally, walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedBarrelVertically, walls) != null;
 
         if (!this.stuckHorizontally) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;

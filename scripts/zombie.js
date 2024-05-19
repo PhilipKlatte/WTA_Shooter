@@ -100,12 +100,12 @@ class Zombie extends GameObject{
         }
 
         let movedZombieHorizontally = new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
-        if (CollisionDetection.collidesWithOneOf2(movedZombieHorizontally, walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(movedZombieHorizontally, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
         }
 
         let movedZombieVertically = new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp);
-        if (CollisionDetection.collidesWithOneOf2(movedZombieVertically, walls) === null) {
+        if (CollisionDetection.collidesWithOneOf(movedZombieVertically, walls) === null) {
             this.posY += this.velocityDown - this.velocityUp;
         }
 

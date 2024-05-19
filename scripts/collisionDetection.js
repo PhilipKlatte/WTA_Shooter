@@ -49,19 +49,27 @@ class CollisionDetection{
     }
 
     /**
-     * @deprecated collidesWithOneOf2() should be utlilzed instead
+     * @deprecated collidesWithOneOf() should be utlilzed instead
+     * 
+     * Checks if specific zones of gameobjects collide.
+     * 
+     * @param {*} object - the object that is tested for collision with the object2
+     * @param {*} objectZone - the specific zone of object1 that should be tested for collision
+     * @param {*} collideObjects - the object that is tested for collision with the object1
+     * @param {*} collideObjectsZone - the specific zone of object2 that should be tested for collision
+     * @returns the first gameobject of collideObjetcs of which the collideObjectsZone overlaps with the objectZone
      */
-    static collidesWithOneOfSpecifyZones(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
+    static collidesWithOneOfSpecifyZones(object, objectZone, collideObjects, collideObjectsZone){
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
-            if (this.collidesWith(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType)) return collideObject;
+            if (this.collidesWithSpecifyZones(object, objectZone, collideObject, collideObjectsZone)) return collideObject;
         }
 
         return null;
     }
 
-    static collidesWithOneOf2(gameObject, collideObjects){
+    static collidesWithOneOf(gameObject, collideObjects){
         for (const collideObject of collideObjects) {
             if (collideObject === undefined) continue;
 
@@ -105,9 +113,9 @@ class CollisionDetection{
      */
     static isNotFreeSpace(spawnObject){
         
-        if(CollisionDetection.collidesWithOneOf2(spawnObject, walls) != null
-            || CollisionDetection.collidesWithOneOf2(spawnObject, zombies) != null
-            || CollisionDetection.collidesWithOneOf2(spawnObject, barrels) != null
+        if(CollisionDetection.collidesWithOneOf(spawnObject, walls) != null
+            || CollisionDetection.collidesWithOneOf(spawnObject, zombies) != null
+            || CollisionDetection.collidesWithOneOf(spawnObject, barrels) != null
             || CollisionDetection.collides(spawnObject, player)
         ){
             return true;
