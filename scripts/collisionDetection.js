@@ -69,16 +69,9 @@ class CollisionDetection{
         return null;
     }
 
-    static collidesWithOneOfRecColideZone(gameObject, collideObjects){
-        for (const collideObject of collideObjects) {
-            if (collideObject === undefined) continue;
-
-            if (this.collidesWith(gameObject, RectangularCollideZone, collideObject, RectangularCollideZone)) return collideObject;
-        }
-
-        return null;
-    }
-
+    /**
+     * @deprecated collidesWithAllOf() should be utlilzed instead
+     */
     static collidesWithAnyOf(gameObject, gameObjectZoneType, collideObjects, collideObjectZoneType){
         const collidingObjects = [];
 
@@ -86,6 +79,18 @@ class CollisionDetection{
             if (collideObject === undefined) continue;
 
             if (this.collidesWith(gameObject, gameObjectZoneType, collideObject, collideObjectZoneType)) collidingObjects.push(collideObject);
+        }
+
+        return collidingObjects;
+    }
+
+    static collidesWithAllOf(gameObject, collideObjects){
+        const collidingObjects = [];
+
+        for (const collideObject of collideObjects) {
+            if (collideObject === undefined) continue;
+
+            if (this.collidesWith2(gameObject, collideObject)) collidingObjects.push(collideObject);
         }
 
         return collidingObjects;

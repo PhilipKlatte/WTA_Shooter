@@ -16,8 +16,8 @@ class Explosion extends GameObject{
     }
 
     hurt(){
-        CollisionDetection.collidesWithAnyOf(this, CircularCollideZone, zombies, RectangularCollideZone).forEach(zombie => zombie.hit(this.damage));
-        CollisionDetection.collidesWithAnyOf(this, CircularCollideZone, barrels, RectangularCollideZone).forEach(barrel => barrel.explode());
+        CollisionDetection.collidesWithAllOf(this, zombies).forEach(zombie => zombie.hit(this.damage));
+        CollisionDetection.collidesWithAllOf(this, barrels).forEach(barrel => barrel.explode());
 
         if (CollisionDetection.collidesWith2(this, player)) player.hit(this.damage);
     }
