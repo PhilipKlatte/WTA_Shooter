@@ -22,10 +22,10 @@ class Bullet extends GameObject {
         if (this.#hitZombie()) return;
         if (this.#hitBarrel()) return;
 
-        if (CollisionDetection.collidesWithOneOf(this,CircularCollideZone, walls, RectangularCollideZone) === null) {
+        if (CollisionDetection.collidesWithOneOf2(this, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
             this.posY = this.posY - this.velocityUp + this.velocityDown;
-        } else if (CollisionDetection.collidesWithOneOf(this, CircularCollideZone, walls, RectangularCollideZone) != null){
+        } else if (CollisionDetection.collidesWithOneOf2(this, walls) != null){
             delete bullets[bullets.indexOf(this)];
         }
 
@@ -33,7 +33,7 @@ class Bullet extends GameObject {
     }
 
     #hitZombie(){
-        let hitZombie = CollisionDetection.collidesWithOneOf(this, CircularHitZone, zombies, RectangularHitZone);
+        let hitZombie = CollisionDetection.collidesWithOneOf2(this, zombies);
 
         if (hitZombie != null){
             hitZombie.hit(this.damage);
@@ -46,7 +46,7 @@ class Bullet extends GameObject {
     }
 
     #hitBarrel(){
-        let hitBarrel = CollisionDetection.collidesWithOneOf(this, CircularCollideZone, barrels, RectangularCollideZone);
+        let hitBarrel = CollisionDetection.collidesWithOneOf2(this, barrels);
 
         if (hitBarrel != null){
             hitBarrel.explode();
