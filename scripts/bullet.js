@@ -13,9 +13,6 @@ class Bullet extends GameObject {
 
         this.collideZone = new CircularCollideZone(4);
         this.hitZone = new CircularHitZone(4);
-
-        this.zones.add(new CircularCollideZone(4));
-        this.zones.add(new CircularHitZone(4));
     }
 
     move() {

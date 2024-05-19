@@ -7,9 +7,6 @@ class Barrel extends GameObject {
         this.velocityUp = 0;
         this.velocityDown = 0;
 
-        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
-        this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
-
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
         this.hitZone = new RectangularHitZone(0, tilesize, tilesize, 2*tilesize);
 

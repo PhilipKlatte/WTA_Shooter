@@ -19,9 +19,6 @@ class Player extends GameObject{
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
         this.hitzone = new RectangularHitZone(0, tilesize, tilesize, 2*tilesize);
-
-        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
-        this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
         
         this.orientation = orientation.up;
 

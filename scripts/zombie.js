@@ -13,14 +13,11 @@ class Zombie extends GameObject{
         this.lastKnownPlayerPositionY = null;
 
         this.speed = speed;
-        this.idlespeed= getRandomNumberIn(1,3);
+        this.idlespeed = getRandomNumberIn(1,3);
 
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
         this.hitZone = new RectangularHitZone(0, 0, tilesize, 2*tilesize);
-
-        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize))
-        this.zones.add(new RectangularHitZone(0, 0, tilesize, 2*tilesize))
 
         this.health = 40;
         this.damageTaken = 0;
@@ -30,10 +27,10 @@ class Zombie extends GameObject{
       
         this.animationFrame = 1;
         this.laufeInEineRichtungFuer=0;
-        this.laufeInRichtungX=0;
-        this.laufeInRichtungY=0;
+        this.laufeInRichtungX = 0;
+        this.laufeInRichtungY = 0;
 
-        this.timeLastSeenPlayer=null;
+        this.timeLastSeenPlayer = null;
     }
 
     move(){
