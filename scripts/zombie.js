@@ -16,9 +16,11 @@ class Zombie extends GameObject{
         this.idlespeed= getRandomNumberIn(1,3);
 
 
-        this.collideZone= new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
-        this.hitZone=new RectangularHitZone(0, 0, tilesize, 2*tilesize);
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.hitZone = new RectangularHitZone(0, 0, tilesize, 2*tilesize);
 
+        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize))
+        this.zones.add(new RectangularHitZone(0, 0, tilesize, 2*tilesize))
 
         this.health = 40;
         this.damageTaken = 0;

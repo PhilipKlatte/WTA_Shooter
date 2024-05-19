@@ -18,6 +18,12 @@ class Wall extends GameObject{
             0,
             this.untilX - this.fromX,
             (this.orientation === "horizontal") ? tilesize*3 : this.untilY - this.fromY);
+
+        this.zones.add(new RectangularCollideZone(
+            0,
+            0,
+            this.untilX - this.fromX,
+            (this.orientation === "horizontal") ? tilesize*3 : this.untilY - this.fromY));
     }
 
     draw(){

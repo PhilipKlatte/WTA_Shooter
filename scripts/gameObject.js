@@ -6,6 +6,8 @@ class GameObject {
 
         this.hitZone= hitZone;
         this.collideZone= collideZone;
+
+        this.zones = new Set();
     }
 
     showCollideZone(){

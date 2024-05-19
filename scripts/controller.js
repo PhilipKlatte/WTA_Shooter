@@ -155,6 +155,9 @@ function pauseUntilKeyPress() {
     });
 }
 
+/**
+ * This function gets called every 50ms (20x per second). It moves all gameobjects and draws the new frame.
+ */
 function gameLoop() {
     bullets.forEach(bullet => bullet.move());
     zombies.forEach(zombie => zombie.move(player.posX, player.posY));
