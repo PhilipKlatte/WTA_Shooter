@@ -33,7 +33,7 @@ async function pressKeyToStartGame(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, tilesX*tilesize, tilesY*tilesize);
     ctx.font ="bold 48px serif";
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "white";
     ctx.fillText("press any key to start game", 8*tilesize, 12*tilesize);
     ctx.restore();
     await pauseUntilKeyPress();

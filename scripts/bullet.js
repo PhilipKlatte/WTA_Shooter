@@ -18,19 +18,16 @@ class Bullet extends GameObject {
     move() {
         if (this.#hitZombie()) return;
         if (this.#hitBarrel()) return;
+        if (this.#hitWall()) return;
 
-        if (CollisionDetection.collidesWithOneOf(this, walls) === null) {
-            this.posX = this.posX + this.velocityRight - this.velocityLeft;
-            this.posY = this.posY - this.velocityUp + this.velocityDown;
-        } else if (CollisionDetection.collidesWithOneOf(this, walls) != null){
-            delete bullets[bullets.indexOf(this)];
-        }
+        this.posX = this.posX + this.velocityRight - this.velocityLeft;
+        this.posY = this.posY - this.velocityUp + this.velocityDown;
 
         //logCoordinates();
     }
 
     #hitZombie(){
-        let hitZombie = CollisionDetection.collidesWithOneOf(this, zombies);
+        let hitZombie = CollisionDetection.hitsOneOf(this, zombies);
 
         if (hitZombie != null){
             hitZombie.hit(this.damage);
@@ -47,6 +44,18 @@ class Bullet extends GameObject {
 
         if (hitBarrel != null){
             hitBarrel.explode();
+            delete bullets[bullets.indexOf(this)];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    #hitWall(){
+        let hitWall = CollisionDetection.collidesWithOneOf(this, walls); 
+
+        if (hitWall != null) {
             delete bullets[bullets.indexOf(this)];
 
             return true;

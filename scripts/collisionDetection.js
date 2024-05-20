@@ -49,6 +49,29 @@ class CollisionDetection{
     }
 
     /**
+     * Checks if the collideZone of object1 overlaps with the hitZone of object2.
+     * 
+     * @param {GameObject} object1 - the object that is tested for collision with the object2
+     * @param {GameObject} object2 - the object that is tested for collision with the object1
+     * @returns true if collideZone of object1 overlaps with the hitZone of object2; false if not.
+     */
+    static hits(object1, object2){
+        let object1CollideZone = object1.collideZone;
+        let object2CollideZone = object2.hitZone;
+
+        if (object1CollideZone instanceof RectangularZone
+            && object2CollideZone instanceof RectangularZone){
+
+            return this.#rectangularCZcollidesWithRectangularCZ(object1, object1CollideZone, object2, object2CollideZone);
+        }
+        if (object1CollideZone instanceof CircularZone
+            && object2CollideZone instanceof RectangularZone){
+
+            return this.#circularCZcollidesWithRectangularCZ(object1, object1CollideZone, object2, object2CollideZone);
+        }
+    }
+
+    /**
      * @deprecated collidesWithOneOf() should be utlilzed instead
      * 
      * DOES NOT WORK! Checks if specific zones of gameobjects collide. Does not work because collideObjectsZone is not 
@@ -83,6 +106,23 @@ class CollisionDetection{
             if (collideObject === undefined) continue;
 
             if (this.collides(gameObject, collideObject)) return collideObject;
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks if a the collideZone of a gameobject overlaps with one of the hitZones of a Set() of other gameObjects
+     * 
+     * @param {GameObject} object - the gameobject that is tested for collision with the of the gameobjects
+     * @param {Set<GameObject>} otherObjects - the Set() of gameobjetcs of which each one is tested for collision with the gameobject
+     * @returns the first gameobject the gameObject collides with
+     */
+    static hitsOneOf(object, otherObjects){
+        for (const otherObject of otherObjects) {
+            if (otherObject === undefined) continue;
+
+            if (this.hits(object, otherObject)) return otherObject;
         }
 
         return null;
