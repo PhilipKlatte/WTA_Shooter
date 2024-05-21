@@ -11,8 +11,6 @@ var orientation = {
     right: 90
 }
 
-let highscore = 0;
-
 var playerImg = AssetLoader.addImage("assets/player/player_full.png");
 var barrelImg = AssetLoader.addImage("assets/barrell32x64.png");
 var zombieImg = AssetLoader.addImage("assets/zombie/zombie_full.png");
@@ -24,14 +22,10 @@ var wall_vertical = AssetLoader.addImage("assets/wall_vertical2_32x32.png");
 var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
 var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
+var press_key = AssetLoader.addImage("assets/game/controls.png");
 
-const walls = [];
-const zombies = [];
-const barrels = [];
-const bullets = [];
-const effects = [];
-
-var maxZombieCount = 4;
+var maxZombieCount = 5;
+var increaseZombieCountProbability = 10; // Probalitity that the ZombieCount increases by one after every killed Zombie
 var lastBarrelDrop = 0;
 
 var zombieMinSpeed = 1;
@@ -39,36 +33,25 @@ var zombieMaxSpeed = 4.5;
 
 var player;
 
-var frame = 0;
+var frame = 0;              // numbers gameloops cyclically from 0-20; gets updated per gameloop
 var start = Date.now();     // Time at which the game was started
-var clock = 0;              // Time elapsed since game was started
+var clock = 0;              // Time elapsed since game was started; gets updated per gameloop
 
-var interval = null;
+var interval = null;        // the Id of the interval that calls the gameLoop() function
 var gamePaused = false;
 var soundsMuted = false;
 
-var mouseX = 0;
-var mouseY = 0;
+var mouseX = 0;             // mouse position X coordinate; currently unused
+var mouseY = 0;             // mouse position Y coordinate; currently unused
 
 var debugMode = false;
-
-var music = new Audio("assets/sounds/music.mp3");
 
 async function startGame(){
     buildCanvas();
 
-    ctx.save();
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, tilesX*tilesize, tilesY*tilesize);
-    ctx.font ="bold 48px serif";
-    ctx.fillStyle = "white";
-    ctx.fillText("press any key to start game", 8*tilesize, 12*tilesize);
-    ctx.restore();
-    await pauseUntilKeyPress();
+    pressKeyToStartGame();
 
-    music.loop = true;
-    music.volume = 0.5;
-    music.play();
+    startMusic();
 
     ctx.drawImage(titlescreen, 0, 0);
     await pauseUntilKeyPress();
@@ -79,28 +62,23 @@ async function startGame(){
     init();
 }
 
-function muteMusic(){
-    music.muted = true;
-}
-
-function unmuteMusic(){
-    music.muted = false;
-}
-
 function init() {
     buildCanvas();
 
-    player = new Player(playerImg, 3*tilesize, 20*tilesize);
+    if (!player) player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     loadWalls();
-    spawnZombies(5);
+    spawnNewZombies();
     spawnBarrels(5);
 
-    if (music.paused) music.play();
+    if (music.paused) playMusic();
 
-    interval = setInterval(gameLoop,50);
+    interval = setInterval(gameLoop,50);        // create interval that calls gameLoop() function every 50ms
 }
 
+/**
+ * Gets the canvas element from the DOM and initializes it
+ */
 function buildCanvas(){
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", (tilesX * tilesize).toString());
@@ -115,7 +93,7 @@ function buildCanvas(){
 function pauseGame(){
     gamePaused = true;
 
-    music.pause();
+    pauseMusic();
 
     clearInterval(interval);
 
@@ -128,14 +106,14 @@ function pauseGame(){
 function resumeGame(){
     gamePaused = false;
 
-    music.play();
+    playMusic();
     interval = setInterval(gameLoop,50);
 }
 
-async function reset(){
+async function resetGame(){
     clearInterval(interval);
 
-    music.pause();
+    pauseMusic();
 
     await pauseUntilKeyPress();
 
@@ -143,17 +121,15 @@ async function reset(){
     start = Date.now();
     clock = 0;
 
-    if (player.kills > highscore) highscore = player.kills;
-
     maxZombieCount = 4;
+
+    player = new Player(playerImg, 3*tilesize, 20*tilesize, player.highscore)
 
     walls.splice(0, walls.length);
     zombies.splice(0, zombies.length);
     barrels.splice(0, barrels.length);
     bullets.splice(0, bullets.length);
     effects.splice(0, effects.length);
-
-    player = new Player(playerImg, 3*tilesize, 20*tilesize);
 
     clearInterval(interval);
 
@@ -173,6 +149,9 @@ function pauseUntilKeyPress() {
     });
 }
 
+/**
+ * This function gets called every 50ms (20x per second). It moves all gameobjects and draws the new frame.
+ */
 function gameLoop() {
     bullets.forEach(bullet => bullet.move());
     zombies.forEach(zombie => zombie.move(player.posX, player.posY));
@@ -180,15 +159,31 @@ function gameLoop() {
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
 
-    (frame === 19) ? frame = 0 : frame ++;
-    clock = Date.now() - start;
+    advanceTime();
 
-    if (clock - lastBarrelDrop > 30000 && count(barrels) < 10) {
+    spawnBarrelsEvery(30000);
+
+    draw();
+}
+
+/**
+ * drops new barrels after a certain period of time
+ * 
+ * @param {int} milliseconds - the time in milliseconds after which new barrels should drop
+ */
+function spawnBarrelsEvery(milliseconds) {
+    if (clock - lastBarrelDrop > milliseconds && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
     }
+}
 
-    draw();
+/**
+ * advances the time variables like clock and frame
+ */
+function advanceTime(){
+    (frame === 19) ? frame = 0 : frame ++;
+    clock = Date.now() - start;
 }
 
 function draw() {
@@ -202,22 +197,11 @@ function draw() {
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
 
-    drawKillCount();
+    player.drawKillCount();
 
     if (player.dead) ctx.drawImage(game_over_overlay, 0, 0);
 
     if (debugMode) drawDebugMode();
-}
-
-function drawKillCount(){
-    ctx.save();
-    ctx.font ="bold 60px serif";
-    let killCountText = "kills: " + player.kills;
-    ctx.fillText(killCountText, tilesize, 2*tilesize);
-    ctx.font ="bold 25px serif";
-    let highscoreText = "highscore: " + highscore;
-    if (highscore > 0) ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
-    ctx.restore();
 }
 
 function drawDebugMode() {

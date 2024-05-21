@@ -6,7 +6,7 @@ class Explosion extends GameObject{
         this.start = clock;
         this.damage = 40;
 
-        this.zones.add(new CircularCollideZone(2*tilesize));
+        this.collideZone = new CircularCollideZone(2*tilesize);
 
         this.firstMoveCall = true;
 
@@ -14,10 +14,10 @@ class Explosion extends GameObject{
     }
 
     hurt(){
-        CollisionDetection.collidesWithAnyOf(this, CircularCollideZone, zombies, RectangularCollideZone).forEach(zombie => zombie.hit(this.damage));
-        CollisionDetection.collidesWithAnyOf(this, CircularCollideZone, barrels, RectangularCollideZone).forEach(barrel => barrel.explode());
+        CollisionDetection.collidesWithAllOf(this, zombies).forEach(zombie => zombie.hit(this.damage));
+        CollisionDetection.collidesWithAllOf(this, barrels).forEach(barrel => barrel.explode());
 
-        if (CollisionDetection.collidesWith(this, CircularCollideZone, player, RectangularCollideZone)) player.hit(this.damage);
+        if (CollisionDetection.collides(this, player)) player.hit(this.damage);
     }
 
     move(){

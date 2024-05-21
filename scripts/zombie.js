@@ -13,13 +13,11 @@ class Zombie extends GameObject{
         this.lastKnownPlayerPositionY = null;
 
         this.speed = speed;
-        this.idlespeed= getRandomNumberIn(1,3);
+        this.idlespeed = getRandomNumberIn(1,3);
 
 
-        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
-
-        this.zones.add(new RectangularHitZone(0, 0, tilesize, 2*tilesize));
-
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.hitZone = new RectangularHitZone(0, 0, tilesize, 2*tilesize);
 
         this.health = 40;
         this.damageTaken = 0;
@@ -29,10 +27,10 @@ class Zombie extends GameObject{
       
         this.animationFrame = 1;
         this.laufeInEineRichtungFuer=0;
-        this.laufeInRichtungX=0;
-        this.laufeInRichtungY=0;
+        this.laufeInRichtungX = 0;
+        this.laufeInRichtungY = 0;
 
-        this.timeLastSeenPlayer=null;
+        this.timeLastSeenPlayer = null;
     }
 
     move(){
@@ -57,9 +55,6 @@ class Zombie extends GameObject{
                 this.hasSeenPlayer= false;
             }
         } else if (!this.hasSeenPlayer){
-            //this.speed= this.speed/2;
-            //console.log("Hey");
-            //console.log(this.laufeInEineRichtungFuer);
             if (this.laufeInEineRichtungFuer<0){
                 if(getRandomNumberIn(1,10)>3) {
                     this.laufeInRichtungX = getRandomNumberIn(0, canvas.width);
@@ -102,12 +97,12 @@ class Zombie extends GameObject{
         }
 
         let movedZombieHorizontally = new Zombie(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
-        if (CollisionDetection.collidesWithOneOf(movedZombieHorizontally, RectangularCollideZone, walls, RectangularCollideZone) === null) {
+        if (CollisionDetection.collidesWithOneOf(movedZombieHorizontally, walls) === null) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
         }
 
         let movedZombieVertically = new Zombie(this.src, this.posX, this.posY + this.velocityDown - this.velocityUp);
-        if (CollisionDetection.collidesWithOneOf(movedZombieVertically, RectangularCollideZone, walls, RectangularCollideZone) === null) {
+        if (CollisionDetection.collidesWithOneOf(movedZombieVertically, walls) === null) {
             this.posY += this.velocityDown - this.velocityUp;
         }
 
@@ -116,7 +111,7 @@ class Zombie extends GameObject{
         if (this.velocityRight > 0) this.orientation = orientation.right;
         if (this.velocityLeft > 0) this.orientation = orientation.left;
 
-        if (CollisionDetection.collidesWith(this,RectangularHitZone, player,RectangularHitZone)) player.hit(this.damage);
+        if (CollisionDetection.collides(this, player)) player.hit(this.damage);
     }
 
     draw(){
@@ -206,7 +201,7 @@ class Zombie extends GameObject{
     hit(damage){
         this.damageTaken += damage;
 
-        if (!soundsMuted) new Audio("assets/sounds/zombie hit.mp3").play();
+        playSound("assets/sounds/zombie hit.mp3");
 
         if (this.health - this.damageTaken <= 0) this.kill();
     }
@@ -214,13 +209,13 @@ class Zombie extends GameObject{
     kill(){
         delete zombies[zombies.indexOf(this)];
 
-        if (getRandomNumberIn(0, 100) < 10) {
+        if (getRandomNumberIn(0, 100) < increaseZombieCountProbability) {
             maxZombieCount++;
         }
 
         player.kills++;
 
-        spawnNewZombie();
+        spawnNewZombies();
     }
 
     #seesPlayer(){

@@ -38,7 +38,7 @@ async function keydownEvent(ev) {
             break;
 
         case 'R':
-            reset();
+            resetGame();
             break;
         case '1':
             (music.muted) ? unmuteMusic() : muteMusic();
@@ -48,7 +48,7 @@ async function keydownEvent(ev) {
             break;
     }
 
-    if (ev.keyCode === 27) {
+    if (ev.keyCode === 27) {                        // ESC key pressed
         (gamePaused) ? resumeGame() : pauseGame();
     }
 }

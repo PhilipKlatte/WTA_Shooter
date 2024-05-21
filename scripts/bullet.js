@@ -11,26 +11,23 @@ class Bullet extends GameObject {
         this.velocityUp = (direction === orientation.up) ? this.speed : 0;
         this.velocityDown = (direction === orientation.down) ? this.speed : 0;
 
-        this.zones.add(new CircularCollideZone(4));
-        this.zones.add(new CircularHitZone(4));
+        this.collideZone = new CircularCollideZone(8);
+        this.hitZone = new CircularHitZone(4);
     }
 
     move() {
         if (this.#hitZombie()) return;
         if (this.#hitBarrel()) return;
+        if (this.#hitWall()) return;
 
-        if (CollisionDetection.collidesWithOneOf(this,CircularCollideZone, walls, RectangularCollideZone) === null) {
-            this.posX = this.posX + this.velocityRight - this.velocityLeft;
-            this.posY = this.posY - this.velocityUp + this.velocityDown;
-        } else if (CollisionDetection.collidesWithOneOf(this, CircularCollideZone, walls, RectangularCollideZone) != null){
-            delete bullets[bullets.indexOf(this)];
-        }
+        this.posX = this.posX + this.velocityRight - this.velocityLeft;
+        this.posY = this.posY - this.velocityUp + this.velocityDown;
 
         //logCoordinates();
     }
 
     #hitZombie(){
-        let hitZombie = CollisionDetection.collidesWithOneOf(this, CircularHitZone, zombies, RectangularHitZone);
+        let hitZombie = CollisionDetection.hitsOneOf(this, zombies);
 
         if (hitZombie != null){
             hitZombie.hit(this.damage);
@@ -43,10 +40,22 @@ class Bullet extends GameObject {
     }
 
     #hitBarrel(){
-        let hitBarrel = CollisionDetection.collidesWithOneOf(this, CircularCollideZone, barrels, RectangularCollideZone);
+        let hitBarrel = CollisionDetection.collidesWithOneOf(this, barrels);
 
         if (hitBarrel != null){
             hitBarrel.explode();
+            delete bullets[bullets.indexOf(this)];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    #hitWall(){
+        let hitWall = CollisionDetection.collidesWithOneOf(this, walls); 
+
+        if (hitWall != null) {
             delete bullets[bullets.indexOf(this)];
 
             return true;

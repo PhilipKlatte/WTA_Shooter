@@ -4,20 +4,13 @@ class GameObject {
         this.posX = posX;
         this.posY = posY;
 
-        this.zones = new Set();
+        this.hitZone;
+        this.collideZone;
     }
 
     showCollideZone(){
-        let zone = null;
-
-        this.zones.forEach(elem => {
-            if (elem instanceof RectangularCollideZone){
-                zone = elem;
-            }
-        })
-
-        if (zone === null) console.error("No CollideZone!");
-        else this.showRectangularCollideZone(zone);
+        if (this.collideZone === null) console.error("No CollideZone!");
+        else this.showRectangularCollideZone(this.collideZone);
     }
 
     showRectangularCollideZone(zone){

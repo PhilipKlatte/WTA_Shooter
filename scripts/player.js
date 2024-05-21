@@ -1,5 +1,6 @@
 class Player extends GameObject{
-    constructor(src, posX, posY) {
+
+    constructor(src, posX, posY, highscore = 0) {
         super(src, posX, posY);
 
         this.velocityRight = 0;
@@ -12,12 +13,13 @@ class Player extends GameObject{
         this.damageTaken = 0;
         this.lastDamage = 0;
         this.kills = 0;
+        this.highscore = highscore;
         this.dead = false;
         this.lastShot = 0;
 
-        this.zones.add(new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize));
-        this.zones.add(new RectangularHitZone(0, tilesize, tilesize, 2*tilesize));
-
+        this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
+        this.hitzone = new RectangularHitZone(0, tilesize, tilesize, 2*tilesize);
+        
         this.orientation = orientation.up;
 
         this.pushedBarrel = null;
@@ -32,8 +34,8 @@ class Player extends GameObject{
         let movedPlayerHorizontally = new Player(this.src, this.posX + this.velocityRight - this.velocityLeft, this.posY);
         let movedPlayerVertically = new Player(this.src, this.posX, this.posY - this.velocityUp + this.velocityDown);
         
-        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedPlayerHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null;
-        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedPlayerVertically, RectangularCollideZone,  walls, RectangularCollideZone) != null;
+        this.stuckHorizontally = CollisionDetection.collidesWithOneOf(movedPlayerHorizontally, walls) != null;
+        this.stuckVertically = CollisionDetection.collidesWithOneOf(movedPlayerVertically, walls) != null;
 
         if (this.pushedBarrel != null){
             let movedBarrelHorizontally = new Barrel(
@@ -41,7 +43,7 @@ class Player extends GameObject{
                 this.pushedBarrel.posX + this.pushedBarrel.velocityRight - this.pushedBarrel.velocityLeft,
                 this.pushedBarrel.posY);
 
-            if (CollisionDetection.collidesWithOneOf(movedBarrelHorizontally, RectangularCollideZone, walls, RectangularCollideZone) != null) {
+            if (CollisionDetection.collidesWithOneOf(movedBarrelHorizontally, walls) != null) {
                 this.stuckHorizontally = true;
             }
 
@@ -50,7 +52,7 @@ class Player extends GameObject{
                 this.pushedBarrel.posX,
                 this.pushedBarrel.posY + this.pushedBarrel.velocityDown - this.pushedBarrel.velocityUp);
 
-            if (CollisionDetection.collidesWithOneOf(movedBarrelVertically, RectangularCollideZone, walls, RectangularCollideZone) != null) {
+            if (CollisionDetection.collidesWithOneOf(movedBarrelVertically, walls) != null) {
                 this.stuckVertically = true;
             }
         }
@@ -132,6 +134,21 @@ class Player extends GameObject{
             tilesize, 2*tilesize);
     }
 
+    drawKillCount(){
+        ctx.save();
+        ctx.font ="bold 60px serif";
+        let killCountText = "kills: " + this.kills;
+        ctx.fillText(killCountText, tilesize, 2*tilesize);
+
+        if (this.highscore > 0){
+            ctx.font ="bold 25px serif";
+            let highscoreText = "highscore: " + this.highscore;
+            ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
+        }
+
+        ctx.restore();
+    }
+
     displayHealth(){
         ctx.save();
         let newHealth = this.health-this.damageTaken;
@@ -146,7 +163,7 @@ class Player extends GameObject{
     hit(damage) {
         if (clock - this.lastDamage < 200) return;
 
-        if (!soundsMuted) new Audio("assets/sounds/player hit.mp3").play();
+        playSound("assets/sounds/player hit.mp3");
 
         this.damageTaken += damage;
 
@@ -156,18 +173,24 @@ class Player extends GameObject{
     }
 
     kill(){
-        if (!soundsMuted) new Audio("assets/sounds/death.mp3").play();
+        playSound("assets/sounds/death.mp3");
 
         this.dead = true;
+        this.updateHighscore();
+        this.kills = 0;
         console.log("player killed with", this.kills, "kills");
 
-        reset();
+        resetGame();
+    }
+
+    updateHighscore() {
+        if (this.kills > this.highscore) this.highscore = this.kills;
     }
 
     shoot(direction){
         if (clock - this.lastShot < 200) return;
 
-        if (!soundsMuted) new Audio("assets/sounds/shot.mp3").play();
+        playSound("assets/sounds/shot.mp3");
 
         bullets.push(new Bullet(
             null,
