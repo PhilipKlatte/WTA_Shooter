@@ -23,10 +23,12 @@ var game_over_overlay = AssetLoader.addImage("assets/game_over_overlay.png");
 var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
 var press_key = AssetLoader.addImage("assets/game/controls.png");
+var medikitImg = AssetLoader.addImage("assets/medikit.png");
 
 var maxZombieCount = 5;
 var increaseZombieCountProbability = 10; // Probalitity that the ZombieCount increases by one after every killed Zombie
 var lastBarrelDrop = 0;
+var lastMedikitDrop = 0;
 
 var zombieMinSpeed = 1;
 var zombieMaxSpeed = 4.5;
@@ -158,10 +160,12 @@ function gameLoop() {
     player.move();
     barrels.forEach(barrel => barrel.move());
     effects.forEach(effect => effect.move());
+    items.forEach(item => item.move());
 
     advanceTime();
 
     spawnBarrelsEvery(30000);
+    spawnMedikitEvery(5);
 
     draw();
 }
@@ -175,6 +179,20 @@ function spawnBarrelsEvery(milliseconds) {
     if (clock - lastBarrelDrop > milliseconds && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
+    }
+}
+
+/**
+ * drops a medikit after a certain number of kills
+ * 
+ * @param {int} kills - the amount of kills after which a new medikit should drop
+ */
+function spawnMedikitEvery(kills) {
+    console.log(count(items));
+
+    if (player.kills != lastMedikitDrop && player.kills % kills === 0) {
+        spawnMedikit();
+        lastMedikitDrop = player.kills;
     }
 }
 
@@ -196,6 +214,7 @@ function draw() {
     zombies.forEach(zombie => zombie.draw());
     bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
+    items.forEach(item => item.draw());
 
     player.drawKillCount();
 
