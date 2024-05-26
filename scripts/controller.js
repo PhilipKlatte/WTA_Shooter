@@ -132,6 +132,7 @@ async function resetGame(){
     barrels.splice(0, barrels.length);
     bullets.splice(0, bullets.length);
     effects.splice(0, effects.length);
+    items.splice(0, items.length);
 
     clearInterval(interval);
 
