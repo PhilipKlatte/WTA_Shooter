@@ -24,11 +24,13 @@ var titlescreen = AssetLoader.addImage("assets/game/Title-Screen.png");
 var controls = AssetLoader.addImage("assets/game/controls.png");
 var press_key = AssetLoader.addImage("assets/game/controls.png");
 var medikitImg = AssetLoader.addImage("assets/medikit.png");
+var ammoImg = AssetLoader.addImage("assets/items/ammo.png");
 
 var maxZombieCount = 5;
-var increaseZombieCountProbability = 10; // Probalitity that the ZombieCount increases by one after every killed Zombie
-var lastBarrelDrop = 0;
-var lastMedikitDrop = 0;
+var increaseZombieCountProbability = 10;    // Probalitity that the ZombieCount increases by one after every killed Zombie
+var lastBarrelDrop = 0;                     // last time in milliseconds when barrels dropped 
+var lastAmmoDrop = 0;                       // last time in milliseconds when ammo dropped
+var lastMedikitDrop = 0;                    // last number of kills by the player when a medikit dropped
 
 var zombieMinSpeed = 1;
 var zombieMaxSpeed = 4.5;
@@ -166,6 +168,7 @@ function gameLoop() {
     advanceTime();
 
     spawnBarrelsEvery(30000);
+    spawnAmmoEvery(20000);
     spawnMedikitEvery(5);
 
     draw();
@@ -180,6 +183,18 @@ function spawnBarrelsEvery(milliseconds) {
     if (clock - lastBarrelDrop > milliseconds && count(barrels) < 10) {
         spawnBarrels(2);
         lastBarrelDrop = clock;
+    }
+}
+
+/**
+ * drops ammunition after a certain period of time
+ * 
+ * @param {int} milliseconds - the time in milliseconds after which ammunition should drop
+ */
+function spawnAmmoEvery(milliseconds) {
+    if (clock - lastAmmoDrop > milliseconds) {
+        spawnAmmo();
+        lastAmmoDrop = clock;
     }
 }
 
@@ -213,9 +228,9 @@ function draw() {
     barrels.forEach(barrel => barrel.draw());
     player.draw();
     zombies.forEach(zombie => zombie.draw());
-    bullets.forEach(bullet => bullet.draw());
     effects.forEach(effect => effect.draw());
     items.forEach(item => item.draw());
+    bullets.forEach(bullet => bullet.draw());
 
     player.drawKillCount();
 

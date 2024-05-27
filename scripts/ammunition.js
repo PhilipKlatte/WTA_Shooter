@@ -6,4 +6,10 @@ class Ammunition extends GameObject {
 
         this.count = 15;
     }
+
+    regenerateAmmo(player){
+        console.log('regenerating ammo');
+        player.ammo += this.count;
+        delete items[items.indexOf(this)];
+    }
 }

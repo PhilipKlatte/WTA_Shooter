@@ -87,3 +87,16 @@ function spawnMedikit(){
 
     items.push(medikit);
 }
+
+function spawnAmmo(){
+    let ammo = null;
+
+    do {
+        ammo = new Ammunition(
+            ammoImg,
+            getRandomNumberIn(0, tilesX)*tilesize,
+            getRandomNumberIn(0, tilesY)*tilesize);
+    } while (CollisionDetection.isNotFreeSpace(ammo));
+
+    items.push(ammo);
+}

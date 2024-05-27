@@ -16,6 +16,7 @@ class Player extends GameObject{
         this.highscore = highscore;
         this.dead = false;
         this.lastShot = 0;
+        this.ammo = 20;
 
         this.collideZone = new RectangularCollideZone(0, tilesize, tilesize, 2*tilesize);
         this.hitzone = new RectangularHitZone(0, tilesize, tilesize, 2*tilesize);
@@ -77,7 +78,14 @@ class Player extends GameObject{
     }
 
     collectItem(item){
-        if (item instanceof Medikit) item.regenerateHealth(this);
+        switch (item.constructor) {
+            case Medikit:
+                item.regenerateHealth(this);
+                break;
+            case Ammunition:
+                item.regenerateAmmo(this);
+                break;
+        }
     }
 
     draw(){
@@ -196,6 +204,9 @@ class Player extends GameObject{
     }
 
     shoot(direction){
+        console.log('ammo is ', this.ammo);
+        if (this.ammo === 0) return;
+
         if (clock - this.lastShot < 200) return;
 
         playSound("assets/sounds/shot.mp3");
@@ -207,6 +218,8 @@ class Player extends GameObject{
             direction));
 
         this.lastShot = clock;
+        this.ammo = this.ammo - 1;
+        console.log('and now it is ', this.ammo);
     }
 
     logCoordinates(){
