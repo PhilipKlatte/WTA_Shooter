@@ -204,8 +204,6 @@ function spawnAmmoEvery(milliseconds) {
  * @param {int} kills - the amount of kills after which a new medikit should drop
  */
 function spawnMedikitEvery(kills) {
-    console.log(count(items));
-
     if (player.kills != lastMedikitDrop && player.kills % kills === 0) {
         spawnMedikit();
         lastMedikitDrop = player.kills;

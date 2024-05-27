@@ -204,7 +204,6 @@ class Player extends GameObject{
     }
 
     shoot(direction){
-        console.log('ammo is ', this.ammo);
         if (this.ammo === 0) return;
 
         if (clock - this.lastShot < 200) return;
@@ -219,7 +218,6 @@ class Player extends GameObject{
 
         this.lastShot = clock;
         this.ammo = this.ammo - 1;
-        console.log('and now it is ', this.ammo);
     }
 
     logCoordinates(){
