@@ -4,7 +4,7 @@ class Ammunition extends GameObject {
 
         this.collideZone = new RectangularCollideZone(0, 0, tilesize, tilesize);
 
-        this.count = 15;
+        this.count = 25;
     }
 
     regenerateAmmo(player){

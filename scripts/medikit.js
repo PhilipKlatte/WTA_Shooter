@@ -12,6 +12,8 @@ class Medikit extends GameObject {
 
         if (newLifePoints <= player.health) {
             player.damageTaken -= this.lifePoints;
+        } else {
+            player.damageTaken = 0;
         }
 
         delete items[items.indexOf(this)];
