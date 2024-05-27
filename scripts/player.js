@@ -93,6 +93,8 @@ class Player extends GameObject{
         else this.drawIdleAnimation();
 
         this.displayHealth();
+        this.drawAmmoCount();
+        this.drawKillCount();
     }
 
     drawWalkingAnimation(){
@@ -162,6 +164,14 @@ class Player extends GameObject{
             ctx.fillText(highscoreText, tilesize, 2.75*tilesize);
         }
 
+        ctx.restore();
+    }
+
+    drawAmmoCount(){
+        ctx.save();
+        ctx.font ="bold 25px serif";
+        let highscoreText = "ammo: " + this.ammo;
+        ctx.fillText(highscoreText, 26*tilesize, 2.75*tilesize);
         ctx.restore();
     }
 

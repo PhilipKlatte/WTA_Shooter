@@ -230,8 +230,6 @@ function draw() {
     items.forEach(item => item.draw());
     bullets.forEach(bullet => bullet.draw());
 
-    player.drawKillCount();
-
     if (player.dead) ctx.drawImage(game_over_overlay, 0, 0);
 
     if (debugMode) drawDebugMode();
