@@ -51,6 +51,10 @@ async function keydownEvent(ev) {
     if (ev.keyCode === 27) {                        // ESC key pressed
         (gamePaused) ? resumeGame() : pauseGame();
     }
+
+    if (ev.keyCode === 191) {                       // # key pressed
+            toggleDebugMode();
+    }
 }
 
 function keyupEvent(ev){
