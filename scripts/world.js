@@ -19,6 +19,7 @@ const zombies = [];
 const barrels = [];
 const bullets = [];
 const effects = [];
+const items = [];
 
 function loadWalls(){
     wallDefinitions.forEach(wall => {
@@ -72,4 +73,17 @@ function spawnZombies(count){
 
         zombies.push(zombie);
     }
+}
+
+function spawnMedikit(){
+    let medikit = null;
+
+    do {
+        medikit = new Medikit(
+            medikitImg,
+            getRandomNumberIn(0, tilesX)*tilesize,
+            getRandomNumberIn(0, tilesY)*tilesize);
+    } while (CollisionDetection.isNotFreeSpace(medikit));
+
+    items.push(medikit);
 }

@@ -57,6 +57,11 @@ class Player extends GameObject{
             }
         }
 
+        let item = CollisionDetection.collidesWithOneOf(this, items);
+        if (item){
+            this.collectItem(item);
+        }
+
         if (!this.stuckHorizontally) {
             this.posX = this.posX + this.velocityRight - this.velocityLeft;
         }
@@ -71,6 +76,9 @@ class Player extends GameObject{
         if (this.velocityLeft > 0) this.orientation = orientation.left;
     }
 
+    collectItem(item){
+        if (item instanceof Medikit) item.regenerateHealth(this);
+    }
 
     draw(){
         if (this.walking()) this.drawWalkingAnimation();

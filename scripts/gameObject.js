@@ -49,5 +49,7 @@ class GameObject {
     draw(){
         if (this.src != null) ctx.drawImage(this.src, this.posX, this.posY);
     }
+
+    move(){}
 }
 
